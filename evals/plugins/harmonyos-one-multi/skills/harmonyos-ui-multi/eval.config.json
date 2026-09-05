@@ -1,0 +1,14 @@
+{
+  "target": {
+    "plugin": "harmonyos-one-multi",
+    "skill": "harmonyos-ui-multi",
+    "path": "../../../../../plugins/harmonyos-one-multi/skills/harmonyos-ui-multi"
+  },
+  "suites": [
+    {
+      "id": "source-contracts",
+      "type": "deterministic",
+      "entry": "run_evals.py"
+    }
+  ]
+}

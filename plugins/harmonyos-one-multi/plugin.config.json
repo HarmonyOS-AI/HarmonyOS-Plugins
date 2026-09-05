@@ -1,0 +1,43 @@
+{
+  "name": "harmonyos-one-multi",
+  "version": "0.1.0",
+  "displayName": "HarmonyOS 一多适配",
+  "description": "HarmonyOS multi-device adaptation with project workflows, ArkUI, camera, H5, and Flutter knowledge, reusable assets, verification tools, and reports.",
+  "shortDescription": "一多流程编排与 ArkUI、相机、H5、Flutter 多设备适配",
+  "longDescription": "保留工程扫描、路由发现、批次 SPEC、高保真确认、任务账本、静态检查、设备验证取证与 HTML 报告，以及 ArkUI 布局、相机链路、H5 响应式和 Flutter 原生/HADSS/OHOS 宿主适配知识与代码资产。当前支持手机、折叠屏和平板，沿用原 Skill 的能力边界。",
+  "author": {
+    "name": "HarmonyOS-AI",
+    "url": "https://github.com/HarmonyOS-AI"
+  },
+  "homepage": "https://github.com/HarmonyOS-AI/HarmonyOS-Plugins",
+  "repository": "https://github.com/HarmonyOS-AI/HarmonyOS-Plugins",
+  "keywords": [
+    "harmonyos",
+    "multi-device",
+    "arkui",
+    "camera",
+    "h5",
+    "flutter",
+    "foldable",
+    "responsive-layout"
+  ],
+  "category": "Developer Tools",
+  "capabilities": [
+    "Read",
+    "Write",
+    "Interactive"
+  ],
+  "defaultPrompt": [
+    "分析这个 HarmonyOS 工程的一多适配问题，并按批次形成方案、验证证据和报告。",
+    "修复折叠屏展开后 ArkUI 页面布局或相机预览异常。",
+    "检查 HarmonyOS WebView/H5 或 Flutter 页面的多设备适配。"
+  ],
+  "brandColor": "#CE0E2D",
+  "components": {
+    "skills": "./skills/"
+  },
+  "opencode": {
+    "packageName": "@harmonyos-ai/harmonyos-one-multi",
+    "toolName": "harmonyos_one_multi_skill"
+  }
+}

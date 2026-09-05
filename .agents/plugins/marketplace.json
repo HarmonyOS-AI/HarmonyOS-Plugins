@@ -15,6 +15,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Developer Tools"
+    },
+    {
+      "name": "harmonyos-one-multi",
+      "source": {
+        "source": "local",
+        "path": "./plugins/harmonyos-one-multi"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
     }
   ]
 }

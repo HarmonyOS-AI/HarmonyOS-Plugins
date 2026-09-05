@@ -1,0 +1,164 @@
+[
+  {
+    "case_id": "PX-FUNC-001",
+    "layer": "scene-functional",
+    "title": "视频播放器悬停态分屏与铰链避让（Flutter）",
+    "phase": "DEV",
+    "user_prompt": "请为 Flutter 视频播放器设计 PuraX 悬停态分屏布局：悬停态时将视频画面和控制栏分别放置在铰链两侧的屏幕上，铰链区域保留空白不放置任何内容。非悬停态回退为常规全屏布局。项目使用 hadss_avoid_area。请输出可落到工程中的开发方案，包含 FolderStack 和 FoldSplitContainer 两种方案对比。",
+    "intent": "验证 harmonyos-flutter-multi 是否路由至 PX-01（悬停态分屏）+ PX-02（铰链避让），输出 FolderStack 和 FoldSplitContainer 两种方案。",
+    "expected": {
+      "primary_phase": "DEV",
+      "primary_scene": "PX-01",
+      "secondary_scenes": [
+        "PX-02"
+      ],
+      "next_scene_refs": [
+        "./SKILL.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "code_touchpoints",
+        "reuse_resources",
+        "implementation_notes",
+        "integration_risks"
+      ],
+      "forbidden_scenes": [
+        "PX-04"
+      ]
+    }
+  },
+  {
+    "case_id": "PX-FUNC-002",
+    "layer": "scene-functional",
+    "title": "聊天 App 列表-详情双栏布局（Flutter）",
+    "phase": "DEV",
+    "user_prompt": "请为 Flutter 聊天 App 设计 PuraX 折叠屏列表-详情双栏布局：折叠态（<600dp）全屏聊天界面，展开态（≥600dp）左侧会话列表 + 右侧聊天内容。项目未引入任何适配库。请输出 hadss 库方案（NavigationSplitContainer）和原生 Flutter 方案（LayoutBuilder），并做方案对比。",
+    "intent": "验证 harmonyos-flutter-multi 是否路由至 PX-03，输出 NavigationSplitContainer 和 LayoutBuilder 双方案对比。",
+    "expected": {
+      "primary_phase": "DEV",
+      "primary_scene": "PX-03",
+      "secondary_scenes": [],
+      "next_scene_refs": [
+        "./SKILL.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "code_touchpoints",
+        "reuse_resources",
+        "implementation_notes",
+        "integration_risks"
+      ],
+      "forbidden_scenes": [
+        "PX-01",
+        "PX-02",
+        "PX-04"
+      ]
+    }
+  },
+  {
+    "case_id": "PX-FUNC-003",
+    "layer": "scene-functional",
+    "title": "PuraX 内外屏差异化适配（Flutter）",
+    "phase": "DEV",
+    "user_prompt": "请为 Flutter 应用实现 PuraX 内外屏差异化适配：外屏为较宽外屏（459×672 vp，sm×lg 断点，宽高比约 0.68），仅展示核心信息 + 底部 Tab 导航；内屏展开态（939×664 vp，lg×sm 断点）利用宽屏空间展示扩展内容，采用多栏布局。内外屏切换时内容需保持连续。请输出可落地的开发方案。",
+    "intent": "验证 harmonyos-flutter-multi 是否路由至 PX-01 + PX-03，覆盖 PuraX 内外屏差异化适配。",
+    "expected": {
+      "primary_phase": "DEV",
+      "primary_scene": "PX-01",
+      "secondary_scenes": [
+        "PX-03"
+      ],
+      "next_scene_refs": [
+        "./SKILL.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "code_touchpoints",
+        "reuse_resources",
+        "implementation_notes",
+        "integration_risks"
+      ],
+      "forbidden_scenes": [
+        "PX-02",
+        "PX-04"
+      ]
+    }
+  },
+  {
+    "case_id": "PX-FUNC-004",
+    "layer": "scene-functional",
+    "title": "断点驱动的四大布局模式实现（Flutter）",
+    "phase": "DEV",
+    "user_prompt": "请为 Flutter 应用实现断点驱动的四种典型布局模式：1）重复布局：商品网格根据断点变化列数；2）分栏布局：聊天应用单/双栏切换；3）挪移布局：底部导航在 lg 断点下移至左侧侧边栏；4）缩进布局：大屏下内容居中限制最大宽度。项目使用 hadss_adaptive_layout。请输出完整实现方案。",
+    "intent": "验证 harmonyos-flutter-multi 是否路由至 PX-03，覆盖四种官方布局模式。",
+    "expected": {
+      "primary_phase": "DEV",
+      "primary_scene": "PX-03",
+      "secondary_scenes": [],
+      "next_scene_refs": [
+        "./SKILL.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "code_touchpoints",
+        "reuse_resources",
+        "implementation_notes",
+        "integration_risks"
+      ],
+      "forbidden_scenes": [
+        "PX-01",
+        "PX-02",
+        "PX-04"
+      ]
+    }
+  },
+  {
+    "case_id": "PX-FUNC-005",
+    "layer": "scene-functional",
+    "title": "视频播放折展连续性保持（Flutter）",
+    "phase": "DEV",
+    "user_prompt": "请为 Flutter 视频播放器实现 PuraX 折叠/展开时的播放连续性保持：折展前快照播放进度和播放/暂停状态，折展后通过 videoController 恢复到快照位置。连续快速折展时进度不能回跳，autoplay 不能抢跑覆盖暂停状态。请输出完整方案。",
+    "intent": "验证 harmonyos-flutter-multi 是否路由至 PX-04，覆盖视频播放连续性保持。",
+    "expected": {
+      "primary_phase": "DEV",
+      "primary_scene": "PX-04",
+      "secondary_scenes": [],
+      "next_scene_refs": [
+        "./SKILL.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "code_touchpoints",
+        "reuse_resources",
+        "implementation_notes",
+        "integration_risks"
+      ],
+      "forbidden_scenes": [
+        "PX-01",
+        "PX-02",
+        "PX-03",
+        "PX-05"
+      ]
+    }
+  }
+]

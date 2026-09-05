@@ -1,0 +1,667 @@
+[
+  {
+    "id": "respect-existing-infrastructure",
+    "prompt": "工程已经有断点和 AppStorage，修复折叠展开后标题栏被状态栏遮挡。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "保留已有断点和状态基础设施",
+      "只补避让区随形态变化刷新的缺口",
+      "修改后验证折叠态和展开态"
+    ],
+    "forbidden_claims": [
+      "无条件替换为 skill 自带断点系统",
+      "只在启动时读取一次避让区"
+    ],
+    "required_resources": [
+      "domains/avoid-area.md",
+      "domains/fold-form.md"
+    ]
+  },
+  {
+    "id": "fullscreen-intent-requires-immersive-layout",
+    "prompt": "页面要求背景和内容铺满整个物理屏幕，并延伸到状态栏和导航条区域。请完成适配。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "将全屏、占满或铺满整个物理屏幕的需求识别为沉浸式窗口布局",
+      "使用 setWindowLayoutFullScreen(true) 让内容延伸到系统栏区域，而不是只设置 height('100%')",
+      "为关键内容配置安全区避让，并监听 avoidAreaChange 处理旋转、分屏和折叠变化",
+      "区分占满物理屏幕与仅占满父容器或安全内容区"
+    ],
+    "forbidden_claims": [
+      "只设置 height('100%') 就能占满包含系统栏在内的物理屏幕",
+      "开启沉浸式后不需要处理状态栏和导航条避让",
+      "任何父容器内的 height('100%') 都必须开启沉浸式"
+    ],
+    "required_resources": [
+      "domains/avoid-area.md",
+      "references/root-causes.md"
+    ]
+  },
+  {
+    "id": "reject-global-centered-width-wrapper",
+    "prompt": "工程有 25 个手机单列页面要适配折叠屏展开态。工程没有响应式基础设施，请抽一个 ContentWidthLimit 公共组件，把所有页面统一居中限宽，尽快完成一多适配。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "拒绝把整页居中限宽作为全工程默认适配策略",
+      "先按页面语义区分增列、分栏、延伸、全宽和局部限宽",
+      "只允许正文或窄表单等有明确依据的局部内容区限宽",
+      "新增公共布局封装必须作为独立结构方案确认并先在代表页验证"
+    ],
+    "forbidden_claims": [
+      "工程没有响应式基础设施即可默认新增 ContentWidthLimit",
+      "给所有页面套 GridRow 和 GridCol 居中后即完成一多适配",
+      "同为单列页面就可以直接复用同一个限宽策略"
+    ],
+    "required_resources": [
+      "references/layout-strategies.md",
+      "domains/size-layout.md",
+      "references/assets-catalog.md"
+    ]
+  },
+  {
+    "id": "limit-width-only-lg-detail-body",
+    "prompt": "首页在折叠屏展开态（md 断点）内容被拉得太宽，帮我在首页外面包一层 GridCol span/offset 居中限宽，让内容收窄一点。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "首页不限宽，sm/md 断点保持全宽",
+      "居中限宽仅在 lg 断点及以上的详情页正文内容子区域适用",
+      "首页大屏应优先增列、延伸或分栏来利用空间",
+      "限宽只包正文那一块，不包页面根容器、导航、背景或媒体"
+    ],
+    "forbidden_claims": [
+      "在 md 断点对首页套 GridCol span/offset 居中限宽",
+      "给整页或页面根容器包限宽",
+      "把首页居中限宽作为默认适配策略",
+      "因为内容被拉宽就限宽，无需看断点和页面类型"
+    ],
+    "required_resources": [
+      "references/layout-strategies.md",
+      "domains/size-layout.md"
+    ]
+  },
+  {
+    "id": "tabs-lg-md-breakpoint-regression",
+    "prompt": "首页 Tabs 在 lg 断点移到左侧后遮住内容，窗口缩到 md 时仍停在左侧。请修复断点监听和 Tabs 切换。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "检查断点初值来自当前主窗口而不是物理屏幕宽度",
+      "断点监听注册幂等且 windowSizeChange 和 systemDensityChange 使用同一回调引用注销",
+      "V2 消费端通过 @Local 引用 BreakpointSystem.state 建立响应式关系",
+      "md 完整恢复 End、false、100%、底部高度和 Fixed，lg 完整切换到侧边五属性",
+      "验证 lg 到 md 再到 lg 时 Tabs 双向切换且普通页面内容不被侧栏覆盖"
+    ],
+    "forbidden_claims": [
+      "使用 isWide 控制 lg 侧边 Tabs",
+      "普通页面使用 Stack 加 position 浮层 SideTabBar",
+      "只修改 barPosition 即认为切换完成",
+      "只验证 md 到 lg 单向切换"
+    ],
+    "required_resources": [
+      "assets/size-layout/BreakpointSystem.ets",
+      "assets/size-layout/BreakpointEntryRegistration.ets",
+      "assets/size-layout/ResponsiveTabsExample.ets",
+      "domains/size-layout.md"
+    ]
+  },
+  {
+    "id": "tabs-lg-side-item-spacing",
+    "prompt": "Tabs 到 LG 断点后放在左侧，但每个页签挨得太近。请把页签之间的间距拉开，并保证页签较多时仍可用。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "确认间距应设置在自定义 tabBar 的页签项根节点，而不是只修改 Tabs 容器",
+      "LG 侧边栏下，在每个自定义 tabBar 页签项根节点同时设置 top 和 bottom margin",
+      "模型结合页签内容尺寸、侧栏可用高度和视觉效果判断 margin 数值并在 LG 下验证",
+      "允许直接使用判断后的数值，不强制要求项目存在对应资源或设计 token",
+      "直接参考 Calendar TabContainer 中完整的 tabBuilder、TabContent 和 Tabs 属性链案例",
+      "BarMode.Scrollable 只负责页签过多时的溢出滚动",
+      "间距不依赖页签数量、容器剩余高度或独立 tabCount 动态计算",
+      "验证 LG 下少量、常规数量和溢出三种情况，并回归 MD 底部栏"
+    ],
+    "forbidden_claims": [
+      "把间距只加在 Tabs 容器而不是每个页签项根节点",
+      "只设置 top 或 bottom 单侧 margin",
+      "改用 padding 而没有为页签项设置上下 margin",
+      "根据当前 Tab 数量或剩余高度动态计算每项 margin",
+      "声称 margin 数值只能来自目标工程已有资源或设计 token",
+      "把 Calendar 的 top: 5 或 bottomRectHeight 当作所有项目的通用间距",
+      "把 BarMode.Scrollable 改成不可滚动导致较多 Tab 被裁切",
+      "LG 侧边栏下没有验证每个页签项的上下 margin"
+    ],
+    "required_resources": [
+      "assets/size-layout/ResponsiveTabsExample.ets",
+      "domains/size-layout.md",
+      "references/cases/bug-fix-size-layout.md",
+      "references/root-causes.md",
+      "references/quality-checklist.md"
+    ]
+  },
+  {
+    "id": "display-priority-without-manual-visible-count",
+    "prompt": "这个 Row 里的标签已经按重要性设置了不同的 displayPriority。请适配窗口连续缩放，让空间不足时优先隐藏低优先级标签。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "完整遍历标签数据并保留每个直接子节点的 displayPriority",
+      "只为单行容器提供明确的主轴宽度约束",
+      "由布局引擎根据子节点实际测量尺寸和优先级决定显隐数量",
+      "说明排列位置本身不决定显隐顺序，只有显式分配的优先级决定分组和先后",
+      "验证不同文字长度、字体缩放和连续窗口宽度下的优先级显隐"
+    ],
+    "forbidden_claims": [
+      "监听窗口或组件宽度后用 availableWidth 除以 itemWidth 计算 visibleCount",
+      "在 displayPriority 之外再维护 maxVisibleCount",
+      "通过 slice 或 filter 预先裁掉标签子节点",
+      "按一个固定标签宽度推导所有标签的可见数量",
+      "把靠后位置描述成 displayPriority 独立于优先级值的隐藏规则"
+    ],
+    "required_resources": [
+      "assets/size-layout/row-displaypriority-truncation.ets",
+      "domains/size-layout.md",
+      "references/root-causes.md"
+    ]
+  },
+  {
+    "id": "display-priority-same-priority-group",
+    "prompt": "一个单行容器中的多个子组件设置了 displayPriority，其中部分子组件具有相同优先级，另有若干元素需要作为一个整体显隐。请说明正确处理方式。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "明确相同 displayPriority 的直接子节点同时显示或隐藏，不会从尾部逐项隐藏",
+      "把需要整体显隐的多个元素封装成一个语义完整的直接子组件",
+      "在组容器上设置 displayPriority，让布局引擎按实际测量尺寸决定整组显隐",
+      "仅在产品明确要求固定显示 N 个或提供更多入口时改用手动分组计数，并与 displayPriority 二选一"
+    ],
+    "forbidden_claims": [
+      "同优先级组件会从尾部逐项隐藏",
+      "displayPriority 无法保证同优先级组件同时显隐",
+      "已经使用 displayPriority 后仍按窗口宽度计算 visibleCount",
+      "把组件排列位置当作 displayPriority 的同级显隐顺序"
+    ],
+    "required_resources": [
+      "assets/size-layout/row-displaypriority-truncation.ets",
+      "domains/size-layout.md",
+      "references/cases/bug-fix-size-layout.md",
+      "references/root-causes.md"
+    ]
+  },
+  {
+    "id": "display-priority-value-graded-content",
+    "prompt": "航班信息行里有登机口、准点率、座位、附加服务标签和分享按钮。请让这行内容在手机、折叠屏和平板上按重要程度适当减少：登机口最关键，附加服务最次要。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "识别为按业务价值分级隐藏场景，在单行容器的直接子节点上使用 displayPriority",
+      "用命名权重常量表达价值层级，关键信息权重最高，不在组件里散落魔数",
+      "同一价值层级共用同一权重，宽度不足时同权重子节点同时显隐",
+      "多个次要小项封装为一个语义组容器，displayPriority 设在组容器上整组显隐，组内子项不单独设置",
+      "必须完整显示的关键项设置 flexShrink(0)，容器提供 width('100%') 主轴约束",
+      "由布局引擎按子项实际测量尺寸决定显隐数量，验证从宽到窄连续缩放时按权重逐级隐藏"
+    ],
+    "forbidden_claims": [
+      "监听窗口或组件宽度后计算可见数量或 maxVisibleCount",
+      "通过 slice 或 filter 预先裁剪子项数据",
+      "在组容器内部给每个子项单独设置不同 displayPriority 破坏整组显隐",
+      "按设备类型或固定宽度分支决定显示哪些项",
+      "用截断或压缩关键信息代替按优先级隐藏"
+    ],
+    "required_resources": [
+      "assets/size-layout/row-displaypriority-value-graded.ets",
+      "domains/size-layout.md",
+      "references/root-causes.md"
+    ]
+  },
+  {
+    "id": "even-distribution-prefers-space-evenly",
+    "prompt": "底部操作区有三个按钮，要求在手机、折叠屏和平板上都是均分布局，间距保持一致。请实现。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "用户提到均分布局时优先在容器主轴上使用 justifyContent(FlexAlign.SpaceEvenly) 完成间距均分",
+      "由布局引擎按各断点剩余空间分配间距，sm 到 lg 自动变化，不写死间距数值",
+      "区分间距均分与尺寸均分：子项要求等宽等高时用 layoutWeight、flexGrow 或百分比，而不是 SpaceEvenly",
+      "不通过手写 margin、padding 或固定 space 模拟均分",
+      "验证最小断点下间距自然归零不重叠，且大屏下项间与两端空隙相等"
+    ],
+    "forbidden_claims": [
+      "用固定 margin 或 padding 数值手动计算均分间距",
+      "把 SpaceBetween 当作均分布局的实现",
+      "监听窗口宽度后动态计算每个子项的间距",
+      "为均分间距写死像素值并声称在所有设备上均分"
+    ],
+    "required_resources": [
+      "domains/size-layout.md",
+      "references/root-causes.md"
+    ]
+  },
+  {
+    "id": "orientation-policy-from-window-rotation-doc",
+    "prompt": "首页旋转需求同时包含设备形态、允许旋转方向和系统旋转开关。请确定应使用哪个 Orientation 枚举并说明实现边界。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "先读取 references/window-rotation-policy.md，再按离线语义快照选择枚举",
+      "根据允许方向、传感器、系统旋转锁、设备形态和窗口场景说明选型依据",
+      "说明首页全局旋转策略应配置在 entry/src/main/module.json5 中",
+      "指出 SM 是窗口断点而非设备类型，平板分屏也可能落入 SM",
+      "说明分屏、悬浮窗或自由多窗中的旋转接口行为限制"
+    ],
+    "forbidden_claims": [
+      "不查 window-rotation-policy.md 就把某段自然语言需求固定绑定到一个 Orientation 枚举",
+      "仅凭枚举名称或历史示例猜测策略值",
+      "把 SM 断点直接当作设备类型来选择旋转枚举",
+      "在分屏、悬浮窗或自由多窗中把 setPreferredOrientation 调用成功当作已经旋转"
+    ],
+    "required_resources": [
+      "domains/orientation.md",
+      "references/window-rotation-policy.md",
+      "references/cases/bug-fix-orientation.md",
+      "references/root-causes.md"
+    ]
+  },
+  {
+    "id": "orientation-follow-desktop-semantic-oracle",
+    "prompt": "首页的方向行为必须与当前设备桌面完全一致：桌面固定时应用固定，桌面允许旋转时应用随桌面旋转。请根据旋转策略参考选择枚举并说明配置位置。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "读取 references/window-rotation-policy.md",
+      "选择 window.Orientation.FOLLOW_DESKTOP，枚举值为 17",
+      "说明依据是跟随桌面行为，而不是根据 SM 断点推断设备类型",
+      "说明首页全局旋转策略配置在 entry/src/main/module.json5 中"
+    ],
+    "forbidden_claims": [
+      "选择 AUTO_ROTATION_RESTRICTED、AUTO_ROTATION_UNSPECIFIED 或 UNSPECIFIED",
+      "按窗口宽度动态重写已经由桌面策略表达的设备形态行为",
+      "把 SM 当作直板机设备类型"
+    ],
+    "required_resources": [
+      "domains/orientation.md",
+      "references/window-rotation-policy.md"
+    ]
+  },
+  {
+    "id": "orientation-restricted-four-direction-oracle",
+    "prompt": "应用主窗口需要跟随传感器支持四个方向自动旋转，并且必须受控制中心旋转锁控制；允许方向不能再由产品形态缩减。请选择 Orientation。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "读取 references/window-rotation-policy.md",
+      "选择 window.Orientation.AUTO_ROTATION_RESTRICTED，枚举值为 8",
+      "区分 AUTO_ROTATION 会忽略旋转锁，AUTO_ROTATION_UNSPECIFIED 的允许方向由系统和产品形态判定",
+      "说明非全屏或特殊窗口场景可能调用成功但不旋转"
+    ],
+    "forbidden_claims": [
+      "选择 AUTO_ROTATION、AUTO_ROTATION_UNSPECIFIED 或 FOLLOW_DESKTOP",
+      "仅凭枚举名称中的 AUTO_ROTATION 猜测结果",
+      "声称分屏下调用成功就已经完成旋转"
+    ],
+    "required_resources": [
+      "domains/orientation.md",
+      "references/window-rotation-policy.md"
+    ]
+  },
+  {
+    "id": "orientation-window-breakpoint-dynamic-oracle",
+    "prompt": "产品明确要求任何 SM 宽度窗口都固定竖屏，非 SM 窗口四向自动旋转并受系统旋转锁控制。请判断单个 Orientation 能否表达。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "读取 references/window-rotation-policy.md",
+      "明确单个 Orientation 不能表达按任意 SM 窗口动态切换的要求",
+      "仅在可生效的主窗口场景按断点切换 PORTRAIT(1) 与 AUTO_ROTATION_RESTRICTED(8)",
+      "指出 SM 是窗口断点而不是设备类型"
+    ],
+    "forbidden_claims": [
+      "用 FOLLOW_DESKTOP、AUTO_ROTATION_UNSPECIFIED 或任一单个枚举完整表达该动态窗口规则",
+      "把 SM 直接等同于直板机",
+      "在分屏或自由多窗中反复强制旋转"
+    ],
+    "required_resources": [
+      "domains/orientation.md",
+      "references/window-rotation-policy.md"
+    ]
+  },
+  {
+    "id": "orientation-follow-desktop-per-form-requirement",
+    "prompt": "首页在直板屏（SM）设备上仅支持竖屏，在折叠屏展开态、平板设备上支持自由旋转，受系统开关控制。请给出首页旋转策略实现方案。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "读取 references/window-rotation-policy.md 并逐形态对照 FOLLOW_DESKTOP 的桌面行为",
+      "确认各形态需求与桌面行为一致后选择 window.Orientation.FOLLOW_DESKTOP，枚举值为 17",
+      "在入口 module.json5 的 ability 上声明 \"orientation\": \"follow_desktop\"（多 product 工程为 products/<product>/src/main/module.json5）",
+      "不在首页运行时调用 setPreferredOrientation 写 PORTRAIT/AUTO_ROTATION_RESTRICTED 设备分叉覆盖声明式策略",
+      "工程已有 WindowOrientationHelper/orientationPresets 等方向基础设施时优先复用其 followDesktop 配置"
+    ],
+    "forbidden_claims": [
+      "用 isFoldable + 折叠状态 + 屏幕长边阈值自行判定平板后运行时分叉设置 PORTRAIT 或 AUTO_ROTATION_RESTRICTED",
+      "未做逐形态对照就断言 FOLLOW_DESKTOP 不适用",
+      "把 SM 当作设备类型而不是窗口断点",
+      "在首页 aboutToAppear/onShown 中反复 setPreferredOrientation 覆盖 module.json5 声明"
+    ],
+    "required_resources": [
+      "domains/orientation.md",
+      "references/window-rotation-policy.md"
+    ]
+  },
+  {
+    "id": "player-landscape-fullscreen-entry-sync",
+    "prompt": "视频播放页通过 windowSizeChange 监听实现了旋转进入全屏，但平板横屏直接进入播放页时仍是竖屏布局，旋转一下才变全屏。请定位并修复。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "指出 windowSizeChange 只在尺寸变化时触发，入场时窗口未变化不会收到事件",
+      "在 aboutToAppear 入场时先读一次当前 windowRect 并按 width > height 同步初始全屏状态",
+      "初始同步与后续 windowSizeChange 使用同一判据与同一同步函数",
+      "监听回调保存引用并在 aboutToDisappear 成对 off"
+    ],
+    "forbidden_claims": [
+      "只依赖 windowSizeChange 监听处理横竖屏联动全屏",
+      "用固定 delay 或轮询等待方向稳定后再设置全屏",
+      "把进入全屏的判据写成 display.rotation 或 display.orientation 值"
+    ],
+    "required_resources": [
+      "domains/orientation.md"
+    ]
+  },
+  {
+    "id": "display-priority-sequence-prefix-weights",
+    "prompt": "出行进度条在窄宽度下截断，需要按显示价值减少节点。价值从高到低：登机口、登机中 > 安检、到达地 > 客舱、行李提取、值机、停车 > 购物、休息室、接机 > 打车、地铁等扩展行程服务。要求各设备上保留的节点是业务顺序的连续前缀，且节点间的箭头不残留。请设计 displayPriority 权重方案。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "识别进度条为顺序前缀型组件：任意宽度下可见集必须是业务顺序的连续前缀",
+      "先按各目标形态的容器宽度预算（子项宽 + 间距 + 连接符）估算每个形态显示到哪一项，权重方案要能复现这些断点，不照抄价值档位字面分组",
+      "指出档位共用权重只能在档边界断开；某形态断点落在档中间时，同档内各项赋逐项递减的独立权重",
+      "最宽形态截断点之后的项与更低档（基础档）合并同权，同一权重整组同时隐藏",
+      "连接符权重取 min(前后节点权重)，任一端隐藏时连接符同步隐藏，不残留孤立箭头",
+      "权重交付静态可核验：在每个数据构造点显式传命名常量/字面量，或在组件渲染时用纯函数按 id 现算",
+      "把每个形态预期显示到哪一项写入验证计划，作为施工后自检断点"
+    ],
+    "forbidden_claims": [
+      "全部节点按价值档位共用权重，导致最宽形态多显示出档内末项",
+      "手动计算 visibleCount 并 slice/filter 预裁数据",
+      "监听窗口宽度自行控制显隐，与 displayPriority 并存",
+      "连接符使用固定权重，节点隐藏后残留孤立箭头",
+      "用构造函数默认参数调用函数计算权重（运行时易被抹平成同值，单组退化后一个都不隐藏）"
+    ],
+    "required_resources": [
+      "domains/size-layout.md"
+    ]
+  },
+  {
+    "id": "split-halfscreen-elastic-blank",
+    "prompt": "应用上下分屏后：登录页底部协议勾选框被截断、滚动也到不了，页面顶部有 154vp 固定内边距和 64/56vp 固定间距；另一隐私声明页要求空间不足时按价值隐藏图标，已设置 displayPriority 却始终不隐藏，该页整体包在 Scroll 里。请定位并修复。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "固定 vp 大间距（padding/margin 常量）在半屏高度下不可压缩，替换为 Blank().layoutWeight(1).constraintSize({ minHeight, maxHeight }) 弹性占位，空间充足时撑开、不足时收缩，关键内容回到可达范围",
+      "指出 displayPriority 的触发前提是容器主轴空间有界且内容可能溢出；把设权重的内容区包进 Scroll 后高度无界，优先级隐藏永不触发",
+      "按价值隐藏的区域保持有界容器（受视口/半屏高度约束），需要滚动的内容放 Scroll，两者不能作用于同一内容区",
+      "改造前盘点所有内容高度可能超过半屏的页面（登录、协议、表单等）逐页处理，不只改一个页面"
+    ],
+    "forbidden_claims": [
+      "再包一层 Scroll 或改滚动参数试图让 displayPriority 生效",
+      "保留固定 vp 大间距只调小数值",
+      "只修复一个长页面就结束",
+      "手算可见数量 slice/filter 预裁"
+    ],
+    "required_resources": [
+      "domains/size-layout.md",
+      "domains/window-form.md"
+    ]
+  },
+  {
+    "id": "float-window-avoidance-baseline-guard",
+    "prompt": "悬浮窗适配需求：首页顶部搜索框在悬浮窗内目前可以正常操作；沉浸式视频页进入悬浮窗后顶部按钮被控制条挡住点不到；另外希望宽大于高的视频悬浮窗横屏显示。请给出改动方案。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "先验证基线：首页搜索在悬浮窗内已可操作（基线通过），不修改其避让实现",
+      "只对未避让的沉浸式页面在 FLOATING 状态下补顶部控制条避让（TYPE_SYSTEM 高度）",
+      "横向悬浮窗用 enableLandscapeMultiWindow 进入 / disableLandscapeMultiWindow 离开成对调用，按视频宽高决定是否启用",
+      "修改共享窗口工具类或新增全局 windowStatusChange 监听重刷避让区属于基础设施级变更，影响所有页面，修改前必须说明影响面并评估回归"
+    ],
+    "forbidden_claims": [
+      "在共享 WindowUtils 中全局监听并重刷避让区，影响所有页面",
+      "给基线已通过的首页新增避让 padding",
+      "每个组件各自挂 windowStatusChange 监听",
+      "为横屏悬浮窗另写一套方向控制"
+    ],
+    "required_resources": [
+      "domains/window-form.md"
+    ]
+  },
+  {
+    "id": "new-action-matches-container-form",
+    "prompt": "商品详情页标题栏操作区（id=product-info-header-actions）内已有一个 CommonSymbol 图标（收藏星标），现在要在同一操作区新增“分屏/合并”入口，宽窗口显示、窄窗口隐藏。请说明新增入口的实现方式。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "先查看同容器内既有操作入口的组件形态：CommonSymbol 图标、同一 Row 层级、相同 id 约定",
+      "新增分屏/合并入口沿用既有入口的组件形态：同为 CommonSymbol，挂在同一操作区容器内",
+      "说明 UI 自动化按组件形态与容器范围统计操作入口，异构入口（文字按钮）会让按形态统计的校验数不到",
+      "宽窗口显示、窄窗口隐藏用窗口宽度阈值（如 600vp）或分屏状态驱动"
+    ],
+    "forbidden_claims": [
+      "在同一操作区新增 Text 文字按钮作为操作入口",
+      "新增入口放在操作区容器之外",
+      "为保持视觉一致给文字按钮套图标样式但组件类型仍不是 CommonSymbol",
+      "改动既有收藏星标的 id 或组件形态"
+    ],
+    "required_resources": [
+      "references/quality-checklist.md"
+    ]
+  },
+  {
+    "id": "split-entry-visibility-gating",
+    "prompt": "给商品详情页新增应用内分屏入口：点击后以 WINDOW_MODE_SPLIT_SECONDARY 启动第二个 UIAbility 显示相同商品。请说明入口在各设备上的显隐条件。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "分屏属于宽窗口能力，入口必须做宽度阈值门控：窗口宽度（onSizeChange 实测值）≥ 600vp 或分屏已激活时显示，窄窗口隐藏",
+      "说明无条件渲染入口会回归基线的窄窗口行为：基线窄窗口本无此入口（操作区计数不变），新增后计数变化直接破坏既有行为",
+      "门控取页面实际窗口宽度（onSizeChange / windowSizeChange 实测），不按设备类型或断点名称猜测"
+    ],
+    "forbidden_claims": [
+      "入口无条件渲染，所有窗口形态都显示",
+      "仅按设备类型（phone/tablet）判断入口显隐",
+      "用折叠状态推导窗口宽度"
+    ],
+    "required_resources": [
+      "domains/window-form.md"
+    ]
+  },
+  {
+    "id": "window-listener-off-in-destroy-must-guard",
+    "prompt": "应用内分屏的第二 UIAbility 在 onWindowStageDestroy 里对保存的主窗口调用 off('windowEvent', callback) 注销监听，进程偶发崩溃，faultlog 显示 This window state is abnormal. Window is nullptr。请定位并修复。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "指出窗口原生对象可能先于 Ability 销毁回调被回收，销毁回调里对 window 调用 off 等接口会抛 Window is nullptr",
+      "onWindowStageDestroy/onDestroy 等销毁回调中所有窗口操作必须 try/catch 兜底，未捕获异常直接崩溃整个进程（表现为 App died）",
+      "兜底后按引用成对注销并置空引用，保持注册/注销纪律不变"
+    ],
+    "forbidden_claims": [
+      "销毁回调里裸调 off 不加 try/catch",
+      "以窗口对象存在为由跳过兜底",
+      "把 off 从销毁回调移到别处规避问题而不兜底"
+    ],
+    "required_resources": [
+      "domains/window-form.md"
+    ]
+  },
+  {
+    "id": "narrow-layer-position-vs-scroll",
+    "prompt": "设置页需要一多适配：SM 断点内容接近全宽，MD 断点内容收窄并居中，LG 断点进一步收窄并居中。页面结构是 Navigation > NavDestination（标题栏含返回箭头）> Scroll > Column(卡片列表)。计划用 GridRow/GridCol 的 span+offset 实现。请给出正确的组件嵌套结构。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "页面级收窄居中（收窄对象是核心内容区，即整个可滚动内容区，不是整个页面）：限宽层必须包住滚动容器本身，结构为 GridRow > GridCol > Scroll，Scroll 的 span+offset 按断点收窄（如 sm 4、md 6+1、lg 8+2）",
+      "标题栏（标题 + 返回箭头）不进限宽层：留在 GridRow 之外保持全宽原位，收窄的只是核心内容区；断点放大后标题和返回箭头跟着居中缩进＝整页被收窄，视觉上像屏幕变小",
+      "指出把 GridRow 放进 Scroll 内部（Scroll > GridRow > GridCol > 内容）只能收窄内容，Scroll 容器本身仍全宽贴边，两侧留白为 0",
+      "自查症状：收窄后滚动条仍贴屏幕边缘＝限宽层放错了位置；滚动容器边界（自动化测试、组件树测量）读到的是全宽",
+      "选完 span 后计算各档收窄比例（width = span / columns）自查：常用基线 MD 约 75%（8 栅格 6/8、12 栅格 9/12）、LG 约 67%（8/12）；“收窄”应比上一档至少收窄一档（≥15%），把各档预期比例写入验证计划",
+      "只有页面内某个局部内容区需要限宽时才用内层结构，且此时不动页面级滚动容器"
+    ],
+    "forbidden_claims": [
+      "页面级收窄需求把 GridRow 放进 Scroll 里实现",
+      "把标题栏或返回箭头一起包进 GridCol 的 span+offset 居中",
+      "用 constraintSize maxWidth 随断点跳变代替栅格 span/offset",
+      "给 Scroll 内的 Column 设固定 maxWidth 后声称页面已收窄居中"
+    ],
+    "required_resources": [
+      "domains/size-layout.md",
+      "assets/size-layout/GridColOffset.ets"
+    ]
+  },
+  {
+    "id": "priority-chain-operators-parse",
+    "prompt": "工具条按优先级链做显隐适配：共享屏幕 >= 成员 > 摄像头 >= 聊天 > 静音 >= 录制 > 举手 >= 白板 > 字幕 >= 投票 >= 回应 >= 布局 >= 邀请 >= 设置 >= 纪要 >= 文件 >= 转写 >= 翻译 >= 聚焦 >= 计时 >= 直播 >= 分组 >= 主持工具 >= 发言列表 >= 签到 >= 联席主持 >= 水印 >= 网络 >= 音频模式 >= 帮助。请解析该链并设计 displayPriority 权重。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "优先级链中 `>` 分隔严格层级、`>=` 连接同一显隐组；连续 `>=` 段不论多长都是一个等价组，整组共用同一权重",
+      "本链按 `>` 切段共 5 组：共享屏幕+成员 / 摄像头+聊天 / 静音+录制 / 举手+白板 / 字幕至帮助的 23 项长组",
+      "解析后自检：组数 = `>` 出现次数 + 1，并数一遍最长 `>=` 段的成员数",
+      "组间权重递减、组内同权；宽度不足时整组同时显隐"
+    ],
+    "forbidden_claims": [
+      "按固定两两分段把连续 `>=` 长段拆成多个双元组并赋不同权重",
+      "把链中所有项当作严格全序逐项递减赋权",
+      "忽略 `>` 与 `>=` 的区别统一按同层处理"
+    ],
+    "required_resources": [
+      "domains/size-layout.md"
+    ]
+  },
+  {
+    "id": "single-page-immersive-declarative-first",
+    "prompt": "商品页需要沉浸式适配：背景和内容（大图、详情、价格）都铺满到屏幕底部导航条区域（不只是背景色延伸），底部按钮避让导航条，顶部不处理；只对该页生效，全屏/分屏/悬浮窗/横竖屏切换都要自动生效。请给出实现方案。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "页面级沉浸优先声明式实现：页面根容器 ignoreLayoutSafeArea([SYSTEM],[BOTTOM]) + height(LayoutPolicy.matchParent) + padding({ bottom: 避让高度 })，内容与背景同节点同帧铺进底部，交互元素经 padding 避让",
+      "避让高度经 avoidAreaChange 维护，绑 padding 用 'Npx' 字符串或统一换算单位",
+      "说明 setWindowLayoutFullScreen 是窗口级全局开关：进出页面要开/关与状态恢复，且把避让高度串进 Tabs barHeight 等跨组件异步链易出现布局不同步（底栏未避让、文本被导航条遮挡）",
+      "只对该页生效时不动窗口级配置，也不改承载其他页面的共享结构"
+    ],
+    "forbidden_claims": [
+      "用 setWindowLayoutFullScreen 全局开关实现单页沉浸且把避让高度挂到 Tabs barHeight 等异步状态链",
+      "只给背景 expandSafeArea 而声称内容已铺满到屏幕边缘",
+      "修改窗口全局配置后不恢复，影响其他页面"
+    ],
+    "required_resources": [
+      "domains/avoid-area.md"
+    ]
+  },
+  {
+    "id": "consolidate-duplicate-breakpoint-listeners",
+    "prompt": "工程十几个页面都生成了内容相同的断点监听类，并且每页 aboutToAppear 都注册。请统一处理。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "全工程搜索断点类、getWindowWidthBreakpoint、windowSizeChange 和注册调用点",
+      "只保留一个断点状态事实源并统一全部消费端",
+      "按 BreakpointEntryRegistration 在 loadContent 加载的入口页 aboutToAppear 唯一注册",
+      "V2 页面只通过 @Local 引用 BreakpointSystem.state",
+      "在该入口页 aboutToDisappear 注销并在修改后复查生产注册点恰好一个"
+    ],
+    "forbidden_claims": [
+      "每个页面保留自己的断点监听类",
+      "在普通业务页 aboutToAppear 和 aboutToDisappear 注册注销全局断点",
+      "在 EntryAbility 和入口页同时注册",
+      "让 BreakpointSystem 与同职责 AppStorage 监听并存"
+    ],
+    "required_resources": [
+      "assets/size-layout/BreakpointSystem.ets",
+      "assets/size-layout/BreakpointEntryRegistration.ets",
+      "domains/size-layout.md",
+      "references/assets-catalog.md"
+    ]
+  },
+  {
+    "id": "prepare-breakpoint-system-during-construction",
+    "prompt": "这个手机工程没有断点类，先直接把二十个页面改成平板和折叠屏布局，最后再统一补断点。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "修改页面前先建立或复用唯一断点状态源和 loadContent 入口页唯一注册点",
+      "确认 V2 页面通过 @Local 消费统一状态且生产注册点恰好一个",
+      "断点基础接入真实调用链后继续同一批页面修改并运行 devecocli build",
+      "最终通过前验证至少一次双向断点切换"
+    ],
+    "forbidden_claims": [
+      "先用固定宽度或设备类型完成页面适配再补断点",
+      "只复制 BreakpointSystem 文件但不注册也算准备完成",
+      "断点基础未构建或未验证仍输出一多适配完成"
+    ],
+    "required_resources": [
+      "assets/size-layout/BreakpointSystem.ets",
+      "assets/size-layout/BreakpointEntryRegistration.ets",
+      "domains/size-layout.md"
+    ]
+  },
+  {
+    "id": "module-device-types-installability",
+    "prompt": "页面已经适配了手机、折叠屏和平板，但 HAP、HAR、HSP 的 module.json5 没有统一检查 deviceTypes，帮我补完整并避免装机失败。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "枚举全部 HAP、HAR、HSP 的 module.json5 而不是只检查入口 HAP",
+      "明确字段名为 module.deviceTypes",
+      "未限定设备时默认覆盖手机、折叠屏和平板三种设备",
+      "手机和折叠屏接受 phone 或 default，平板要求 tablet",
+      "用户明确缩小设备范围时不追加未要求设备",
+      "把缺失声明作为确定性问题修改",
+      "修改后运行 devecocli build，并说明目标设备安装结果仍未验证"
+    ],
+    "forbidden_claims": [
+      "把折叠屏写成 foldable",
+      "无论用户目标是什么都强制写成同一个 deviceTypes 数组",
+      "构建成功就代表目标设备一定能安装",
+      "只修改 entry 模块而忽略 HAR 或 HSP"
+    ],
+    "required_resources": [
+      "references/module-device-types.md",
+      "references/quality-checklist.md"
+    ]
+  },
+  {
+    "id": "preserve-existing-view-ids",
+    "prompt": "把这行信息组件适配到折叠屏和平板：需要重排布局并调整部分子组件结构。工程已有 UI 自动化测试用例通过 .id() 定位这些控件，不能被破坏。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "重排和重构过程中保留既有 .id() 原值，不删除、不改名",
+      "说明 .id() 是 UI 自动化测试的定位锚点，删改会破坏既有测试用例",
+      "新增组件需要标识时使用新的 id，不复用已有 id",
+      "只有整段组件在已确认修改范围内被移除时，其 id 才随之删除",
+      "修改后用 git diff 或修改前快照核对目标文件的 id 清单，发现删改立即恢复原值"
+    ],
+    "forbidden_claims": [
+      "重构时顺手删除或重命名 .id() 以保持代码整洁",
+      "id 命名不符合新结构风格就统一改名",
+      "id 只是内部标识，改了不影响测试",
+      "删除组件时不检查测试依赖直接删掉 id"
+    ],
+    "required_resources": [
+      "references/quality-checklist.md"
+    ]
+  },
+  {
+    "id": "camera-fold-rotation",
+    "prompt": "折叠屏开合和旋转后，相机预览方向错误并偶发黑屏。",
+    "should_trigger": false,
+    "required_outcomes": [
+      "纯相机问题不触发 UI 一多 Skill",
+      "明确该问题不属于本 Skill 的职责范围"
+    ],
+    "forbidden_claims": [
+      "由 UI Skill 分析或路由相机问题"
+    ],
+    "required_resources": []
+  },
+  {
+    "id": "input-keyboard-focus",
+    "prompt": "平板接键盘后 Tab 焦点会乱跳，列表项也没有鼠标悬停反馈。",
+    "should_trigger": false,
+    "required_outcomes": [
+      "纯键鼠和焦点问题不触发 UI 一多 Skill",
+      "由多输入 Skill 的 frontmatter 独立触发"
+    ],
+    "forbidden_claims": [
+      "由 UI Skill 分析或路由多输入问题"
+    ],
+    "required_resources": []
+  },
+  {
+    "id": "generic-arkts-type-error",
+    "prompt": "帮我修一个与多设备无关的 ArkTS 类型报错。",
+    "should_trigger": false,
+    "required_outcomes": [
+      "把通用 ArkTS 类型检查交给 devecocli 或对应语言能力"
+    ],
+    "forbidden_claims": [
+      "用一多静态规则代替编译器"
+    ],
+    "required_resources": []
+  }
+]

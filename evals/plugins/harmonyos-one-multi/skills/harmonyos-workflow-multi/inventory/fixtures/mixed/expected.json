@@ -1,0 +1,45 @@
+{
+  "expect": [
+    {
+      "path": "entry/src/main/ets/pages/ArticleDetail.ets",
+      "component": "ArticleDetail",
+      "kind": "nav-destination",
+      "module": "entry",
+      "registeredRoute": null,
+      "confidence": "heuristic"
+    },
+    {
+      "path": "entry/src/main/ets/pages/Detail.ets",
+      "component": "Detail",
+      "kind": "entry",
+      "module": "entry",
+      "registeredRoute": null,
+      "confidence": "entry-unregistered"
+    },
+    {
+      "path": "entry/src/main/ets/pages/Detail.ets",
+      "component": "Detail",
+      "kind": "nav-destination",
+      "module": "entry",
+      "registeredRoute": null,
+      "confidence": "heuristic"
+    },
+    {
+      "path": "entry/src/main/ets/pages/Index.ets",
+      "component": "Index",
+      "kind": "entry",
+      "module": "entry",
+      "registeredRoute": "pages/Index",
+      "confidence": "registered"
+    },
+    {
+      "path": "feature/src/main/ets/pages/Settings.ets",
+      "component": "Settings",
+      "kind": "entry",
+      "module": "feature",
+      "registeredRoute": null,
+      "confidence": "no-registry-found"
+    }
+  ],
+  "note": "覆盖两种发现信号与全部四档置信度。entry 模块有 main_pages.json：Index 命中注册路由（entry/registered）；Detail 是 @Entry 但不在注册表里，且它自己的 build() 也用了 NavDestination，因此同一个文件会同时以 entry/entry-unregistered 和 nav-destination/heuristic 两条记录出现——这是刻意覆盖的场景，证明两种信号互不吞并。ArticleDetail 完全没有 @Entry，只能靠 NavDestination( 子串+就近 struct 名找到（nav-destination/heuristic）。feature 模块的 module.json5 没有 pages 字段，Settings 归到 entry/no-registry-found，且必须带上 module=feature（不能因为 entry 模块解析出注册表就把 feature 的页面误判成 entry-unregistered）。"
+}

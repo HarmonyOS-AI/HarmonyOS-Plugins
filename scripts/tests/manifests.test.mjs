@@ -57,8 +57,9 @@ test("plugin scaffolding initializes an empty marketplace root", async () => {
       path.join(temporaryRoot, "marketplace.config.json")
     );
     await cp(
-      path.join(repositoryRoot, "scripts", "templates", "opencode-plugin.js"),
-      path.join(temporaryRoot, "scripts", "templates", "opencode-plugin.js")
+      path.join(repositoryRoot, "scripts", "templates"),
+      path.join(temporaryRoot, "scripts", "templates"),
+      { recursive: true }
     );
 
     const result = spawnSync(

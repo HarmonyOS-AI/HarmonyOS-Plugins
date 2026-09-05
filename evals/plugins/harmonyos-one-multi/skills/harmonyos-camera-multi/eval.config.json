@@ -1,0 +1,14 @@
+{
+  "target": {
+    "plugin": "harmonyos-one-multi",
+    "skill": "harmonyos-camera-multi",
+    "path": "../../../../../plugins/harmonyos-one-multi/skills/harmonyos-camera-multi"
+  },
+  "suites": [
+    {
+      "id": "source-contracts",
+      "type": "deterministic",
+      "entry": "run_evals.py"
+    }
+  ]
+}

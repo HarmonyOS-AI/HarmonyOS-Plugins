@@ -1,0 +1,197 @@
+[
+  {
+    "id": "camera-fold-rotation",
+    "prompt": "折叠屏展开后相机预览转了 90 度，折回外屏又偶发黑屏。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "检查折展后的相机设备列表与 Session 重建",
+      "区分预览旋转、拍照旋转和页面方向",
+      "缺少设备时把运行时折展路径标注为未验证"
+    ],
+    "forbidden_claims": [
+      "未运行真实预览就写成通过"
+    ]
+  },
+  {
+    "id": "camera-front-back-profile",
+    "prompt": "平板切换前后摄后预览被拉伸，部分设备没有后摄时还会崩溃。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "按 cameraPosition 和运行时支持列表枚举设备并处理缺失",
+      "从支持列表选择 Profile",
+      "前后置与降级路径以代码落位和编译验证为准，运行时结论标注未验证"
+    ],
+    "forbidden_claims": [
+      "硬编码 cameraId",
+      "手工构造未被设备支持的 Profile",
+      "用设备规格矩阵替代运行时能力查询"
+    ]
+  },
+  {
+    "id": "camera-stride-flower-screen",
+    "prompt": "用 ImageReceiver 取预览帧做二维码识别，画面出现花屏堆叠、行偏移。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "检查 rowStride 与 width 的比对，去除无效填充像素",
+      "说明 buffer 逐行拷贝与 cropSync 两种修法的取舍",
+      "确认每次 readNextImage 后释放帧资源"
+    ],
+    "forbidden_claims": [
+      "硬编码 stride 值",
+      "把花屏归因为布局或旋转问题"
+    ]
+  },
+  {
+    "id": "camera-syscap-fallback",
+    "prompt": "手表和手机上同一份相机代码，部分设备没有相机能力，直接调用会崩。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "用 canIUse 判设备类型间差异，能力查询接口判型号差异",
+      "同步接口用错误码 801 兜底降级",
+      "核对 SysCap 字符串不能拼细粒度后缀"
+    ],
+    "forbidden_claims": [
+      "只做 try/catch 不做能力检测",
+      "凭记忆拼接 SystemCapability 字符串"
+    ]
+  },
+  {
+    "id": "camera-fold-black-screen",
+    "prompt": "折叠屏开合后相机黑屏，从后台返回页面也黑屏。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "监听 foldStatusChange 并在折展终态完整重建 Session",
+      "onPageShow 热启动恢复，aboutToDisappear 释放监听与资源",
+      "半折叠过渡态不重复重建"
+    ],
+    "forbidden_claims": [
+      "在运行中的 Session 上增量改 input/output",
+      "只在 aboutToAppear 初始化就宣称完成",
+      "目标位置未命中时静默选择 cameras[0]"
+    ]
+  },
+  {
+    "id": "camera-fold-front-continuity",
+    "prompt": "折叠态前置是 cameraId=2，展开态前置是 cameraId=3。现在展开后画面变成后置了，请保证开合时一直保持用户选择的前置语义。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "把用户请求的 CAMERA_POSITION_FRONT 作为跨形态不变量，允许物理 cameraId 从 2 变为 3",
+      "把请求位置与当前物理设备分开持久化，并在监听前从既有 isFront 或 ViewModel 恢复；XComponent 或页面重建后不得恢复为默认后置",
+      "优先消费 CameraManager foldStatusChange 返回的 supportedCameras，并在释放旧链前选中目标前置设备",
+      "翻转 Surface 前生成设备与 Profile 计划，100–200ms 防抖并使用 generation 保证只有最新终态提交",
+      "完整串行重建 Input、Profile、Output 和 Session，记录请求位置以及旧新 cameraId 和实际位置",
+      "目标前置暂不可用时保持原选择，迟到 onLoad 不得重新查询覆盖快照，并串行释放旧链或执行已确认降级"
+    ],
+    "forbidden_claims": [
+      "硬编码 cameraId=2 或 cameraId=3 作为通用方案",
+      "findIndex 未命中后默认使用 cameras[0]",
+      "多个同位置候选时无条件依赖数组第一个元素",
+      "旧 generation 在新折叠事件后仍提交 curCameraDevice 或 Session 状态",
+      "把最新快照无前置误当成首次启动，并在 onLoad 中重新查询后启动旧设备",
+      "没有 cameraId 和 cameraPosition 证据就断言是系统自动切到了后置",
+      "同时开启系统自动切镜与业务手工重建"
+    ]
+  },
+  {
+    "id": "camera-fold-orientation-freeze",
+    "prompt": "折叠屏在折叠态外屏横屏拍照正常，展开成内屏后画面不旋转还是横屏，内容被拉伸，两边还有黑边，重算 Surface 矩形也不恢复。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "先按窗口方向策略排查而非先动相机流：展开态/最小边 ≥ 600vp 用 AUTO_ROTATION_RESTRICTED，UNSPECIFIED 不是通用恢复值",
+      "方向策略在 windowSizeChange（窗口尺寸已稳定）重估；foldStatusChange 回调时刻窗口还是旧形态的值",
+      "方向去重缓存以 setPreferredOrientation 的设置结果维护：成功才更新、失败即失效；半折叠锁横屏、退出恢复自动旋转",
+      "流与 Surface 矩形基准同源：终态重建前重读当前窗口，基准比例变化（如外屏 1:1 与内屏 4:3 互切）时完整重建流重选 Profile"
+    ],
+    "forbidden_claims": [
+      "把不旋转直接归因为相机流问题，只调 setPreviewRotation 或只重算 Surface 矩形",
+      "用 UNSPECIFIED 作为展开态的方向策略或恢复值",
+      "用本地缓存命中跳过方向设置且不校验设置结果",
+      "折展终态仍按 foldStatusChange 回调时刻读到的旧窗口尺寸建流且不做窗口稳定比对"
+    ]
+  },
+  {
+    "id": "camera-fold-stale-stream-ratio",
+    "prompt": "折叠屏折叠态用外屏预览正常，展开成内屏后：后置画面视野明显变窄像焦距被拉大，前置画面变成窄竖条宽度没铺满，重算 Surface 矩形也不改善，方向和拉伸本身都正常。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "判定为流基准固化：重建流的时机早于窗口稳定（相机层 foldStatusChange 先于窗口切换到达），流仍按折叠态外屏基准（如 1:1 裁切档）创建，重算矩形救不回来",
+      "固定时长防抖（100–200ms）不构成窗口稳定判据：折展窗口迁移叠加方向策略生效可达数百毫秒，防抖后重读仍可能是旧值",
+      "建流成功后记录建流时刻的形态基准，windowSizeChange 回调实时重算基准与之比对：不同走完整重建队列，相同才允许只重算矩形",
+      "筛不到基准比例档位时回退 previewProfiles 列表首档并按实际比例 letterbox，不盲选最高分辨率（16:9 裁切档会收窄视野）"
+    ],
+    "forbidden_claims": [
+      "把视野变窄当作变焦或对焦问题处理",
+      "用固定时长防抖后的重读比对充当窗口稳定门槛",
+      "windowSizeChange 后只重算 Surface 矩形而不比对建流基准",
+      "fallback 直接选最高分辨率档位"
+    ]
+  },
+  {
+    "id": "camera-half-folded-layout",
+    "prompt": "相机页要做折叠屏半折叠悬停适配：上半屏预览、下半屏快门控件，控件不能压折痕，展开后恢复全屏。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "把悬停/半折叠形态纳入当前问题范围",
+      "明确 UI 上下分区与折痕避让不属于相机 Skill；若调用方使用 FolderStack，相机预览需考虑 enableAnimation(false)",
+      "相机链路自查：进入悬停且 MD+横屏锁横向（LANDSCAPE 或 AUTO_ROTATION_LANDSCAPE_RESTRICTED），退出悬停恢复 AUTO_ROTATION_RESTRICTED",
+      "Surface 矩形以折痕上方实际可用区为 letterbox 容器，分屏/高度切换后联动重算",
+      "悬停↔展开转换相机可用集合不变，跳过相机重建，只重算布局与矩形"
+    ],
+    "forbidden_claims": [
+      "悬停分屏用整个窗口做 Surface letterbox 容器",
+      "进入悬停时触发完整 release→init 相机重建",
+      "在相机文档内展开悬停 UI 布局实现而不转布局域"
+    ]
+  },
+  {
+    "id": "camera-video-rotation",
+    "prompt": "录像出来的画面方向和持握方向不一致，旋转设备录制时方向不更新。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "录像前取重力角并映射 ImageRotation",
+      "把旋转角度写入 AVMetadata.videoOrientation",
+      "预览与录像输出流分辨率宽高比保持一致"
+    ],
+    "forbidden_claims": [
+      "用 display.rotation 代替重力方向",
+      "不区分前后置的旋转映射"
+    ]
+  },
+  {
+    "id": "camera-progressive-reference-loading",
+    "prompt": "ImageReceiver 取得的预览帧每行错位，但正常相机预览和折叠切换都没有问题。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "优先读取 camera-frames.md 的预览帧 stride 花屏和帧格式映射表章节",
+      "只对照 cases/camera-output-cases.md 的场景 6",
+      "根据 rowStride、width、format 和帧释放证据定位"
+    ],
+    "forbidden_claims": [
+      "默认全文读取全部相机参考资料",
+      "无证据加载折叠切镜、旋转或录像场景"
+    ]
+  },
+  {
+    "id": "generic-keyboard-focus",
+    "prompt": "平板接键盘后 Tab 焦点乱跳，列表项没有鼠标悬停反馈。",
+    "should_trigger": false,
+    "required_outcomes": [
+      "纯键盘和焦点问题不触发相机 Skill",
+      "由多输入 Skill 的 frontmatter 独立触发"
+    ],
+    "forbidden_claims": [
+      "用相机 Skill 处理焦点或悬停问题"
+    ]
+  },
+  {
+    "id": "generic-responsive-layout",
+    "prompt": "把商品详情页在平板上改成左右分栏。",
+    "should_trigger": false,
+    "required_outcomes": [
+      "不承接普通业务页面的响应式布局"
+    ],
+    "forbidden_claims": [
+      "用相机 Skill 重构页面断点系统"
+    ]
+  }
+]

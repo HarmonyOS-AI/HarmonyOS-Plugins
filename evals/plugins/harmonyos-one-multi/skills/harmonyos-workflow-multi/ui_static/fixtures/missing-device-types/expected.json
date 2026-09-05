@@ -1,0 +1,5 @@
+{
+  "expect_fail": ["S17"],
+  "expect_warn": [],
+  "note": "HSP 完全缺少 deviceTypes 或 HAP 把折叠屏写成 foldable 时必须阻断；phone/default 都不能误报。"
+}

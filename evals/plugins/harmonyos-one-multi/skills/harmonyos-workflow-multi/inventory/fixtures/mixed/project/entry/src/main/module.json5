@@ -1,0 +1,8 @@
+{
+  "module": {
+    "name": "entry",
+    "type": "entry",
+    "pages": "$profile:main_pages",
+    "deviceTypes": ["default", "tablet"]
+  }
+}

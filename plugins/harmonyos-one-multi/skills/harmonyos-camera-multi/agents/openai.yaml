@@ -1,0 +1,4 @@
+interface:
+  display_name: "HarmonyOS 相机多设备适配"
+  short_description: "分析和修复相机设备、折展、旋转、镜像与预览问题"
+  default_prompt: "使用 $harmonyos-camera-multi 分析并修复这个 HarmonyOS 相机多设备问题。"

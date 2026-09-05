@@ -1,0 +1,13 @@
+{
+  "target": {
+    "plugin": "harmonyos-one-multi",
+    "path": "../../../plugins/harmonyos-one-multi"
+  },
+  "suites": [
+    {
+      "id": "portable-plugin",
+      "type": "deterministic",
+      "entry": "tests/portable-plugin.test.mjs"
+    }
+  ]
+}

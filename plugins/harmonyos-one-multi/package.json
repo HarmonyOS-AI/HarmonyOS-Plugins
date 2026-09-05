@@ -1,0 +1,35 @@
+{
+  "name": "@harmonyos-ai/harmonyos-one-multi",
+  "version": "0.1.0",
+  "description": "HarmonyOS multi-device adaptation with project workflows, ArkUI, camera, H5, and Flutter knowledge, reusable assets, verification tools, and reports.",
+  "type": "module",
+  "exports": "./opencode/plugin.js",
+  "files": [
+    "*",
+    ".claude-plugin",
+    ".codex-plugin",
+    ".qoder-plugin",
+    ".cursor-plugin",
+    ".mcp.json",
+    "./skills/"
+  ],
+  "keywords": [
+    "harmonyos",
+    "multi-device",
+    "arkui",
+    "camera",
+    "h5",
+    "flutter",
+    "foldable",
+    "responsive-layout"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarmonyOS-AI/HarmonyOS-Plugins.git",
+    "directory": "plugins/harmonyos-one-multi"
+  },
+  "dependencies": {
+    "@opencode-ai/plugin": "^1.14.0",
+    "yaml": "^2.8.1"
+  }
+}

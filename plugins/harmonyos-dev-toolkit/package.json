@@ -5,14 +5,13 @@
   "type": "module",
   "exports": "./opencode/plugin.js",
   "files": [
+    "*",
     ".claude-plugin",
     ".codex-plugin",
     ".qoder-plugin",
+    ".cursor-plugin",
     ".mcp.json",
-    "hooks",
-    "opencode",
-    "plugin.config.json",
-    "skills"
+    "./skills/"
   ],
   "keywords": [
     "harmonyos",
@@ -26,10 +25,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HarmonyOS-AI/Harmony-Skills.git",
+    "url": "git+https://github.com/HarmonyOS-AI/HarmonyOS-Plugins.git",
     "directory": "plugins/harmonyos-dev-toolkit"
   },
   "dependencies": {
-    "@opencode-ai/plugin": "^1.14.0"
+    "@opencode-ai/plugin": "^1.14.0",
+    "yaml": "^2.8.1"
   }
 }

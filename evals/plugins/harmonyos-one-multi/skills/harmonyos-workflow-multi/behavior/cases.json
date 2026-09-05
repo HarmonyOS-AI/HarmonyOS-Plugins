@@ -1,0 +1,45 @@
+[
+  {
+    "id": "explicit-full-workflow",
+    "prompt": "按全流程完成首页折叠屏适配，先出 SPEC 和高保真。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "使用 workflow 组织范围、SPEC、确认、施工、验证和报告",
+      "在诊断、方案和修复时加载 UI 领域 Skill",
+      "SPEC 与高保真合并确认"
+    ],
+    "forbidden_claims": [
+      "因为只有一页就跳过 workflow",
+      "未确认 SPEC 就修改源码"
+    ]
+  },
+  {
+    "id": "large-project-batch-adaptation",
+    "prompt": "把一个 30 多页的手机商城适配到平板和折叠屏，不要逐页反复确认。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "生成并核实页面清单和 route-map.json",
+      "按公共依赖和页面类型组织批次",
+      "每批依次完成 SPEC、确认、施工、验证和报告",
+      "用户同意后才开始下一批"
+    ],
+    "forbidden_claims": [
+      "在批次规划时提前生成具体问题和修法",
+      "先完成所有批次施工再统一验证",
+      "批次 SPEC 已汇总确认就自动执行后续批次"
+    ]
+  },
+  {
+    "id": "non-interactive-workflow",
+    "prompt": "在不能提问的 CI 中扫描工程并输出一多适配结果。",
+    "should_trigger": true,
+    "required_outcomes": [
+      "无法获得的用户决策明确标记为推定",
+      "没有目标形态证据时标记未验证",
+      "不将缺少人工确认的方案写成已确认"
+    ],
+    "forbidden_claims": [
+      "没有运行或视觉证据也标记验证通过"
+    ]
+  }
+]

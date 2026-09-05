@@ -1,0 +1,11 @@
+{
+ "expect_fail": [
+  "S13",
+  "S15",
+  "S5"
+ ],
+ "expect_warn": [
+  "S16"
+ ],
+ "note": "覆盖保留静态规则的违规写法。S5 黑名单现有一条 SDK 实证条目 KeyboardAvoidMode.PAN；S13 走 json.loads 真解析，本 fixture 覆盖它的 5 条判据（互斥 key 并存、mode=2 非法值、mode=1 配 transPages、ratio 缺空格、splitDividerColor 六位色值）；S15/S16 对应质量检查 QC-11 与字体/字号问题。module.deviceTypes=[phone] 是明确缩小到手机/折叠屏范围时的合法声明，不能被 S17 误报。工程里同时保留了原 S1~S12/S14 的违规写法（ComponentSize 参考系、三档断点、layoutWeight+width、lanes+divider 等），这些规则已因误报率过高删除，**它们必须一条都不再命中**——这个 fixture 因此同时是删除动作的回归锁。"
+}

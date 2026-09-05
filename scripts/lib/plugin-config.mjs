@@ -35,6 +35,8 @@ export async function loadPluginConfigs(repositoryRoot) {
 
   assertUnique(configs, ({ config }) => config.name, "plugin name");
   assertUnique(configs, ({ config }) => config.opencode.toolName, "OpenCode tool name");
+  const packages = configs.flatMap(({ config }) => [config.opencode.packageName, `${config.opencode.packageName}-v2`]);
+  assertUnique(packages, (name) => name, "OpenCode package name");
   return configs;
 }
 
@@ -62,6 +64,14 @@ export function validatePluginConfig(config, directoryName) {
   }
   if (config.components.mcpServers) {
     requireString(config.components.mcpServers, "components.mcpServers");
+  }
+  for (const [component, relative] of Object.entries(config.components)) {
+    if (!["skills", "mcpServers"].includes(component)) {
+      throw new Error(`Unsupported portable component: ${component}`);
+    }
+    if (!relative.startsWith("./") || relative.includes("\\") || relative.split("/").includes("..") || relative === "./") {
+      throw new Error(`components.${component} must be a ./ path inside the plugin.`);
+    }
   }
 
   if (!PLUGIN_NAME_PATTERN.test(config.name)) {

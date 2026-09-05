@@ -1,0 +1,28 @@
+{
+  "common": {
+    "displayModeOptions": {
+      "wideWindowMode": "routerSplit",
+      "routerSplitOptions": { "homePage": "pages/Index" },
+      "navigationSplitOptions": { "homePage": "navBar" }
+    }
+  },
+  "phone": {
+    "displayModeOptions": {
+      "routerSplitOptions": {
+        "homePage": "pages/Index",
+        "mode": 2,
+        "wideSplit": { "ratio": "2|1" },
+        "splitDividerColor": { "light": "#E5E5E5", "dark": "#FF303030" }
+      }
+    }
+  },
+  "tablet": {
+    "displayModeOptions": {
+      "routerSplitOptions": {
+        "homePage": "pages/Index",
+        "mode": 1,
+        "transPages": ["pages/Profile"]
+      }
+    }
+  }
+}

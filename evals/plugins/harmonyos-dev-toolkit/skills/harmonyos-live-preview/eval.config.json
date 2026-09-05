@@ -1,0 +1,29 @@
+{
+  "target": {
+    "plugin": "harmonyos-dev-toolkit",
+    "skill": "harmonyos-live-preview",
+    "path": "../../../../../plugins/harmonyos-dev-toolkit/skills/harmonyos-live-preview"
+  },
+  "suites": [
+    {
+      "id": "drive",
+      "type": "deterministic",
+      "entry": "tests/test-drive.mjs"
+    },
+    {
+      "id": "multidevice",
+      "type": "deterministic",
+      "entry": "tests/test-multidevice.mjs"
+    },
+    {
+      "id": "bridge-real",
+      "type": "deterministic",
+      "entry": "tests/test-bridge-real.mjs"
+    },
+    {
+      "id": "resize",
+      "type": "deterministic",
+      "entry": "tests/test-resize.mjs"
+    }
+  ]
+}

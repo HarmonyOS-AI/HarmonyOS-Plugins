@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flutter OHOS 一多适配"
+  short_description: "构建与诊断 Flutter 鸿蒙多设备、折叠屏及多窗口适配方案"
+  default_prompt: "Use $harmonyos-flutter-multi to adapt this Flutter app for HarmonyOS multi-device layouts."

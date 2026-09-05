@@ -1,0 +1,96 @@
+:root {
+  color-scheme: light dark;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --surface: Canvas;
+  --text: CanvasText;
+  --accent: #0a66d8;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { font-family: system-ui, sans-serif; }
+
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--surface);
+}
+
+img, video { max-inline-size: 100%; block-size: auto; }
+
+.app-shell {
+  min-block-size: 100vh;
+  padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
+}
+
+@supports (min-height: 100dvh) {
+  .app-shell { min-block-size: 100dvh; }
+}
+
+.topbar {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-block-size: 3.5rem;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+  background: var(--surface);
+}
+
+.page-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  inline-size: min(100%, 90rem);
+  margin-inline: auto;
+  padding: 1rem clamp(1rem, 4vw, 2rem) 2rem;
+}
+
+.navigation {
+  display: flex;
+  gap: .5rem;
+  overflow-x: auto;
+}
+
+.navigation a {
+  flex: 0 0 auto;
+  padding: .75rem 1rem;
+  color: inherit;
+  text-decoration: none;
+  border-radius: .75rem;
+  background: rgba(127, 127, 127, .12);
+}
+
+.navigation a[aria-current="page"] { color: white; background: var(--accent); }
+.content { min-inline-size: 0; }
+.content > :first-child { margin-block-start: 0; }
+.cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+
+.card {
+  min-inline-size: 0;
+  padding: 1rem;
+  border: 1px solid rgba(127, 127, 127, .3);
+  border-radius: 1rem;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 600px) {
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 840px) {
+  .page-layout { grid-template-columns: 14rem minmax(0, 1fr); }
+  .navigation { flex-direction: column; overflow: visible; }
+  .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .navigation a:hover { outline: 2px solid rgba(10, 102, 216, .5); }
+}
+
+.navigation a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }

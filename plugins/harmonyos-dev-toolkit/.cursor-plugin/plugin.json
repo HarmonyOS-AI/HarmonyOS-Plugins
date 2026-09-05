@@ -1,0 +1,22 @@
+{
+  "name": "harmonyos-dev-toolkit",
+  "version": "0.1.0",
+  "description": "HarmonyOS and ArkTS development toolkit with language rules, official documentation lookup, SDK API lookup, and zero-DevEco live UI preview.",
+  "author": {
+    "name": "HarmonyOS-AI",
+    "url": "https://github.com/HarmonyOS-AI"
+  },
+  "homepage": "https://github.com/HarmonyOS-AI/HarmonyOS-Plugins",
+  "repository": "https://github.com/HarmonyOS-AI/HarmonyOS-Plugins",
+  "keywords": [
+    "harmonyos",
+    "arkts",
+    "arkui",
+    "ohos",
+    "ets",
+    "skills",
+    "live-preview",
+    "hot-reload"
+  ],
+  "skills": "./skills/"
+}

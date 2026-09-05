@@ -1,0 +1,1157 @@
+{
+  "sourceRepository": "https://github.com/yutou-Group/hm-service-agent",
+  "sourceCommit": "b2efbcc2a1f65fa5f87fc9ac07ec2aeb854ec7b6",
+  "sourceDirectory": "skills/harmonyos-one-multi",
+  "files": [
+    {
+      "source": ".gitignore",
+      "destination": "plugins/harmonyos-one-multi/.gitignore",
+      "sourceSha256": "111dc0c923bf23170057850308439f4f7102eeed919384a1f0640f676fa3fd35"
+    },
+    {
+      "source": "harmonyos-camera-multi/SKILL.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-camera-multi/SKILL.md",
+      "sourceSha256": "25fbebd5c1681588ce8506c8d2aaf1a04423ca86cdfe0f1fc8d6aced3e6deca5"
+    },
+    {
+      "source": "harmonyos-camera-multi/agents/openai.yaml",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-camera-multi/agents/openai.yaml",
+      "sourceSha256": "37e8c2b170ab65ce4d2a4192fc33a26f6c453c44f03591f2c1842f39b67b2851"
+    },
+    {
+      "source": "harmonyos-camera-multi/assets/CameraFoldable.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-camera-multi/assets/CameraFoldable.ets",
+      "sourceSha256": "70937b89113fa5e08d05c504e05477a0f152ea09bf4d78e5a1338adbf7d2101e"
+    },
+    {
+      "source": "harmonyos-camera-multi/evals/behavior/cases.json",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-camera-multi/behavior/cases.json",
+      "sourceSha256": "d2be46e8b581dcdbef9f45a6ed01c9e151d18d50e71a783c7e8e11016377a84b"
+    },
+    {
+      "source": "harmonyos-camera-multi/evals/run_evals.py",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-camera-multi/run_evals.py",
+      "sourceSha256": "4b00cd370d1246d33164d3afeb315c6cb57e21e0be061096a0ae8a11aa6f62e3"
+    },
+    {
+      "source": "harmonyos-camera-multi/evals/skill_contract.py",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-camera-multi/skill_contract.py",
+      "sourceSha256": "e870188c9c8f236ed579bd66c6e44d3121215dfa9055c337621d43ed2e3a06ce"
+    },
+    {
+      "source": "harmonyos-camera-multi/references/camera-capabilities.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-camera-multi/references/camera-capabilities.md",
+      "sourceSha256": "fd7826663cc551c81d86a7d95b633343fdb295029e1e690a88daf79f8c24818f"
+    },
+    {
+      "source": "harmonyos-camera-multi/references/camera-fold.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-camera-multi/references/camera-fold.md",
+      "sourceSha256": "e63a7295cc69193b50f2f8ee42a359de914fd9a8bd08f268812cff2958b92a0f"
+    },
+    {
+      "source": "harmonyos-camera-multi/references/camera-frames.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-camera-multi/references/camera-frames.md",
+      "sourceSha256": "cef16b22539caf218c04effed0aa9d84f97a13143ffa58c0eedbdd23e9ca9d96"
+    },
+    {
+      "source": "harmonyos-camera-multi/references/camera-output.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-camera-multi/references/camera-output.md",
+      "sourceSha256": "8a469bf26ecafcc7990dea50002bc92c659e5bbac08c65af30f2aa4ebc6ea2f5"
+    },
+    {
+      "source": "harmonyos-camera-multi/references/camera-preview-ui.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-camera-multi/references/camera-preview-ui.md",
+      "sourceSha256": "e8b9b8e76202206b573bca0083d27d8a7ffcbb879044503028a368a6c6be353e"
+    },
+    {
+      "source": "harmonyos-camera-multi/references/camera-root-causes.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-camera-multi/references/camera-root-causes.md",
+      "sourceSha256": "e97e854401f99b90a72b6cfff9fcb6666529f94435a114b9a5410d9c696ea170"
+    },
+    {
+      "source": "harmonyos-camera-multi/references/cases/camera-fold-cases.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-camera-multi/references/cases/camera-fold-cases.md",
+      "sourceSha256": "509e564cbb9943e7f46b10f355556ab3b69b9ab9a82481e3ec1f2f379a8fb1f3"
+    },
+    {
+      "source": "harmonyos-camera-multi/references/cases/camera-output-cases.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-camera-multi/references/cases/camera-output-cases.md",
+      "sourceSha256": "23cb9228840b9c85b60145a3d7e8aba352a4d04be379d14a20d7e9483fac40c4"
+    },
+    {
+      "source": "harmonyos-camera-multi/references/device-capabilities.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-camera-multi/references/device-capabilities.md",
+      "sourceSha256": "5f432b17db19134500769c5977b34a2f5b98cba68bfe116140070a4900e1c959"
+    },
+    {
+      "source": "harmonyos-flutter-multi/README.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/README.md",
+      "sourceSha256": "c93c5d0a25030055e7ecd2992c044004f49a470d35ab1ae309b82ab54fc7778f"
+    },
+    {
+      "source": "harmonyos-flutter-multi/SKILL.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/SKILL.md",
+      "sourceSha256": "76e63bd7da3aebd793f227a84d8c13172494da3dd3ee528adf7331223ee82e96"
+    },
+    {
+      "source": "harmonyos-flutter-multi/agents/openai.yaml",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/agents/openai.yaml",
+      "sourceSha256": "3d72297b57d4ae046e3ca95be3057132e44f4e7b158202c342d176360844eafe"
+    },
+    {
+      "source": "harmonyos-flutter-multi/core/breakpoint-system.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/core/breakpoint-system.md",
+      "sourceSha256": "e905f2dc39acbcf7c2bc93c39d50bc45c58a655328e4307c6cc1fb1c73f863b2"
+    },
+    {
+      "source": "harmonyos-flutter-multi/core/decision-tree.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/core/decision-tree.md",
+      "sourceSha256": "c9a7f93cbe7291248a6f04fbea8cc5e5a149fea531ba86592c98bf293be09c28"
+    },
+    {
+      "source": "harmonyos-flutter-multi/core/device-and-window-model.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/core/device-and-window-model.md",
+      "sourceSha256": "d256b419bb5d00a2215b796dad802783d8c46fda131ffa00a87664a05b6489ec"
+    },
+    {
+      "source": "harmonyos-flutter-multi/core/engineering-rules.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/core/engineering-rules.md",
+      "sourceSha256": "bba0de58922f9aba3d3bb18b05fdc2ce7ebb75800a4aaa93cd35b56c81e41518"
+    },
+    {
+      "source": "harmonyos-flutter-multi/core/index.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/core/index.md",
+      "sourceSha256": "87aa22efaf4aa89939f3b2a8db46a32bb268706aef1dc11915b1459b6ff0d125"
+    },
+    {
+      "source": "harmonyos-flutter-multi/core/output-contract.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/core/output-contract.md",
+      "sourceSha256": "cee1e7deb8f4ac2573a89a9a0fde5a73e6fac62d5bb3ea2b10f9adc9359432fb"
+    },
+    {
+      "source": "harmonyos-flutter-multi/core/scope-and-boundaries.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/core/scope-and-boundaries.md",
+      "sourceSha256": "601e5b60f57d00edfeb081fb8fe5f08a49a6becadade8d2cd87189d22456d0c8"
+    },
+    {
+      "source": "harmonyos-flutter-multi/examples/flutter-native/breakpoint_listener.dart",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/examples/flutter-native/breakpoint_listener.dart",
+      "sourceSha256": "9f2120a4baaef64b5ae3b52325c892e08486d74607279b53c318b70668c63de3"
+    },
+    {
+      "source": "harmonyos-flutter-multi/examples/flutter-native/hover_layout.dart",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/examples/flutter-native/hover_layout.dart",
+      "sourceSha256": "0d12bab36d0b9fcf6b72c77dadf1cbccf07356d15e6ce1643502cc5cd03c9127"
+    },
+    {
+      "source": "harmonyos-flutter-multi/examples/flutter-native/navigation_split.dart",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/examples/flutter-native/navigation_split.dart",
+      "sourceSha256": "30abae089f62772b1884da272a10ea14b7465971737a027d92032c8cc0c6a0b4"
+    },
+    {
+      "source": "harmonyos-flutter-multi/examples/hadss/breakpoint_listener.dart",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/examples/hadss/breakpoint_listener.dart",
+      "sourceSha256": "d8e1b7388eb9d0281537047c3442c3bcfbd884db474eda7c0dd0ae91d5dac81c"
+    },
+    {
+      "source": "harmonyos-flutter-multi/examples/hadss/folder_stack.dart",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/examples/hadss/folder_stack.dart",
+      "sourceSha256": "dcab411b7f7caec8c70ee1f8768712a7155d8f8a3210e5323348b3205c53c0c0"
+    },
+    {
+      "source": "harmonyos-flutter-multi/examples/hadss/navigation_split.dart",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/examples/hadss/navigation_split.dart",
+      "sourceSha256": "16167902d7392f8bcf777674fdd6e03b9c62babe71b19e7ddf453322fb766e49"
+    },
+    {
+      "source": "harmonyos-flutter-multi/examples/index.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/examples/index.md",
+      "sourceSha256": "fe899c1ed0078648815861ea0ced1680f6f6bae6b39add8e0be9a24fb6b3be12"
+    },
+    {
+      "source": "harmonyos-flutter-multi/flutter-native/breakpoint-detection.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/flutter-native/breakpoint-detection.md",
+      "sourceSha256": "501447b845bdf6c2c797553d35a5d811b219aa4d21446a731267dcfdd8286fc7"
+    },
+    {
+      "source": "harmonyos-flutter-multi/flutter-native/crease-avoidance.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/flutter-native/crease-avoidance.md",
+      "sourceSha256": "3bb9735afd98bb70723268cbb3cb5f7443da80ddf30850debca87b1119a259a7"
+    },
+    {
+      "source": "harmonyos-flutter-multi/flutter-native/fold-continuity.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/flutter-native/fold-continuity.md",
+      "sourceSha256": "6714802704e76bd55cd22ec715921bdf197bce36165a837bc99fb3f55022ef58"
+    },
+    {
+      "source": "harmonyos-flutter-multi/flutter-native/fold-status.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/flutter-native/fold-status.md",
+      "sourceSha256": "c82e98e716c61b4f23d8cda727a56500a92551f3ef9429df8c7958100b52c436"
+    },
+    {
+      "source": "harmonyos-flutter-multi/flutter-native/hover-layout.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/flutter-native/hover-layout.md",
+      "sourceSha256": "1140682d3ca36f9efe45521a523d864ce2fb6c6b1d45e5dc609df6fa23117835"
+    },
+    {
+      "source": "harmonyos-flutter-multi/flutter-native/index.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/flutter-native/index.md",
+      "sourceSha256": "270ffb179e3b1c60039b24e94c186dc6f9938d12d76fb5bb3002416a4f784a18"
+    },
+    {
+      "source": "harmonyos-flutter-multi/flutter-native/multi-window.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/flutter-native/multi-window.md",
+      "sourceSha256": "c5f40c70d9712ea9f2075165aadaab153c7472b6f9a645f0be8056ea65c34e10"
+    },
+    {
+      "source": "harmonyos-flutter-multi/flutter-native/navigation-split.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/flutter-native/navigation-split.md",
+      "sourceSha256": "bde04c57ce83c6fcc8f2609c2ee6ffd0fae5876d4877f79950437462de67db89"
+    },
+    {
+      "source": "harmonyos-flutter-multi/flutter-native/overflow-and-keyboard.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/flutter-native/overflow-and-keyboard.md",
+      "sourceSha256": "447253e63ae6503f11da83c95f0c569bd4af767806c7052b170b4725e5387e1b"
+    },
+    {
+      "source": "harmonyos-flutter-multi/flutter-native/responsive-layout.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/flutter-native/responsive-layout.md",
+      "sourceSha256": "0ab209d094c38cc9d09a69d932554d19d11b43a42f58edf0c6e69c7c9bd0cb8a"
+    },
+    {
+      "source": "harmonyos-flutter-multi/flutter-native/safe-area.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/flutter-native/safe-area.md",
+      "sourceSha256": "dd0cea9580e2c51a7faf62ba5e1f3b602b7f22313dbefe40949947ec8d50bc4c"
+    },
+    {
+      "source": "harmonyos-flutter-multi/flutter-native/setup.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/flutter-native/setup.md",
+      "sourceSha256": "4cc363d986be36afaf2442fa9d5b5ea4439b82e3e32e3570239e518fb060765e"
+    },
+    {
+      "source": "harmonyos-flutter-multi/flutter-native/ux-fix-patterns.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/flutter-native/ux-fix-patterns.md",
+      "sourceSha256": "0b04722c976045ea7d14bad885ae1c09c58039e728c6c3437db520faae3d0c19"
+    },
+    {
+      "source": "harmonyos-flutter-multi/hadss/breakpoint-detection.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/hadss/breakpoint-detection.md",
+      "sourceSha256": "8e91f08dffdfd028ab48c5551558c95e90ac42029604df84ec0c689c526f14e8"
+    },
+    {
+      "source": "harmonyos-flutter-multi/hadss/crease-avoidance.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/hadss/crease-avoidance.md",
+      "sourceSha256": "ff9681df59ff13e60851163132e505c59fa3aef59a2033fa322b30461561a42a"
+    },
+    {
+      "source": "harmonyos-flutter-multi/hadss/fold-continuity.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/hadss/fold-continuity.md",
+      "sourceSha256": "1d169d4452bab18a39ca165fb7ce9db821e8ea08f0c13725d9264f0934453ea0"
+    },
+    {
+      "source": "harmonyos-flutter-multi/hadss/fold-status.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/hadss/fold-status.md",
+      "sourceSha256": "e1073e48296dabf816d3b3dbfdfa57d40b15388a3b8067c6edbaba13435c3267"
+    },
+    {
+      "source": "harmonyos-flutter-multi/hadss/hover-layout.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/hadss/hover-layout.md",
+      "sourceSha256": "4866afc0c0c75ea8bd50800b566c33b25306f2f67789d31133896ea584d3f7be"
+    },
+    {
+      "source": "harmonyos-flutter-multi/hadss/index.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/hadss/index.md",
+      "sourceSha256": "dc822672620d442c12af568c92199fb6f5a5a0b2693c030577fbfcfe006c1eb1"
+    },
+    {
+      "source": "harmonyos-flutter-multi/hadss/multi-window.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/hadss/multi-window.md",
+      "sourceSha256": "8048cbfeb5ee665e7c53787fadba49c15cb14d1064c35f75d2b66124b789fa23"
+    },
+    {
+      "source": "harmonyos-flutter-multi/hadss/navigation-split.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/hadss/navigation-split.md",
+      "sourceSha256": "6e2f0a2210b91d93a7adaf866c91e5fff364cb10281163d50ab087de235ca602"
+    },
+    {
+      "source": "harmonyos-flutter-multi/hadss/overflow-and-keyboard.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/hadss/overflow-and-keyboard.md",
+      "sourceSha256": "08078c1a412e72ae37e67a5b919e4ea1fe23741adf7f437ca0735dba7365f433"
+    },
+    {
+      "source": "harmonyos-flutter-multi/hadss/responsive-layout.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/hadss/responsive-layout.md",
+      "sourceSha256": "fef5ecdd6d762e8746b0188dd8c55855527de84b7eddb043a683936fb295a78b"
+    },
+    {
+      "source": "harmonyos-flutter-multi/hadss/safe-area.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/hadss/safe-area.md",
+      "sourceSha256": "5b12bc1b7f5be7d3683297fc0c51ef026de99514f19fb775a69916a8fcd5cfac"
+    },
+    {
+      "source": "harmonyos-flutter-multi/hadss/setup.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/hadss/setup.md",
+      "sourceSha256": "efe8911b63f3007a44a21c33e4ce1224fec0d34ccb0a77edec85286a4bb1be5c"
+    },
+    {
+      "source": "harmonyos-flutter-multi/hadss/ux-fix-patterns.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/hadss/ux-fix-patterns.md",
+      "sourceSha256": "6666a5ba4927e4b44ff4bb78a0b778e50249111a8a28a43c514c5650d9ab406f"
+    },
+    {
+      "source": "harmonyos-flutter-multi/ohos-platform/app-lifecycle.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/ohos-platform/app-lifecycle.md",
+      "sourceSha256": "a92fd5a53bf400f947e4cedf08a4aa64f4e37cff70401959a6deda6392727403"
+    },
+    {
+      "source": "harmonyos-flutter-multi/ohos-platform/architecture.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/ohos-platform/architecture.md",
+      "sourceSha256": "140ceec04d9c2ab50ea98b9db5a0b13f2da95c1956153c771f86ce8d670bab35"
+    },
+    {
+      "source": "harmonyos-flutter-multi/ohos-platform/display-features.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/ohos-platform/display-features.md",
+      "sourceSha256": "118a35fa716882b60cb93345ad497fa3ef87b66c52bd66d641b4a8d71f8c7d9e"
+    },
+    {
+      "source": "harmonyos-flutter-multi/ohos-platform/dpi-and-framework-extensions.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/ohos-platform/dpi-and-framework-extensions.md",
+      "sourceSha256": "abe42c525d2dcb1e70e0a23e58a04c2c9596940c99aadac39ad52fe664ab1e4a"
+    },
+    {
+      "source": "harmonyos-flutter-multi/ohos-platform/index.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/ohos-platform/index.md",
+      "sourceSha256": "335a25d96733f3d2a1c2346778331ce3fdd8edcdff9bc340033f5ea087c7764e"
+    },
+    {
+      "source": "harmonyos-flutter-multi/ohos-platform/ltpo.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/ohos-platform/ltpo.md",
+      "sourceSha256": "fd615013333d78900283787ad960771bf33c7bf004fa203432e3f45cd4975ad1"
+    },
+    {
+      "source": "harmonyos-flutter-multi/ohos-platform/platform-view-and-channels.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/ohos-platform/platform-view-and-channels.md",
+      "sourceSha256": "14c27cdef296e1beb46916abb65f416c25c49af2ad4249275d7fc9bddc3beea4"
+    },
+    {
+      "source": "harmonyos-flutter-multi/ohos-platform/scbcompatible-letterbox.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/ohos-platform/scbcompatible-letterbox.md",
+      "sourceSha256": "e9de55b69750fea6a0876e247b9cc8a92858ac148aee57a8db9954d2018a3007"
+    },
+    {
+      "source": "harmonyos-flutter-multi/ohos-platform/split-view-framework.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/ohos-platform/split-view-framework.md",
+      "sourceSha256": "a4257c51c20166280d2cb53ef60bbb11edb9e1eb0314306dbe49ac5d3e65c62c"
+    },
+    {
+      "source": "harmonyos-flutter-multi/ohos-platform/window-and-orientation.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/ohos-platform/window-and-orientation.md",
+      "sourceSha256": "4801f8f74cdfedbe2ef468224ae0001caa748a3bdc98c86f21731f5dbdb6f4d9"
+    },
+    {
+      "source": "harmonyos-flutter-multi/references/dpi-guide.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/references/dpi-guide.md",
+      "sourceSha256": "5fd64ac0fa2646f307882f4bd3cd15756094b52ebeb0ee9b4d2f16cc5fac0106"
+    },
+    {
+      "source": "harmonyos-flutter-multi/references/index.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/references/index.md",
+      "sourceSha256": "3b93854594290335176d99a8e197d89a43b335738ef91f18c19fe99fefe293f9"
+    },
+    {
+      "source": "harmonyos-flutter-multi/references/pura-x-guide.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/references/pura-x-guide.md",
+      "sourceSha256": "d3e2dca66e37a017de50af922fb96fe7ac7bf22f97af91eb3a80b1e7670affd3"
+    },
+    {
+      "source": "harmonyos-flutter-multi/references/pura-x-patterns.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/references/pura-x-patterns.md",
+      "sourceSha256": "0c921ccc04c748d454404667f97e10dcbbcca740845012226f93662cc7f12f69"
+    },
+    {
+      "source": "harmonyos-flutter-multi/references/purax/README.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/references/purax/README.md",
+      "sourceSha256": "d5f54a72ffcf01e1e5ae15fc574b8d2dd0457cca60e7e7face24aefbeb9a7be4"
+    },
+    {
+      "source": "harmonyos-flutter-multi/references/purax/breakpoint_layout.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/references/purax/breakpoint_layout.md",
+      "sourceSha256": "b7092429a401ad6ece327a18c52abd735eff8f61a353109c079dd0841e322cef"
+    },
+    {
+      "source": "harmonyos-flutter-multi/references/purax/bug_fix_cases.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/references/purax/bug_fix_cases.md",
+      "sourceSha256": "01ac97eeabdda03b4f815a22107fa950b91f08a2ff3912f88cadf87f73b9b562"
+    },
+    {
+      "source": "harmonyos-flutter-multi/references/purax/crease_avoidance.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/references/purax/crease_avoidance.md",
+      "sourceSha256": "4d302b87ab67efbeba5ffde888b87f49a980480b6bd2e15c3edee93b18038be6"
+    },
+    {
+      "source": "harmonyos-flutter-multi/references/purax/fold_continuity.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/references/purax/fold_continuity.md",
+      "sourceSha256": "9b247b6cb89a4aafc9fa84e788f157ee701ac8dcf53ec43e95f99e53b24b5a38"
+    },
+    {
+      "source": "harmonyos-flutter-multi/references/purax/fold_status_detection.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/references/purax/fold_status_detection.md",
+      "sourceSha256": "1b246cd31e9232699e60f4515601fec550526409890cefc7eb688197841c1695"
+    },
+    {
+      "source": "harmonyos-flutter-multi/references/purax/hover_state_interaction.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/references/purax/hover_state_interaction.md",
+      "sourceSha256": "98c8a645ecfafdc80586eeb0fb4dc73a40a5b025803af4242998f138740d837e"
+    },
+    {
+      "source": "harmonyos-flutter-multi/references/purax/official_adaptation_guide.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/references/purax/official_adaptation_guide.md",
+      "sourceSha256": "0cc4262b892486b95f691c2ce5b8985885cc585dc66dac6ad29f71092a161ee1"
+    },
+    {
+      "source": "harmonyos-flutter-multi/references/purax/scbcompatible_letterbox.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/references/purax/scbcompatible_letterbox.md",
+      "sourceSha256": "d743fe69ea3db908dee347211a752f8ce5489b453e515cc1c466adb6b72d301a"
+    },
+    {
+      "source": "harmonyos-flutter-multi/references/purax/scenario_development_cases.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/references/purax/scenario_development_cases.md",
+      "sourceSha256": "8c73ea19c0f4772f2d93a228c036024dc84a79cbfa830f8c4f73bbe87be5c0ee"
+    },
+    {
+      "source": "harmonyos-flutter-multi/references/scenes.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/references/scenes.md",
+      "sourceSha256": "3a9bbe3e362454f61a5acdaa657e018ac21a2d926abcd6830680d53517bfed6c"
+    },
+    {
+      "source": "harmonyos-flutter-multi/references/source-map.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/references/source-map.md",
+      "sourceSha256": "1b1a5e9d811c4e1e6eb1eeca564c0632d67997ae20304c9a3b93d2d084884aaf"
+    },
+    {
+      "source": "harmonyos-flutter-multi/scenarios/foldable-catalog.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/scenarios/foldable-catalog.md",
+      "sourceSha256": "9e4ac75578fd0f5890abaa2ef7407b02ef7dd0b09b9f98828b3f810912405a57"
+    },
+    {
+      "source": "harmonyos-flutter-multi/scenarios/index.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/scenarios/index.md",
+      "sourceSha256": "89c17ac0ee085bea590e3696d3f1be58362a01fed8d82504b79cf8ebfe82131c"
+    },
+    {
+      "source": "harmonyos-flutter-multi/scenarios/multi-device-catalog.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/scenarios/multi-device-catalog.md",
+      "sourceSha256": "fcc0d4f2741882dc275f3309c5b10fcb53502891f7160aef9e3573819a3ab1e8"
+    },
+    {
+      "source": "harmonyos-flutter-multi/scenarios/routing-matrix.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/scenarios/routing-matrix.md",
+      "sourceSha256": "edf9dd6986db2d57a322bfe349fce86cb1d7721d31270b41e4478931ba93c149"
+    },
+    {
+      "source": "harmonyos-flutter-multi/scenarios/ux-catalog.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/scenarios/ux-catalog.md",
+      "sourceSha256": "3992201b45a64771adf350bb535fc82bb917951e7e0d9e16f2f73f8d9ef89d3e"
+    },
+    {
+      "source": "harmonyos-flutter-multi/test-cases/index.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/test-cases/index.md",
+      "sourceSha256": "262d74b6d8cb5a2d17f3b98d81eb6f633cf7e3e97d3f5bac591d7bd848826412"
+    },
+    {
+      "source": "harmonyos-flutter-multi/test-cases/real-world/real-world.json",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/test-cases/real-world/real-world.json",
+      "sourceSha256": "496302d45b93c6de19c8aced332099cb6df625a01be2b1fd28fc449ad8182d04"
+    },
+    {
+      "source": "harmonyos-flutter-multi/test-cases/scene-functional/scene-functional.json",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/test-cases/scene-functional/scene-functional.json",
+      "sourceSha256": "b1ac40d7c19df1b995a3eef22d3dd88dfe8477c6dad87ebecc5dcdab05fcdb60"
+    },
+    {
+      "source": "harmonyos-flutter-multi/test-cases/smoke/smoke-fold-state.json",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/test-cases/smoke/smoke-fold-state.json",
+      "sourceSha256": "9e7f920967e478bf6660a04ad155d38bb636c48aacab44a23a8283aaca39b032"
+    },
+    {
+      "source": "harmonyos-flutter-multi/validation/acceptance-matrix.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/validation/acceptance-matrix.md",
+      "sourceSha256": "174e71fbbe21c8d36006b900d3bae14ce7af28a5f7a75884cf32f8f124d21b51"
+    },
+    {
+      "source": "harmonyos-flutter-multi/validation/coverage.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/validation/coverage.md",
+      "sourceSha256": "2634f0303ed0525544a9590a7a85b6f5448dcb6ff25902cb91a5348f776339a2"
+    },
+    {
+      "source": "harmonyos-flutter-multi/validation/diagnostic-evidence.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/validation/diagnostic-evidence.md",
+      "sourceSha256": "4f7cfa048a7dc8d9bc2ad3d03ab0731c2b16490e57d7b9cac8ef2d35a06af180"
+    },
+    {
+      "source": "harmonyos-flutter-multi/validation/index.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/validation/index.md",
+      "sourceSha256": "71995ef0fa1bf001c69abbf1f9a72e5333014042e42846e7ba98cfd7df13a437"
+    },
+    {
+      "source": "harmonyos-flutter-multi/validation/known-risks.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/validation/known-risks.md",
+      "sourceSha256": "993baa469631bcdeea658a972bcbfda2189c26df6c94bdb7e9ce7f479cef9b40"
+    },
+    {
+      "source": "harmonyos-flutter-multi/validation/regression-checklist.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/validation/regression-checklist.md",
+      "sourceSha256": "375947948361f6060eb2db4dd9a906c58502c0e9d7af4ae6736dcaf73951bcea"
+    },
+    {
+      "source": "harmonyos-flutter-multi/validation/ux-px-checklist.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-flutter-multi/validation/ux-px-checklist.md",
+      "sourceSha256": "894e8c09e5b9152dcc5f532fe5482cb9499109e2c86c862b673f7de5ac107ebd"
+    },
+    {
+      "source": "harmonyos-h5-multi/SKILL.md",
+      "destination": "plugins/harmonyos-one-multi/skills/hmos-multidevice-h5-layout/SKILL.md",
+      "sourceSha256": "940978a4936bd1e92de801ab3100c57aa93fae9ccb86bfa9d5fa02febaa091d4"
+    },
+    {
+      "source": "harmonyos-h5-multi/assets/responsive-shell/adaptive.css",
+      "destination": "plugins/harmonyos-one-multi/skills/hmos-multidevice-h5-layout/assets/responsive-shell/adaptive.css",
+      "sourceSha256": "7f62dafbf162ad9d40411ffb271f0c94c28dce49504d4da96f18ed9c08325d23"
+    },
+    {
+      "source": "harmonyos-h5-multi/assets/responsive-shell/index.html",
+      "destination": "plugins/harmonyos-one-multi/skills/hmos-multidevice-h5-layout/assets/responsive-shell/index.html",
+      "sourceSha256": "c52cdc9337ef3bc0116359168441dcd34fe7e7e1358c37c2d6f7c9cf3807d975"
+    },
+    {
+      "source": "harmonyos-h5-multi/references/arkts-h5-coordination.md",
+      "destination": "plugins/harmonyos-one-multi/skills/hmos-multidevice-h5-layout/references/arkts-h5-coordination.md",
+      "sourceSha256": "667bf83f7a00d04918eb74766a7466614a98b037f08770fbe9b7ca4ab19e3c6f"
+    },
+    {
+      "source": "harmonyos-h5-multi/references/capability-boundary.md",
+      "destination": "plugins/harmonyos-one-multi/skills/hmos-multidevice-h5-layout/references/capability-boundary.md",
+      "sourceSha256": "efbe03390dd0854c6db50d009e82df5ec17e67d3776a0fc2a20e9331c8714457"
+    },
+    {
+      "source": "harmonyos-h5-multi/references/compatibility-matrix.md",
+      "destination": "plugins/harmonyos-one-multi/skills/hmos-multidevice-h5-layout/references/compatibility-matrix.md",
+      "sourceSha256": "be6028eff784f2c9262f44a7c310779686f49a9feb254be2c9d8dd208cad5860"
+    },
+    {
+      "source": "harmonyos-h5-multi/references/rem-responsive.md",
+      "destination": "plugins/harmonyos-one-multi/skills/hmos-multidevice-h5-layout/references/rem-responsive.md",
+      "sourceSha256": "0214d81c755d0f9d987ebeeb63d5f6a0e5919cf150ad151de3be04e3a7354f8d"
+    },
+    {
+      "source": "harmonyos-h5-multi/references/responsive-layout.md",
+      "destination": "plugins/harmonyos-one-multi/skills/hmos-multidevice-h5-layout/references/responsive-layout.md",
+      "sourceSha256": "60952350d971fdbcf0aa06de75e829d62e1127b1b0e3d5f82357f98ed9d34689"
+    },
+    {
+      "source": "harmonyos-h5-multi/references/responsive-media.md",
+      "destination": "plugins/harmonyos-one-multi/skills/hmos-multidevice-h5-layout/references/responsive-media.md",
+      "sourceSha256": "27245523cbc713d1dcd50db691e2dc2f94a811e282b0959e5f59f6e1ab78690b"
+    },
+    {
+      "source": "harmonyos-h5-multi/references/safe-area-and-keyboard.md",
+      "destination": "plugins/harmonyos-one-multi/skills/hmos-multidevice-h5-layout/references/safe-area-and-keyboard.md",
+      "sourceSha256": "ea712daea84119b2dc051681c2fc1dec032d6dc8ef41a5a5d2450b347d604fc1"
+    },
+    {
+      "source": "harmonyos-h5-multi/references/test-prompts.md",
+      "destination": "plugins/harmonyos-one-multi/skills/hmos-multidevice-h5-layout/references/test-prompts.md",
+      "sourceSha256": "c7f8603041dc8e5c4506f19fae6598c5d03c3b0c8fa41d87d190a84313226bad"
+    },
+    {
+      "source": "harmonyos-h5-multi/references/troubleshoot.md",
+      "destination": "plugins/harmonyos-one-multi/skills/hmos-multidevice-h5-layout/references/troubleshoot.md",
+      "sourceSha256": "2f72eaf4eaf9a3b69392adc84623a8a1ff693a7567f587d4b97b66dccff5285c"
+    },
+    {
+      "source": "harmonyos-h5-multi/references/wide-screen-landscape.md",
+      "destination": "plugins/harmonyos-one-multi/skills/hmos-multidevice-h5-layout/references/wide-screen-landscape.md",
+      "sourceSha256": "4ca714bff0c9df0c57be03e7768a4759d6558e0959b4be886986e9655698684a"
+    },
+    {
+      "source": "harmonyos-h5-multi/scripts/scan-h5-adaptation.mjs",
+      "destination": "plugins/harmonyos-one-multi/skills/hmos-multidevice-h5-layout/scripts/scan-h5-adaptation.mjs",
+      "sourceSha256": "aef3c02c3d1cfd4e7b1d71acde871842c4fb9d0eb3a4f24c1f4bb60096620518"
+    },
+    {
+      "source": "harmonyos-ui-multi/.gitignore",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/.gitignore",
+      "sourceSha256": "7f7db7cbe091623e1800c3e23db78084a5c632ec285dc1cf977ddd7f896f33f8"
+    },
+    {
+      "source": "harmonyos-ui-multi/SKILL.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/SKILL.md",
+      "sourceSha256": "09b0b535cec3a2bb1e18d775c36d472e8bb2b5596f57fbca04e74c34518e11a1"
+    },
+    {
+      "source": "harmonyos-ui-multi/agents/openai.yaml",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/agents/openai.yaml",
+      "sourceSha256": "2083949ebba93f168b463f18c5260be9885e0a2022d8538205042f95183cb9fc"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/avoid-area/CutoutAvoidanceManager.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/avoid-area/CutoutAvoidanceManager.ets",
+      "sourceSha256": "73436eeaff02ac6a12d32350e6701c45bc99ee281471794225bd06975aa24912"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/avoid-area/KeyboardAvoidanceList.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/avoid-area/KeyboardAvoidanceList.ets",
+      "sourceSha256": "74f2ff2d8f9d01c02551229721911e604733b95e7c702a4052a34437fccec79e"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/avoid-area/KeyboardAvoidanceScroll.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/avoid-area/KeyboardAvoidanceScroll.ets",
+      "sourceSha256": "4a68f424f8248bf7ebcb1f21d58d365a443b8d5013a323946c9e44655a7c368c"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/fold-form/CreaseAvoidance.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/fold-form/CreaseAvoidance.ets",
+      "sourceSha256": "d0d5c74e5ba913dd0dc154648501bf87215edea8be136bdb3bfdc52af3af70bb"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/fold-form/HoverStateUtil.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/fold-form/HoverStateUtil.ets",
+      "sourceSha256": "6958d35f7774846e51b3f94e13ab9afe05021d64c00ae14c05e815d2676f3e9e"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/orientation/OrientationDetector.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/orientation/OrientationDetector.ets",
+      "sourceSha256": "7f8e6368b71e2be02391ba2ab8b7f59aacbdd019111fd0799abb848740fb9e0b"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/size-layout/BreakpointEntryRegistration.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/size-layout/BreakpointEntryRegistration.ets",
+      "sourceSha256": "99fd8b8bc1e2d8ed2bbf476888a121c031608762df1ed7be3af8e0b0b92bef1b"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/size-layout/BreakpointSystem.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/size-layout/BreakpointSystem.ets",
+      "sourceSha256": "9d238206f5aaba44810c8940ed7f8667586607fd366076edcb24ff734f265595"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/size-layout/GridColOffset.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/size-layout/GridColOffset.ets",
+      "sourceSha256": "df99110e15191dc5a78c8603b33d9320889bedc79e2d6f507fc7a0e1d3d7e7cf"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/size-layout/GridRowBreakpoints.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/size-layout/GridRowBreakpoints.ets",
+      "sourceSha256": "41fc66c3a3ce137b268fc405ff860f5ead6bf6d7f6dbd5bb16b4652f72fb4ed8"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/size-layout/GridRowExample.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/size-layout/GridRowExample.ets",
+      "sourceSha256": "9271c26a45518d2ed2ad7e7c7602121c327243b8b2886254afd83095cf950089"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/size-layout/ResponsiveTabsExample.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/size-layout/ResponsiveTabsExample.ets",
+      "sourceSha256": "3baedf1e3d2900f9ad7e7e882f74701328e04d946b977c7e99040471ed383b41"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/size-layout/SplitNavThreeColumn.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/size-layout/SplitNavThreeColumn.ets",
+      "sourceSha256": "c5fee555ef70b9a8a297532a7be16b2d01e3efaabfb3220393234179f2023207"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/size-layout/SplitNavTwoColumn.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/size-layout/SplitNavTwoColumn.ets",
+      "sourceSha256": "2d39256e27a17de91316e523ce868e1aa15f5155486f9dfb596dc0e6bf9fa333"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/size-layout/SystemBreakpointExample.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/size-layout/SystemBreakpointExample.ets",
+      "sourceSha256": "d45f287154aba18f6da26eed6209f8461f82e7a4fb995df5b11cb870deb4d422"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/size-layout/WindowSizeChangeListener.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/size-layout/WindowSizeChangeListener.ets",
+      "sourceSha256": "e4b7bc9ad21e1f0a98835181162422ec73482759f627a1658700d28dbc8eb543"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/size-layout/list-scroll-extension-avoid-truncation.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/size-layout/list-scroll-extension-avoid-truncation.ets",
+      "sourceSha256": "5ba7939d2d5d55744c61dcc0571ef6805bb7239dead99cd7911e232c116b7696"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/size-layout/row-displaypriority-truncation.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/size-layout/row-displaypriority-truncation.ets",
+      "sourceSha256": "6552e0d80184e32ceba024d544531a312b311fe67e308cf74cd14e1b713bc4ab"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/size-layout/row-displaypriority-value-graded.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/size-layout/row-displaypriority-value-graded.ets",
+      "sourceSha256": "b346991221e27540b5f4cd376b793c8e96ccff405453b5a3e9d4852eb68d974d"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/size-layout/row-flexshrink-text-ellipsis.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/size-layout/row-flexshrink-text-ellipsis.ets",
+      "sourceSha256": "3287e2d3610cd315084e99ebb3f5b57f70354a4f9e8bed8e56e583886ce2e15f"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/size-layout/track-displaypriority-prefix.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/size-layout/track-displaypriority-prefix.ets",
+      "sourceSha256": "1a1a316efb33f440e019e801f287ef89fa356eb1c9067ccf4d57fa20c32be8d3"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/window-form/SplitScreenAbility.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/window-form/SplitScreenAbility.ets",
+      "sourceSha256": "f807e75f3512daa02a393960b4f1a723a2fad4041a08f357f5413e482fea91d2"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/window-form/SplitScreenDetailPage.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/window-form/SplitScreenDetailPage.ets",
+      "sourceSha256": "58355d5eb582dc50f7c133e1dcece165d34e39dbb96e2bdcd2e54b4d4df1be66"
+    },
+    {
+      "source": "harmonyos-ui-multi/assets/window-form/SplitScreenMainPage.ets",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/assets/window-form/SplitScreenMainPage.ets",
+      "sourceSha256": "71eb928de25b5f2cbce4f2e700f0c5ff4b2a76944c967e91accc1a634940c00f"
+    },
+    {
+      "source": "harmonyos-ui-multi/domains/avoid-area.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/domains/avoid-area.md",
+      "sourceSha256": "d0de722567377ec452815731cf7d9f60d3ffdb36c1543652bb2cb95b68b1708e"
+    },
+    {
+      "source": "harmonyos-ui-multi/domains/fold-form.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/domains/fold-form.md",
+      "sourceSha256": "8d8bb527b8f11a98a8cca0c945f1ac35bdfd67e85e0948d559950d16c87bda3f"
+    },
+    {
+      "source": "harmonyos-ui-multi/domains/global-adaptation.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/domains/global-adaptation.md",
+      "sourceSha256": "1b89fc3637134c4a9a39fc3794e6c473b83b5505fdd5aadff3d67218b0fc08cd"
+    },
+    {
+      "source": "harmonyos-ui-multi/domains/orientation.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/domains/orientation.md",
+      "sourceSha256": "7d98e8f6dd5aa23f4609492fc4545c6f385bdd2259e0f64249563d0dd19d7149"
+    },
+    {
+      "source": "harmonyos-ui-multi/domains/size-layout.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/domains/size-layout.md",
+      "sourceSha256": "cd380a09a8e271a9cf2ff0391d7068d0351b5313cc9f14dff145d455b9d392a4"
+    },
+    {
+      "source": "harmonyos-ui-multi/domains/window-form.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/domains/window-form.md",
+      "sourceSha256": "28628e63c61aeb93e04d43ca16c85c2f3a867101121c3e1fc235132a38e17822"
+    },
+    {
+      "source": "harmonyos-ui-multi/evals/behavior/cases.json",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/behavior/cases.json",
+      "sourceSha256": "23b554292ba7b93de9bedc34ded4fa1fc087ca774add0bb2ec781b33fa15b19c"
+    },
+    {
+      "source": "harmonyos-ui-multi/evals/run_evals.py",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/run_evals.py",
+      "sourceSha256": "98592e483b11aa3aa76cd63da33c2125b5b5004e11097e36e0490647de12acc8"
+    },
+    {
+      "source": "harmonyos-ui-multi/evals/skill_contract.py",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/skill_contract.py",
+      "sourceSha256": "3475a6533010c5650a9563868fb8c9d2d03b162c8d4ffdbfd6f44452a67bcc8b"
+    },
+    {
+      "source": "harmonyos-ui-multi/references/assets-catalog.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/references/assets-catalog.md",
+      "sourceSha256": "4677c96cfa5fe76422a7ff7bbc4072cff6d9f0cdc14a7d13c17bcdd0c128f758"
+    },
+    {
+      "source": "harmonyos-ui-multi/references/cases/bug-fix-avoid-areas.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/references/cases/bug-fix-avoid-areas.md",
+      "sourceSha256": "a7bb49306e0d43e00cd2fb8233ed2f48f0538b5b8e50e5c6191cacb969579246"
+    },
+    {
+      "source": "harmonyos-ui-multi/references/cases/bug-fix-fold-form.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/references/cases/bug-fix-fold-form.md",
+      "sourceSha256": "8d48e41d59027b68090fa6f6b1abd172fca2eb88c71edca9e07a38a4f21605e6"
+    },
+    {
+      "source": "harmonyos-ui-multi/references/cases/bug-fix-orientation.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/references/cases/bug-fix-orientation.md",
+      "sourceSha256": "ffbb9808af1d8ec78317c399ecbcd5d00178c6b5b5afb7ed9a74831e5fd008fb"
+    },
+    {
+      "source": "harmonyos-ui-multi/references/cases/bug-fix-size-layout.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/references/cases/bug-fix-size-layout.md",
+      "sourceSha256": "93ff63cd5be3cc7d0a06c4f2a6ee24309ade0428b63ac1ea9b3296547766bf27"
+    },
+    {
+      "source": "harmonyos-ui-multi/references/cases/scenario-avoid-areas.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/references/cases/scenario-avoid-areas.md",
+      "sourceSha256": "2e5c3e5572bb60615c52a27a8bacb2e4928e03ac7b5c8341ab91bdb97daf4ce5"
+    },
+    {
+      "source": "harmonyos-ui-multi/references/cases/scenario-fold-form.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/references/cases/scenario-fold-form.md",
+      "sourceSha256": "36f619ed4a5f254f20ab332f4d58cccfdeab04bda07c89d0594c25cc340a6c75"
+    },
+    {
+      "source": "harmonyos-ui-multi/references/device-matrix.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/references/device-matrix.md",
+      "sourceSha256": "1a3bbd78ad5453fbe446bd9d1a2396ff313245ce158535b5422a788f9ac9d630"
+    },
+    {
+      "source": "harmonyos-ui-multi/references/hifi-html.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/references/hifi-html.md",
+      "sourceSha256": "82bb46738e4dc046f60fbd8b0fd450f7a9720ee9917e5d6321a155c0e4781218"
+    },
+    {
+      "source": "harmonyos-ui-multi/references/layout-strategies.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/references/layout-strategies.md",
+      "sourceSha256": "45e353c50f4422a794060964744538234616f84e640ee03276849c60b16f4d31"
+    },
+    {
+      "source": "harmonyos-ui-multi/references/module-device-types.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/references/module-device-types.md",
+      "sourceSha256": "9b8ad79f9f142061e6a8c28db60a14a4bbb6c82f67e08524fd3caf3f14c96a8f"
+    },
+    {
+      "source": "harmonyos-ui-multi/references/quality-checklist.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/references/quality-checklist.md",
+      "sourceSha256": "119c708361e709de56d706e70018aa88732a8808a1a77bdfebad66a049dc6ca1"
+    },
+    {
+      "source": "harmonyos-ui-multi/references/root-causes.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/references/root-causes.md",
+      "sourceSha256": "48d1e9b8801561a7669adc088a6237781f7b32e92defb579e158a5b79b5a2f18"
+    },
+    {
+      "source": "harmonyos-ui-multi/references/window-rotation-policy.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-ui-multi/references/window-rotation-policy.md",
+      "sourceSha256": "89feebec1583adb38aa482b11cc3e52eef76edded963fe0d0675e89b7518db3b"
+    },
+    {
+      "source": "harmonyos-workflow-multi/SKILL.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/SKILL.md",
+      "sourceSha256": "039d4a3d22485b198b5d7de886b89079cdeaaa7bc8878e9dcb08e57e92fc6a2d"
+    },
+    {
+      "source": "harmonyos-workflow-multi/agents/openai.yaml",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/agents/openai.yaml",
+      "sourceSha256": "ff65629192bed250bac6c2d47461c7e294474f6c7476717049f5d00f638074d0"
+    },
+    {
+      "source": "harmonyos-workflow-multi/assets/report/report-template.html",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/assets/report/report-template.html",
+      "sourceSha256": "0027965fe1c41641d75253155636e56e046df2b4b6f308f53eff35183dc0ac8f"
+    },
+    {
+      "source": "harmonyos-workflow-multi/assets/verification/startIcon.png",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/assets/verification/startIcon.png",
+      "sourceSha256": "567c7c0c7a321ca180e010ad880f0f7519f6d351ac2b9665e2ee710e7cfe7778"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/behavior/cases.json",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/behavior/cases.json",
+      "sourceSha256": "55828c7f778a3c475dc586818f2b0a662e103a6a652dc39fff54e7f88d3a4011"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/inventory/fixtures/mixed/expected.json",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/inventory/fixtures/mixed/expected.json",
+      "sourceSha256": "e14c4bea6850c8b378222f9765a00ce20031dbe8e3461990322a06444f32bd01"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/inventory/fixtures/mixed/project/entry/src/main/ets/pages/ArticleDetail.ets",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/inventory/fixtures/mixed/project/entry/src/main/ets/pages/ArticleDetail.ets",
+      "sourceSha256": "e0e14ff21bf0b90e10a3783be9317b3464d50552ee824974c0326f89f223af24"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/inventory/fixtures/mixed/project/entry/src/main/ets/pages/Detail.ets",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/inventory/fixtures/mixed/project/entry/src/main/ets/pages/Detail.ets",
+      "sourceSha256": "f73fa293137934706c8ea9c5b34e10715870861773af200d25c1457f51a7e5a9"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/inventory/fixtures/mixed/project/entry/src/main/ets/pages/Index.ets",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/inventory/fixtures/mixed/project/entry/src/main/ets/pages/Index.ets",
+      "sourceSha256": "863d244a4c37a892535c8b312060558a9dba9ba102d41d43bdcf5e534c43bac5"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/inventory/fixtures/mixed/project/entry/src/main/module.json5",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/inventory/fixtures/mixed/project/entry/src/main/module.json5",
+      "sourceSha256": "28f3eea1c7eab3df2fe34d3a4460ca911353d0dc98016309806fad72d0657b66"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/inventory/fixtures/mixed/project/entry/src/main/resources/base/profile/main_pages.json",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/inventory/fixtures/mixed/project/entry/src/main/resources/base/profile/main_pages.json",
+      "sourceSha256": "f21984fb1d5096f0db41314da0bb94c573e7ad018e5afae3044f8d5ff71b0bfc"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/inventory/fixtures/mixed/project/feature/src/main/ets/pages/Settings.ets",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/inventory/fixtures/mixed/project/feature/src/main/ets/pages/Settings.ets",
+      "sourceSha256": "52224b1c690185149c3bb861175cbfd9e72d939e21ba2e1fabe818792ba9758a"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/inventory/fixtures/mixed/project/feature/src/main/module.json5",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/inventory/fixtures/mixed/project/feature/src/main/module.json5",
+      "sourceSha256": "b912a01b5f78240d76ca5daaf821de2227a16dc7e0b3d3ec640e3e10f5568f0e"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/ledger_contract.py",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/ledger_contract.py",
+      "sourceSha256": "6b01a5e048f5282b6bf5812383bb36336a7578a5d2b230e55810db5217acdacd"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/report_contract.py",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/report_contract.py",
+      "sourceSha256": "6b25ea1857e1ae5eb9a69a79c6085a3847984719dfcf9c4b01dd450d7fe798d2"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/run_evals.py",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/run_evals.py",
+      "sourceSha256": "db7da9fd5f7230b22d73a858232e89cadbcde3acf9fa52e13ee6549ff94d9fad"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/skill_contract.py",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/skill_contract.py",
+      "sourceSha256": "ba8db57675a893da5e879d6b42bb98168156a2768a61b2a5225f627049e65fff"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/ui_device_types_contract.py",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/ui_device_types_contract.py",
+      "sourceSha256": "c138ff1136b7ccc3d237b2e22545c4bd6244fb30047842dfde350ebb795d5a44"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/ui_static/fixtures/compliant/expected.json",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/ui_static/fixtures/compliant/expected.json",
+      "sourceSha256": "a309ef9755e1a0f84084225f3e8a5db31ac5e4429523749dda752da1249dea47"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/ui_static/fixtures/compliant/project/entry/src/main/ets/pages/Good.ets",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/ui_static/fixtures/compliant/project/entry/src/main/ets/pages/Good.ets",
+      "sourceSha256": "29ad73bf9278c26e7fb509bd1ad79f9de252b5563e9d05dd302a0bb2ff2ac357"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/ui_static/fixtures/compliant/project/entry/src/main/module.json5",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/ui_static/fixtures/compliant/project/entry/src/main/module.json5",
+      "sourceSha256": "87a3f6010791ecd0af0c0fa1216bafae1a5f08b7cc6794be72828d0a62ed9388"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/ui_static/fixtures/false-positive-guard/expected.json",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/ui_static/fixtures/false-positive-guard/expected.json",
+      "sourceSha256": "0ad52e18d0caaf6292887819848cf898cd62155d66711f164b5ee4fab7898943"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/ui_static/fixtures/false-positive-guard/project/entry/src/main/ets/pages/Guard.ets",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/ui_static/fixtures/false-positive-guard/project/entry/src/main/ets/pages/Guard.ets",
+      "sourceSha256": "ce8cb4488548251f80c72f81a9f79c542e0893274907d5be647148b5ef9943de"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/ui_static/fixtures/false-positive-guard/project/entry/src/main/module.json5",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/ui_static/fixtures/false-positive-guard/project/entry/src/main/module.json5",
+      "sourceSha256": "7559afce356978ab537b449de07661e8693595315379a77ad05dc7140fb61758"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/ui_static/fixtures/false-positive-guard/project/entry/src/main/resources/base/profile/easy_go.json",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/ui_static/fixtures/false-positive-guard/project/entry/src/main/resources/base/profile/easy_go.json",
+      "sourceSha256": "a113d2b44358f06228426b75d2d3722322aa2c6530292ae99fbd4e1abc256fef"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/ui_static/fixtures/missing-device-types/expected.json",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/ui_static/fixtures/missing-device-types/expected.json",
+      "sourceSha256": "5fc8345ef3ee9784013637b45626dd5b5e73dd3dccf32019d59dc0481d9073fb"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/ui_static/fixtures/missing-device-types/project/entry/src/main/module.json5",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/ui_static/fixtures/missing-device-types/project/entry/src/main/module.json5",
+      "sourceSha256": "853b63e22e5e89b5d734a1c4e671d495c107e859c4c3fee6976bd08435db7aed"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/ui_static/fixtures/missing-device-types/project/shared/src/main/module.json5",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/ui_static/fixtures/missing-device-types/project/shared/src/main/module.json5",
+      "sourceSha256": "47be32798a2cc98b344c73591f0c5a626241b2353472917c48fc375296afe760"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/ui_static/fixtures/violations/expected.json",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/ui_static/fixtures/violations/expected.json",
+      "sourceSha256": "9026d921c25d36ea10de5e221518439cc06d67d9a264f21fcfdd2922b5148eb8"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/ui_static/fixtures/violations/project/entry/src/main/ets/entryability/EntryAbility.ets",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/ui_static/fixtures/violations/project/entry/src/main/ets/entryability/EntryAbility.ets",
+      "sourceSha256": "57d09ef6dcca6ae49340702274bc41b84fa2740b494f1711d277d94fa8212c3b"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/ui_static/fixtures/violations/project/entry/src/main/ets/pages/Bad.ets",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/ui_static/fixtures/violations/project/entry/src/main/ets/pages/Bad.ets",
+      "sourceSha256": "82fcf9ce45a7161250f6f996068b6e7f2e3df5f00b382bb180978cd78a019849"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/ui_static/fixtures/violations/project/entry/src/main/ets/pages/Index.ets",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/ui_static/fixtures/violations/project/entry/src/main/ets/pages/Index.ets",
+      "sourceSha256": "0593b4aff98ce68c9faffee506fcc3cf4a9c7e00c8c6d819433ba337beb5c76f"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/ui_static/fixtures/violations/project/entry/src/main/module.json5",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/ui_static/fixtures/violations/project/entry/src/main/module.json5",
+      "sourceSha256": "7559afce356978ab537b449de07661e8693595315379a77ad05dc7140fb61758"
+    },
+    {
+      "source": "harmonyos-workflow-multi/evals/ui_static/fixtures/violations/project/entry/src/main/resources/base/profile/easy_go.json",
+      "destination": "evals/plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/ui_static/fixtures/violations/project/entry/src/main/resources/base/profile/easy_go.json",
+      "sourceSha256": "e054c57333fc9e9d2bb401d4b9df903bce5cd4eeb8a60ae711bad1da702048ec"
+    },
+    {
+      "source": "harmonyos-workflow-multi/references/domain-verification/camera.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/references/domain-verification/camera.md",
+      "sourceSha256": "3154372967aa79b7aea1f01a52aa104c57234a24c63deb8cf90daf0c9fd208b9"
+    },
+    {
+      "source": "harmonyos-workflow-multi/references/hifi-delivery.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/references/hifi-delivery.md",
+      "sourceSha256": "c97a12ef946ea45d6c34bab29e8ebc586720a528651fe910f263659cefaf6dff"
+    },
+    {
+      "source": "harmonyos-workflow-multi/references/multimodal-common-issues.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/references/multimodal-common-issues.md",
+      "sourceSha256": "efb0f8d153fa74c268cdc9f3cfdbfa1c2d3e71b139b255300beb6f2ed5d6215d"
+    },
+    {
+      "source": "harmonyos-workflow-multi/references/page-inventory.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/references/page-inventory.md",
+      "sourceSha256": "c354e56d1e627ca3ee9782ad4d1d6638562787d3f8a92a66a76dde393c27aa07"
+    },
+    {
+      "source": "harmonyos-workflow-multi/references/reporting.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/references/reporting.md",
+      "sourceSha256": "927ed60b89ad19397274f427b380708b6f628da5165022f0eaabc1aaf16dcc33"
+    },
+    {
+      "source": "harmonyos-workflow-multi/references/route-map.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/references/route-map.md",
+      "sourceSha256": "1173ceb6cfafebcaa3daf010cf0e8d44976e5ca0df1f1520d9f1b3403f9c56f9"
+    },
+    {
+      "source": "harmonyos-workflow-multi/references/task-ledger.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/references/task-ledger.md",
+      "sourceSha256": "28418e48e0d32155cdc6791df86f7a5bfb7f992c66be4badd6d9a18e8b6c7ecb"
+    },
+    {
+      "source": "harmonyos-workflow-multi/references/tooling.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/references/tooling.md",
+      "sourceSha256": "638a3da69122cd24bffbfc8945bd43f2beccf2c2b3314e62c406025d09a2ada8"
+    },
+    {
+      "source": "harmonyos-workflow-multi/references/verification.md",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/references/verification.md",
+      "sourceSha256": "42641d707367ea3a9daa8a32b71a755b220f39ff8e9e70741472aaf60b0485e7"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/install-to-project.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/install-to-project.py",
+      "sourceSha256": "6f935424ad3d6b0ac537c51f67ea302c84fb06fd6c6b4b855535a144d952de81"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/onemulti/__init__.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/onemulti/__init__.py",
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/onemulti/json5.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/onemulti/json5.py",
+      "sourceSha256": "d443bfc44028f7858396779be402b3473a16ec34cfd8a042d70e3009fe60c0c8"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/onemulti/ledger.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/onemulti/ledger.py",
+      "sourceSha256": "b072284c5885ee4517d9cafb94ddf5b89ae4fc007fdc46718527fb1d788e10c8"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/onemulti/project.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/onemulti/project.py",
+      "sourceSha256": "8de4302837cd5d3fe0f3d323fe7cdbfa686d44e6070b07b0ca451712e4870b5a"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/onemulti/reporting.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/onemulti/reporting.py",
+      "sourceSha256": "49a2f855e06345003d247c2d273ac093735e4e3d8892e519adc15a3ffe4e3ce1"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/onemulti/route_map.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/onemulti/route_map.py",
+      "sourceSha256": "74c31fddfc6337dfd9120c54141f7da5fdd38f9fd982208302f78d553f5538cb"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/project-scan.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/project-scan.py",
+      "sourceSha256": "ca1c2cb35122fe79afe6c3afc54e5db5da575cdbdfb687a56d231674b33fe425"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/render-report.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/render-report.py",
+      "sourceSha256": "4f1d0f25711d391604b2bb26373391aea33c504add5bfd0c084a39f03a00f47c"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/task-ledger.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/task-ledger.py",
+      "sourceSha256": "3bdc66d428ee23d16f6e21b4dfc992ae006d961a893ca13351401e7ece7f69aa"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/validate-state.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/validate-state.py",
+      "sourceSha256": "d08d48a18a50868d0a6e9b6169ef4492fa0d78189c8574352957f31198560a6f"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/verification/checks/ui/check-device-types.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/verification/checks/ui/check-device-types.py",
+      "sourceSha256": "a69379435fa5e494a4715d80a0a26eb6e704a1e06d3b523e7749d36202b66120"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/verification/checks/ui/static-check.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/verification/checks/ui/static-check.py",
+      "sourceSha256": "2a49dccdf35734914a5a1ce54066c0fb29666b7a50953ebef5dcff2c3de7d62c"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/verification/checks/ui/ui_checks/__init__.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/verification/checks/ui/ui_checks/__init__.py",
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/verification/checks/ui/ui_checks/device_types.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/verification/checks/ui/ui_checks/device_types.py",
+      "sourceSha256": "be66b9109a7b464383d18f57ce93dff09839e725b62d460ce240eb25e7086595"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/verification/checks/ui/ui_checks/json5.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/verification/checks/ui/ui_checks/json5.py",
+      "sourceSha256": "d443bfc44028f7858396779be402b3473a16ec34cfd8a042d70e3009fe60c0c8"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/verification/checks/ui/ui_checks/project.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/verification/checks/ui/ui_checks/project.py",
+      "sourceSha256": "db2fbb4a7378ded9f1bf5fc5657dd2e93d2bba4cee11082a0748d9326aa1153a"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/verification/checks/ui/ui_checks/static_rules.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/verification/checks/ui/ui_checks/static_rules.py",
+      "sourceSha256": "d1fdce0be372dbe0a3170a0f4f59569e703d49aad327b77dad76505bf19fa23f"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/verification/evidence-session.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/verification/evidence-session.py",
+      "sourceSha256": "619ba83e456ec21ce6212444a56fbce759865545960cd9d079e413536739521b"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/verification/preflight.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/verification/preflight.py",
+      "sourceSha256": "fff92f982bf7e64c72a6ca4a4ac5adeaaa1671ac0045f0a996ac43bf909b7eef"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/verification/prepare-device.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/verification/prepare-device.py",
+      "sourceSha256": "2884a18a2c619ced72f619586e613f8ac792352e59a82a736c1d63db70045c95"
+    },
+    {
+      "source": "harmonyos-workflow-multi/scripts/verification/run-foundation.py",
+      "destination": "plugins/harmonyos-one-multi/skills/harmonyos-workflow-multi/scripts/verification/run-foundation.py",
+      "sourceSha256": "9d4dddcac17902c0596677454bf86a41b5a8d0c02a08be5115634f373f77906f"
+    }
+  ]
+}

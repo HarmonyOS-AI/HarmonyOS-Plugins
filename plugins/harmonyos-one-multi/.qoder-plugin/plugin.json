@@ -1,0 +1,23 @@
+{
+  "name": "harmonyos-one-multi",
+  "version": "0.1.0",
+  "displayName": "HarmonyOS 一多适配",
+  "description": "HarmonyOS multi-device adaptation with project workflows, ArkUI, camera, H5, and Flutter knowledge, reusable assets, verification tools, and reports.",
+  "author": {
+    "name": "HarmonyOS-AI",
+    "url": "https://github.com/HarmonyOS-AI"
+  },
+  "homepage": "https://github.com/HarmonyOS-AI/HarmonyOS-Plugins",
+  "repository": "https://github.com/HarmonyOS-AI/HarmonyOS-Plugins",
+  "keywords": [
+    "harmonyos",
+    "multi-device",
+    "arkui",
+    "camera",
+    "h5",
+    "flutter",
+    "foldable",
+    "responsive-layout"
+  ],
+  "skills": "./skills/"
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "HarmonyOS 一多 UI 适配"
+  short_description: "诊断并修复平板、折叠屏与多窗口 UI 问题"
+  default_prompt: "使用 $harmonyos-ui-multi 分析并修复这个 HarmonyOS UI 多设备问题。"

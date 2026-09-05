@@ -1,0 +1,5 @@
+{
+ "expect_fail": [],
+ "expect_warn": [],
+ "note": "专攻保留规则各自最可能的误报形态：注释与字符串里出现幻觉 API 名（文档化的常态）、合法字号、$r() 资源引用的字号、把 lpx 用在尺寸而非字号上，以及只面向手机/折叠屏时合法的 deviceTypes=[phone]。easy_go.json 是一份**完全合法**的官方结构配置，专门踩 S13 新增判据的边界：只声明一种分栏方式、mode=1 且只配 pagePairs（合法搭配）、ratio 竖线两侧带空格、splitDividerColor 用八位 #AARRGGBB、common 与 tablet 分段共存。任何命中都是误报，一条都不许有。"
+}

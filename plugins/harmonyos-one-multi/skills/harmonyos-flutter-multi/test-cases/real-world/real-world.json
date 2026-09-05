@@ -1,0 +1,155 @@
+[
+  {
+    "case_id": "PX-REAL-001",
+    "layer": "real-world",
+    "title": "视频详情页悬停态布局未生效——控制栏被铰链遮挡（Flutter）",
+    "phase": "FIX",
+    "source_scene": "场景A：悬停态布局未生效",
+    "user_prompt": "Flutter 视频详情页在 PuraX 展开态正常，但半折叠（悬停态）后仍显示单屏布局，播放器控制栏被铰链遮挡，用户看不到播放/暂停按钮。代码中使用 Stack + Positioned(bottom: 0) 固定控制栏位置，完全没有铰链感知。项目已引入 hadss_avoid_area: ^1.0.0-rc.0。请给出修复方案。",
+    "intent": "验证真实故障下，harmonyos-flutter-multi 能正确识别未使用 FolderStack 的问题并给出修复。",
+    "expected": {
+      "primary_phase": "FIX",
+      "primary_scene": "PX-01",
+      "secondary_scenes": [
+        "PX-02"
+      ],
+      "next_scene_refs": [
+        "./SKILL.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "problem_profile",
+        "root_cause_hypothesis",
+        "fix_plan",
+        "regression_watchlist"
+      ],
+      "forbidden_scenes": []
+    },
+    "solution_contract": {
+      "must_cover": [
+        "必须将 Stack 替换为 FolderStack，使用 upperItems 标记视频组件移到上半屏",
+        "必须给视频组件添加 ValueKey 与 upperItems 中的字符串匹配",
+        "必须说明非折叠状态下 FolderStack 退化为普通 Stack",
+        "必须给出完整的代码修改（修改前/修改后）"
+      ]
+    }
+  },
+  {
+    "case_id": "PX-REAL-002",
+    "layer": "real-world",
+    "title": "商品列表 GridView 展开后列数不变——缺少 BreakpointManager 监听（Flutter）",
+    "phase": "FIX",
+    "source_scene": "场景B：GridView 断点适配失效",
+    "user_prompt": "Flutter 电商项目线上问题：商品列表页在 PuraX 折叠态（sm）显示 2 列正常，展开后（lg，约 900dp）仍为 2 列，卡片过大堆积，用户体验差。代码中 GridView.builder 使用了 SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2) 硬编码列数。项目已引入 hadss_adaptive_layout: ^1.0.0-rc.2 但未正确使用 BreakpointManager。请按'问题描述-根因分析-通用修复方案'路径输出修复方案。",
+    "intent": "验证真实故障下，harmonyos-flutter-multi 能正确识别缺少 BreakpointManager 监听的问题并给出修复。",
+    "expected": {
+      "primary_phase": "FIX",
+      "primary_scene": "PX-03",
+      "secondary_scenes": [
+        "PX-05"
+      ],
+      "next_scene_refs": [
+        "./SKILL.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "problem_profile",
+        "root_cause_hypothesis",
+        "fix_plan",
+        "regression_watchlist"
+      ],
+      "forbidden_scenes": []
+    },
+    "solution_contract": {
+      "must_cover": [
+        "必须指出根因是 crossAxisCount 硬编码为 2，缺少 BreakpointManager 监听",
+        "必须给出 hadss 方案：BreakpointManager.instance.addListener + _getColumnCount 映射 + setState",
+        "未要求对比时不得额外展开原生 Flutter 实现",
+        "必须说明 dispose 中需移除监听"
+      ]
+    }
+  },
+  {
+    "case_id": "PX-REAL-003",
+    "layer": "real-world",
+    "title": "聊天 App 折叠态展开后仍为单栏——缺少 NavigationSplitContainer（Flutter）",
+    "phase": "FIX",
+    "source_scene": "场景C：列表-详情双栏缺失",
+    "user_prompt": "Flutter 聊天 App 线上问题：在 PuraX 折叠态全屏聊天正常，但展开后仍为单栏布局（全屏聊天界面），没有像常见平板聊天客户端那样左侧会话列表 + 右侧聊天内容并排。项目未引入任何适配库，当前使用普通 Scaffold + ListView。请给出修复方案，需包含 hadss 库方案和原生 Flutter 方案。",
+    "intent": "验证真实故障下，harmonyos-flutter-multi 能正确识别缺少 NavigationSplitContainer 的问题并给出双方案修复。",
+    "expected": {
+      "primary_phase": "FIX",
+      "primary_scene": "PX-03",
+      "secondary_scenes": [],
+      "next_scene_refs": [
+        "./SKILL.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "problem_profile",
+        "root_cause_hypothesis",
+        "fix_plan",
+        "regression_watchlist"
+      ],
+      "forbidden_scenes": []
+    },
+    "solution_contract": {
+      "must_cover": [
+        "方案 A：NavigationSplitContainer(mode: NavigationSplitMode.auto)，auto 模式下 >600dp 自动切换双栏",
+        "方案 B：LayoutBuilder + Row 实现双栏切换",
+        "必须说明折展后滚动位置和选中会话状态的保持"
+      ]
+    }
+  },
+  {
+    "case_id": "PX-REAL-004",
+    "layer": "real-world",
+    "title": "折展后输入内容与搜索结果丢失——折展逻辑覆盖业务状态（Flutter）",
+    "phase": "FIX",
+    "source_scene": "场景D：开合连续性断档",
+    "user_prompt": "Flutter 搜索页线上问题：在 PuraX 折叠态输入搜索关键词并查看结果后，展开设备时搜索结果被清空，输入框文字丢失。代码中在 BreakpointManager 回调里直接调用了 loadData() 重新加载数据，且 TextEditingController 在 build() 中重新创建导致状态丢失。请按折展问题通用修复路径排查并给出修复方案。",
+    "intent": "验证真实故障下，harmonyos-flutter-multi 能正确识别折展逻辑覆盖业务状态的问题并给出修复。",
+    "expected": {
+      "primary_phase": "FIX",
+      "primary_scene": "PX-04",
+      "secondary_scenes": [
+        "PX-05"
+      ],
+      "next_scene_refs": [
+        "./SKILL.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "problem_profile",
+        "root_cause_hypothesis",
+        "fix_plan",
+        "regression_watchlist"
+      ],
+      "forbidden_scenes": []
+    },
+    "solution_contract": {
+      "must_cover": [
+        "必须指出根因：断点回调中覆盖业务状态（loadData）+ Controller 在 build 中重建",
+        "必须分离折展逻辑与业务状态：断点回调只更新布局参数，不改写业务数据",
+        "必须将 TextEditingController 放在 State 中而非 build() 中",
+        "必须说明恢复链路触发时机，禁止基于过期视口恢复"
+      ]
+    }
+  }
+]

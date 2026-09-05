@@ -1,0 +1,2 @@
+{ "module": { "name": "entry", "type": "entry",
+    "deviceTypes": ["phone"] } }

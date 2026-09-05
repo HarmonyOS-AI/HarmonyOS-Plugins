@@ -9,6 +9,13 @@
     "plugins:create": "node scripts/create-plugin-group.mjs",
     "plugins:sync": "node scripts/sync-manifests.mjs",
     "plugins:validate": "node scripts/validate-plugins.mjs",
-    "test": "node --test scripts/tests/*.test.mjs"
+    "test": "node --test scripts/tests/*.test.mjs",
+    "evals": "node scripts/run-evals.mjs",
+    "evals:live-preview": "node evals/plugins/harmonyos-dev-toolkit/skills/harmonyos-live-preview/run.mjs",
+    "test:all": "npm test && npm run evals && npm run plugins:validate",
+    "plugins:pack": "node scripts/build-distributions.mjs"
+  },
+  "devDependencies": {
+    "yaml": "^2.8.1"
   }
 }

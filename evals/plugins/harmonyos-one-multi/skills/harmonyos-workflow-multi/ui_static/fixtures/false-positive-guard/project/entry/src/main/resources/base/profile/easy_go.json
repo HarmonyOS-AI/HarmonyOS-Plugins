@@ -1,0 +1,28 @@
+{
+  "common": {
+    "displayModeOptions": {
+      "wideWindowMode": "routerSplit",
+      "squareWindowMode": "routerSplit",
+      "routerSplitOptions": {
+        "homePage": "pages/Index",
+        "relatedPage": "pages/Detail",
+        "fullScreenPages": ["pages/Album"],
+        "mode": 1,
+        "pagePairs": [
+          { "from": "pages/Index", "to": "pages/Detail" }
+        ],
+        "wideSplit": { "ratio": "2 | 1" },
+        "squareSplit": { "ratio": "1 | 1" },
+        "splitDividerColor": { "light": "#FFE5E5E5", "dark": "#FF303030" },
+        "enableInSplitScreen": true
+      }
+    }
+  },
+  "tablet": {
+    "displayModeOptions": {
+      "routerSplitOptions": {
+        "enableReducedContainerSize": true
+      }
+    }
+  }
+}

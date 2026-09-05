@@ -2,11 +2,10 @@ import { readdir, readFile, realpath, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { tool } from "@opencode-ai/plugin";
+import { loadPluginContent } from "../runtime/plugin-content.js";
 
 const pluginRoot = fileURLToPath(new URL("../", import.meta.url));
-const config = JSON.parse(await readFile(path.join(pluginRoot, "plugin.config.json"), "utf8"));
-const skills = await discoverSkills(path.join(pluginRoot, "skills"));
-const mcpServers = await loadMcpServers(path.join(pluginRoot, ".mcp.json"));
+const { config, skills, mcpServers } = await loadPluginContent(pluginRoot, "v1");
 
 export default async function portableSkillPlugin() {
   return {
@@ -15,7 +14,9 @@ export default async function portableSkillPlugin() {
         return;
       }
       hostConfig.mcp ??= {};
-      Object.assign(hostConfig.mcp, mcpServers);
+      for (const [name, server] of Object.entries(mcpServers)) {
+        hostConfig.mcp[name] ??= server;
+      }
     },
     ...(skills.size > 0 ? { tool: {
       [config.opencode.toolName]: tool({
@@ -72,65 +73,6 @@ export default async function portableSkillPlugin() {
   };
 }
 
-async function discoverSkills(skillsRoot) {
-  let entries;
-  try {
-    entries = await readdir(skillsRoot, { withFileTypes: true });
-  } catch (error) {
-    if (error.code === "ENOENT") {
-      return new Map();
-    }
-    throw error;
-  }
-  const result = new Map();
-
-  for (const entry of entries.filter((item) => item.isDirectory()).sort(byName)) {
-    const directory = path.join(skillsRoot, entry.name);
-    const skillPath = path.join(directory, "SKILL.md");
-    const source = await readFile(skillPath, "utf8");
-    result.set(entry.name, {
-      id: entry.name,
-      directory,
-      description: readFrontmatterDescription(source)
-    });
-  }
-
-  return result;
-}
-
-async function loadMcpServers(mcpPath) {
-  let source;
-  try {
-    source = JSON.parse(await readFile(mcpPath, "utf8"));
-  } catch (error) {
-    if (error.code === "ENOENT") {
-      return {};
-    }
-    throw error;
-  }
-
-  const servers = source.mcpServers ?? source.mcp_servers ?? source;
-  return Object.fromEntries(Object.entries(servers).map(([name, server]) => [name, toOpenCodeMcp(server)]));
-}
-
-function toOpenCodeMcp(server) {
-  if (server.command) {
-    return {
-      type: "local",
-      command: [server.command, ...(server.args ?? [])],
-      ...(server.env ? { environment: server.env } : {})
-    };
-  }
-  if (server.url) {
-    return {
-      type: "remote",
-      url: server.url,
-      ...(server.headers ? { headers: server.headers } : {})
-    };
-  }
-  throw new Error("MCP server entries must define either command or url.");
-}
-
 async function resolveContainedPath(root, relativePath) {
   if (path.isAbsolute(relativePath)) {
     throw new Error("Resource paths must be relative to the skill directory.");
@@ -141,41 +83,4 @@ async function resolveContainedPath(root, relativePath) {
     throw new Error("Resource path escapes the selected skill directory.");
   }
   return candidate;
-}
-
-function readFrontmatterDescription(source) {
-  const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  if (!match) {
-    return "No description provided.";
-  }
-
-  const lines = match[1].split(/\r?\n/);
-  const start = lines.findIndex((line) => /^description\s*:/.test(line));
-  if (start === -1) {
-    return "No description provided.";
-  }
-
-  const firstValue = lines[start].replace(/^description\s*:\s*/, "").trim();
-  if (!/^[>|]-?$/.test(firstValue)) {
-    return stripQuotes(firstValue);
-  }
-
-  const continuation = [];
-  for (const line of lines.slice(start + 1)) {
-    if (/^[A-Za-z0-9_-]+\s*:/.test(line)) {
-      break;
-    }
-    if (line.trim()) {
-      continuation.push(line.trim());
-    }
-  }
-  return continuation.join(" ") || "No description provided.";
-}
-
-function stripQuotes(value) {
-  return value.replace(/^(?:"(.*)"|'(.*)')$/, "$1$2");
-}
-
-function byName(left, right) {
-  return left.name.localeCompare(right.name);
 }

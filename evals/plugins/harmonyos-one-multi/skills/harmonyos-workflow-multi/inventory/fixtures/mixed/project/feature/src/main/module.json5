@@ -1,0 +1,8 @@
+{
+  'module': {
+    'name': 'feature',
+    // 华为官方 demo 里 lib_av_details 就是这种单引号写法，故意在这个 fixture 里覆盖
+    "type": "har",
+    "deviceTypes": ["default", "tablet"],
+  }
+}

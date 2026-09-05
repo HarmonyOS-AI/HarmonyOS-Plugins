@@ -44,7 +44,34 @@ export function renderQoderManifest(config) {
     author: config.author,
     homepage: config.homepage,
     repository: config.repository,
-    keywords: config.keywords
+    keywords: config.keywords,
+    ...config.components
+  };
+}
+
+export function renderCursorManifest(config) {
+  const { displayName, ...manifest } = renderQoderManifest(config);
+  return manifest;
+}
+
+export function renderCursorMarketplace(marketplace, configs) {
+  return {
+    name: marketplace.name,
+    owner: marketplace.owner,
+    plugins: configs.map((config) => ({
+      name: config.name,
+      source: `./plugins/${config.name}`,
+      description: config.description
+    }))
+  };
+}
+
+export function renderOpenCodeV2Package(config) {
+  return {
+    ...renderOpenCodePackage(config),
+    name: `${config.opencode.packageName}-v2`,
+    exports: "./opencode-v2/plugin.js",
+    dependencies: { yaml: "^2.8.1" }
   };
 }
 
@@ -56,14 +83,13 @@ export function renderOpenCodePackage(config) {
     type: "module",
     exports: "./opencode/plugin.js",
     files: [
+      "*",
       ".claude-plugin",
       ".codex-plugin",
       ".qoder-plugin",
+      ".cursor-plugin",
       ".mcp.json",
-      "hooks",
-      "opencode",
-      "plugin.config.json",
-      "skills"
+      ...Object.values(config.components)
     ],
     keywords: config.keywords,
     repository: {
@@ -72,7 +98,8 @@ export function renderOpenCodePackage(config) {
       directory: `plugins/${config.name}`
     },
     dependencies: {
-      "@opencode-ai/plugin": "^1.14.0"
+      "@opencode-ai/plugin": "^1.14.0",
+      "yaml": "^2.8.1"
     }
   };
 }

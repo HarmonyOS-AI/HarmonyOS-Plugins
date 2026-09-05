@@ -7,8 +7,8 @@
     "name": "HarmonyOS-AI",
     "url": "https://github.com/HarmonyOS-AI"
   },
-  "homepage": "https://github.com/HarmonyOS-AI/Harmony-Skills",
-  "repository": "https://github.com/HarmonyOS-AI/Harmony-Skills",
+  "homepage": "https://github.com/HarmonyOS-AI/HarmonyOS-Plugins",
+  "repository": "https://github.com/HarmonyOS-AI/HarmonyOS-Plugins",
   "keywords": [
     "harmonyos",
     "arkts",
@@ -18,5 +18,6 @@
     "skills",
     "live-preview",
     "hot-reload"
-  ]
+  ],
+  "skills": "./skills/"
 }

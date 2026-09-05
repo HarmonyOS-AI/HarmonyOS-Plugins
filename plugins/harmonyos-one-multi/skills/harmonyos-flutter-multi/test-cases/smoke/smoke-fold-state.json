@@ -1,0 +1,304 @@
+[
+  {
+    "case_id": "PX-SMOKE-01-001",
+    "layer": "smoke",
+    "title": "BreakpointManager 断点变化监听与首帧初始化（Flutter）",
+    "phase": "DEV",
+    "user_prompt": "Flutter 折叠屏应用首帧渲染时布局抖动，且折叠/展开过程中页面未实时刷新。计划使用 hadss_adaptive_layout 的 BreakpointManager 获取断点并监听断点变化，在状态变化后通过 setState 触发布局刷新。同时需要在 initState 中获取当前断点做首帧初始化。请给出完整的监听注册、首帧初始化与 listen 取消注册实现方案。",
+    "intent": "验证 harmonyos-flutter-multi 是否稳定命中 PX-03，覆盖 BreakpointManager 监听与首帧初始化的开发场景。",
+    "expected": {
+      "primary_phase": "DEV",
+      "primary_scene": "PX-03",
+      "primary_scene_ref": "./SKILL.md",
+      "secondary_scenes": [],
+      "next_scene_refs": [
+        "./references/fold_status_detection.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "code_touchpoints",
+        "reuse_resources",
+        "implementation_notes",
+        "integration_risks"
+      ],
+      "forbidden_scenes": []
+    }
+  },
+  {
+    "case_id": "PX-SMOKE-01-002",
+    "layer": "smoke",
+    "title": "GridView 硬编码列数导致展开后列数不变修复（Flutter）",
+    "phase": "FIX",
+    "user_prompt": "Flutter 项目在 PuraX 折叠屏上有个 bug：折叠状态（sm 断点）下 GridView 2 列布局正常，但展开后（md/lg 断点）仍为 2 列，卡片过大堆叠。代码中 SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2) 硬编码了列数。项目已引入 hadss_adaptive_layout: ^1.0.0-rc.2。请排查原因并给出修复方案。",
+    "intent": "验证 harmonyos-flutter-multi 是否稳定命中 PX-03 + PX-05，覆盖 GridView 断点适配失效的修复场景。",
+    "expected": {
+      "primary_phase": "FIX",
+      "primary_scene": "PX-03",
+      "primary_scene_ref": "./SKILL.md",
+      "secondary_scenes": [
+        "PX-05"
+      ],
+      "next_scene_refs": [
+        "./references/breakpoint_layout.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "problem_profile",
+        "root_cause_hypothesis",
+        "fix_plan",
+        "regression_watchlist"
+      ],
+      "forbidden_scenes": []
+    }
+  },
+  {
+    "case_id": "PX-SMOKE-02-001",
+    "layer": "smoke",
+    "title": "视频播放器悬停态铰链避让实现（Flutter）",
+    "phase": "DEV",
+    "user_prompt": "Flutter 视频播放器在 PuraX 半折叠态下，控制栏被铰链遮挡。需要使用 hadss_avoid_area 的 FolderStack 实现上半屏播放视频、下半屏显示控制栏，铰链区域自动避让。项目已引入 hadss_avoid_area: ^1.0.0-rc.0。请给出完整的 FolderStack 悬停态适配方案。",
+    "intent": "验证 harmonyos-flutter-multi 是否稳定命中 PX-01，自动联动 PX-02，覆盖视频播放器悬停态铰链避让的开发场景。",
+    "expected": {
+      "primary_phase": "DEV",
+      "primary_scene": "PX-01",
+      "primary_scene_ref": "./SKILL.md",
+      "secondary_scenes": [
+        "PX-02"
+      ],
+      "next_scene_refs": [
+        "./references/hover_state_interaction.md",
+        "./references/crease_avoidance.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "code_touchpoints",
+        "reuse_resources",
+        "implementation_notes",
+        "integration_risks"
+      ],
+      "forbidden_scenes": []
+    }
+  },
+  {
+    "case_id": "PX-SMOKE-02-002",
+    "layer": "smoke",
+    "title": "悬停态分屏职责分配需求分析（Flutter 视频应用）",
+    "phase": "REQ",
+    "user_prompt": "Flutter 视频应用在 PuraX 折叠屏悬停态下需要重新设计页面布局：上半屏展示视频画面，下半屏放置控制按钮和评论区。项目使用 hadss_adaptive_layout + hadss_avoid_area。请先给出需求分析，明确上半屏和下半屏的职责分配、退出悬停后的恢复策略和验收标准。",
+    "intent": "验证 harmonyos-flutter-multi 是否稳定命中 PX-01 + PX-02 联动，覆盖悬停态上下分屏的需求分析场景。",
+    "expected": {
+      "primary_phase": "REQ",
+      "primary_scene": "PX-01",
+      "primary_scene_ref": "./SKILL.md",
+      "secondary_scenes": [
+        "PX-02"
+      ],
+      "next_scene_refs": [
+        "./references/hover_state_interaction.md",
+        "./references/crease_avoidance.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "device_constraints",
+        "capability_boundary",
+        "acceptance_focus"
+      ],
+      "forbidden_scenes": []
+    }
+  },
+  {
+    "case_id": "PX-SMOKE-03-001",
+    "layer": "smoke",
+    "title": "聊天 App 列表-详情双栏 NavigationSplitContainer 实现（Flutter）",
+    "phase": "DEV",
+    "user_prompt": "Flutter 聊天 App 需要适配 PuraX：折叠态全屏聊天，展开态左边会话列表 + 右边聊天内容。项目尚未引入任何适配库。请给出完整的方案，使用 NavigationSplitContainer（方案 A）和 LayoutBuilder（方案 B）两种方式。",
+    "intent": "验证 harmonyos-flutter-multi 是否稳定命中 PX-03，覆盖列表-详情双栏的开发场景，要求双方案（hadss + 原生）。",
+    "expected": {
+      "primary_phase": "DEV",
+      "primary_scene": "PX-03",
+      "primary_scene_ref": "./SKILL.md",
+      "secondary_scenes": [],
+      "next_scene_refs": [
+        "./references/breakpoint_layout.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "code_touchpoints",
+        "reuse_resources",
+        "implementation_notes",
+        "integration_risks"
+      ],
+      "forbidden_scenes": []
+    }
+  },
+  {
+    "case_id": "PX-SMOKE-04-001",
+    "layer": "smoke",
+    "title": "开合后输入内容与滚动位置丢失修复（Flutter）",
+    "phase": "FIX",
+    "user_prompt": "Flutter 搜索页面在 PuraX 折叠屏折叠/展开后，搜索框输入文字丢失，搜索结果被清空。代码中在 BreakpointManager 回调里重新调用了 loadData()，导致用户当前状态被覆盖。请排查原因并给出修复方案。",
+    "intent": "验证 harmonyos-flutter-multi 是否稳定命中 PX-04，覆盖开合后输入内容与滚动位置丢失的修复场景。",
+    "expected": {
+      "primary_phase": "FIX",
+      "primary_scene": "PX-04",
+      "primary_scene_ref": "./SKILL.md",
+      "secondary_scenes": [],
+      "next_scene_refs": [
+        "./references/fold_continuity.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "problem_profile",
+        "root_cause_hypothesis",
+        "fix_plan",
+        "regression_watchlist"
+      ],
+      "forbidden_scenes": []
+    }
+  },
+  {
+    "case_id": "PX-SMOKE-04-002",
+    "layer": "smoke",
+    "title": "视频折展后播放进度与播放状态保持（Flutter）",
+    "phase": "DEV",
+    "user_prompt": "Flutter 视频应用在 PuraX 折叠/展开后，视频播放进度丢失（从头播放），且暂停后折展变成自动播放。需要实现播放进度和暂停/播放状态的跨折展保持。请给出快照保存与恢复方案。",
+    "intent": "验证 harmonyos-flutter-multi 是否稳定命中 PX-04，覆盖视频播放连续性保障的开发场景。",
+    "expected": {
+      "primary_phase": "DEV",
+      "primary_scene": "PX-04",
+      "primary_scene_ref": "./SKILL.md",
+      "secondary_scenes": [],
+      "next_scene_refs": [
+        "./references/fold_continuity.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "code_touchpoints",
+        "reuse_resources",
+        "implementation_notes",
+        "integration_risks"
+      ],
+      "forbidden_scenes": []
+    }
+  },
+  {
+    "case_id": "PX-SMOKE-05-001",
+    "layer": "smoke",
+    "title": "折展问题通用修复——未注册 BreakpointManager 监听导致布局不刷新",
+    "phase": "FIX",
+    "user_prompt": "Flutter 应用在 PuraX 折叠后界面未更新，断点变化回调未触发。代码中在 initState 里通过 BreakpointManager.instance.currentBreakpoint 读取了一次断点，但没有注册 addListener 回调，导致折叠/展开后布局不刷新。同时在 dispose 中也忘记 removeListener。请排查原因并给出修复方案。",
+    "intent": "验证 harmonyos-flutter-multi 是否稳定命中 PX-05，覆盖折展问题中状态监听缺失的修复场景。",
+    "expected": {
+      "primary_phase": "FIX",
+      "primary_scene": "PX-05",
+      "primary_scene_ref": "./SKILL.md",
+      "secondary_scenes": [
+        "PX-03"
+      ],
+      "next_scene_refs": [
+        "./references/bug_fix_cases.md",
+        "./references/fold_status_detection.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "problem_profile",
+        "root_cause_hypothesis",
+        "fix_plan",
+        "regression_watchlist"
+      ],
+      "forbidden_scenes": []
+    }
+  },
+  {
+    "case_id": "PX-SMOKE-05-002",
+    "layer": "smoke",
+    "title": "PuraX 外屏与直板机区分适配（Flutter）",
+    "phase": "FIX",
+    "user_prompt": "Flutter 项目在 PuraX 外屏（折叠态）和普通直板机上处于同一断点区间（横向 sm + 纵向 lg），导致个性化适配无法区分。需要识别 PuraX 外屏（宽高比 10:14，较宽的外屏）并单独做适配。请给出区分方案。",
+    "intent": "验证 harmonyos-flutter-multi 是否稳定命中 PX-05，覆盖 PuraX 外屏识别的修复场景。",
+    "expected": {
+      "primary_phase": "FIX",
+      "primary_scene": "PX-05",
+      "primary_scene_ref": "./SKILL.md",
+      "secondary_scenes": [
+        "PX-01"
+      ],
+      "next_scene_refs": [
+        "./references/bug_fix_cases.md",
+        "./references/official_adaptation_guide.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "problem_profile",
+        "root_cause_hypothesis",
+        "fix_plan",
+        "regression_watchlist"
+      ],
+      "forbidden_scenes": []
+    }
+  },
+  {
+    "case_id": "PX-SMOKE-03-002",
+    "layer": "smoke",
+    "title": "商品列表 GridRow/GridCol 栅格断点适配需求分析（Flutter）",
+    "phase": "REQ",
+    "user_prompt": "Flutter 电商项目需要在 PuraX 不同断点下展示不同列数的商品卡片：xs=1 列、sm=2 列、md=3 列、lg=4 列、xl=5 列。同时还需支持侧边栏导航在 lg 断点下切换，底部页签在 sm/md 断点下显示。项目使用 hadss_adaptive_layout。请先给出需求分析和验收标准。",
+    "intent": "验证 harmonyos-flutter-multi 是否稳定命中 PX-03，覆盖栅格断点适配的需求分析场景。",
+    "expected": {
+      "primary_phase": "REQ",
+      "primary_scene": "PX-03",
+      "primary_scene_ref": "./SKILL.md",
+      "secondary_scenes": [],
+      "next_scene_refs": [
+        "./references/breakpoint_layout.md"
+      ],
+      "required_output_fields": [
+        "active_phases",
+        "primary_phase",
+        "primary_scene",
+        "secondary_scenes",
+        "resources_used",
+        "device_constraints",
+        "capability_boundary",
+        "acceptance_focus"
+      ],
+      "forbidden_scenes": []
+    }
+  }
+]

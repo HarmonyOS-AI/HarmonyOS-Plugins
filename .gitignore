@@ -3,4 +3,11 @@
 *.pyc
 __pycache__/
 .skill-workspaces/
+.eval-runs/
+.eval-cache/
+*.eval-report.html
+*.eval-result.json
 node_modules/
+
+# Generated cross-host release bundles
+/dist/

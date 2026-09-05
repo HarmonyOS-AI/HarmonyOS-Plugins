@@ -1,0 +1,5 @@
+{
+ "expect_fail": [],
+ "expect_warn": [],
+ "note": "全部正确写法：on/off 配对、断点值含 1440vp、WindowSize 参考系、span+offset 居中、deviceTypes 完整。任何命中都是误报。"
+}

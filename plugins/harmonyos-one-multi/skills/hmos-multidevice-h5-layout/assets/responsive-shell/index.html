@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>HarmonyOS H5 Adaptive Shell</title>
+  <link rel="stylesheet" href="./adaptive.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <strong>Adaptive Shell</strong>
+    </header>
+
+    <main class="page-layout">
+      <nav class="navigation" aria-label="主导航">
+        <a href="#overview" aria-current="page">概览</a>
+        <a href="#items">内容</a>
+        <a href="#settings">设置</a>
+      </nav>
+
+      <section class="content" id="overview">
+        <h1>窗口驱动的响应式页面</h1>
+        <p>页面只根据 viewport 和组件容器尺寸，从单栏渐进到宽屏多栏。</p>
+        <div class="cards" id="items">
+          <article class="card"><h2>自适应</h2><p>用 Grid、Flex 和流式尺寸消除组件溢出。</p></article>
+          <article class="card"><h2>响应式</h2><p>在内容断裂点切换导航、列数和页面结构。</p></article>
+          <article class="card"><h2>短屏</h2><p>横屏同时检查高度，让关键内容保持可见。</p></article>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
