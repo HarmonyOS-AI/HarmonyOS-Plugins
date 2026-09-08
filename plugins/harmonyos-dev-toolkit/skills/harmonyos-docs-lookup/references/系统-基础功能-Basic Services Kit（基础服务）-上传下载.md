@@ -1,1 +1,0 @@
-* **[应用文件上传下载](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/app-file-upload-download)**

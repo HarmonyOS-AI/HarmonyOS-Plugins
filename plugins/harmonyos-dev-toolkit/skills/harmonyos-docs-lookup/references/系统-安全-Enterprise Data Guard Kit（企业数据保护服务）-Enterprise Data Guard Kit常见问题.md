@@ -1,1 +1,0 @@
-* **[Enterprise Data Guard Kit权限获取失败](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/dataguard-faq-1)**

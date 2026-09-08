@@ -1,1 +1,0 @@
-可以，弹框文案详细信息由用户配置，具体请参考[配置本地化基础信息](https://developer.huawei.com/consumer/cn/doc/app/agc-help-release-app-intro-0000002313477961)中的新版本特性。

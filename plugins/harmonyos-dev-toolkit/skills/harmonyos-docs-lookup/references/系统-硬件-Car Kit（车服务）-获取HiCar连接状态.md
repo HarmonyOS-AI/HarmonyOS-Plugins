@@ -1,2 +1,0 @@
-* **[主动获取HiCar的连接状态](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/car-check-application-start)**
-* **[监听HiCar的连接状态](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/car-listener-connect-status)**

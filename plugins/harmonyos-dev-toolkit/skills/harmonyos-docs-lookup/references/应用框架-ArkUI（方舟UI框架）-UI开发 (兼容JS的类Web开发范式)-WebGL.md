@@ -1,1 +1,0 @@
-* **[使用WebGL绘制图形](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/webgl-2d-guidelines)**

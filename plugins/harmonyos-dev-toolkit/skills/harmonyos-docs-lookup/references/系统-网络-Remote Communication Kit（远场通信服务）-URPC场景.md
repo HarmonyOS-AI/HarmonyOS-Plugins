@@ -1,1 +1,0 @@
-* **[使用URPC进行远程程序调用](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/remote-communication-urpccall)**

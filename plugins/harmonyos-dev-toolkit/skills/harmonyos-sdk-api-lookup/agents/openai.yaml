@@ -1,4 +1,0 @@
-interface:
-  display_name: "HarmonyOS SDK API Lookup"
-  short_description: "Look up HarmonyOS/OpenHarmony SDK API references"
-  default_prompt: "Use $harmonyos-sdk-api-lookup to find the API signature and permissions for this call."

@@ -1,4 +1,0 @@
-* **[基本准备工作](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/iap-basic-preparation)**
-* **[配置商品信息](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/iap-config-product)**
-* **[配置签名](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/iap-config-sign)**
-* **[配置应用身份信息](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/iap-config-app-identity-info)**

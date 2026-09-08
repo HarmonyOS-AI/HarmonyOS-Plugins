@@ -1,5 +1,0 @@
-* **[概要](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/health-data-type-summary)**
-* **[权限说明](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/health-permission-description)**
-* **[采样数据](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/health-samplepoint)**
-* **[锻炼记录数据](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/health-exercisesequence)**
-* **[健康记录数据](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/health-healthsequence)**

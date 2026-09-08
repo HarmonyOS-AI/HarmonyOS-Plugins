@@ -1,2 +1,0 @@
-* **[使用通话设备切换组件](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/using-switch-call-devices)**
-* **[使用投播组件](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/distributed-playback)**

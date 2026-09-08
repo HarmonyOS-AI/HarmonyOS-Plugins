@@ -1,4 +1,0 @@
-interface:
-  display_name: "HarmonyOS Docs Lookup"
-  short_description: "Search 2860+ HarmonyOS official doc pages"
-  default_prompt: "Use $harmonyos-docs-lookup to find HarmonyOS developer guide docs for this task."

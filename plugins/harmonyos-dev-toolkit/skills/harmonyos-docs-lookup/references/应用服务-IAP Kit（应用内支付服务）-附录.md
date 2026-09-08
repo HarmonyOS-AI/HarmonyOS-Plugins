@@ -1,1 +1,0 @@
-* **[华为IAP范围覆盖](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/iap-appendix-coverage)**

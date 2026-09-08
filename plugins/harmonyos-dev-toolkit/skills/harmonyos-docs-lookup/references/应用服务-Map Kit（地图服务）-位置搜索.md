@@ -1,2 +1,0 @@
-* **[POI搜索](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/map-site-search)**
-* **[地理编码](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/map-site-geocode)**

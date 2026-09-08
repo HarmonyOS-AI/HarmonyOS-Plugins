@@ -1,3 +1,0 @@
-* **[使用AVRecorder录制音频(ArkTS)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/using-avrecorder-for-recording)**
-* **[使用AVRecorder录制视频(ArkTS)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/video-recording)**
-* **[使用AVScreenCaptureRecorder录屏写文件(ArkTS)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/using-avscreencapture-arkts)**

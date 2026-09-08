@@ -1,2 +1,0 @@
-* **[Configuration：高效实现定制功能](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/remote-communication-customconfig)**
-* **[拦截器：更丰富、更高阶的定制能力](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/remote-communication-interceptconfig)**

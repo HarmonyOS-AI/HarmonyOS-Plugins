@@ -1,1 +1,0 @@
-Access Token的有效时长是1个小时，Refresh Token的有效时长是180天。

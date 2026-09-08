@@ -1,2 +1,0 @@
-* **[发送语音播报消息](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/push-send-extend-noti)**
-* **[撤回语音播报消息](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/push-revoke-extend-noti)**

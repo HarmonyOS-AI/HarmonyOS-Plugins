@@ -1,2 +1,0 @@
-* **[使用Image\_NativeModule完成图片编码](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/image-packer-c)**
-* **[使用Image\_NativeModule完成多图对象编码](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/image-packer-picture-c)**

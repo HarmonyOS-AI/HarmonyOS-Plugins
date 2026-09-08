@@ -1,1 +1,0 @@
-* **[怎么获取layeredDrawableDescriptor对象信息？](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/ui-design-faq1)**

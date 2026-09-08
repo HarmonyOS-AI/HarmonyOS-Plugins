@@ -1,3 +1,0 @@
-* **[展示数字商品](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/store-iap-distribute-query)**
-* **[购买数字商品](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/store-iap-distribute-purchase)**
-* **[发放数字商品权益](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/store-iap-distribute-delivering)**

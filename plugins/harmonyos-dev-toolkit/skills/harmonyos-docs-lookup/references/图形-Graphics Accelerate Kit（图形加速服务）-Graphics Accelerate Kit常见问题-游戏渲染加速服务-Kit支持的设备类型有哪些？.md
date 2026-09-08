@@ -1,1 +1,0 @@
-Graphics Accelerate Kit支持的硬件设备类型包括：华为手机、华为平板设备。同时，您可以通过调用[canIUse()](https://developer.huawei.com/consumer/cn/doc/harmonyos-references/init#caniuse)接口并传入"SystemCapability.GraphicsGame.RenderAccelerate"进行设备类型适配查询。

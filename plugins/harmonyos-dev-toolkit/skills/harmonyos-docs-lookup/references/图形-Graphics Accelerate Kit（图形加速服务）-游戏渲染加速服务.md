@@ -1,4 +1,0 @@
-* **[业务概述](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/graphics-accelerate-overview)**
-* **[超帧功能开发](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/graphics-accelerate-fg)**
-* **[ABR功能开发](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/graphics-accelerate-abr)**
-* **[OpenGTX功能开发](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/graphics-accelerate-opengtx)**

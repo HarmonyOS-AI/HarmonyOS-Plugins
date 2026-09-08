@@ -1,1 +1,0 @@
-游戏官方账号图标大小总和不超过35KB。若超过35KB，调用[unionLogin](https://developer.huawei.com/consumer/cn/doc/harmonyos-references/gameservice-gameplayer#section157848375136)接口时，会出现[1002000001](https://developer.huawei.com/consumer/cn/doc/harmonyos-references/gameservice-error-code#section132125911468)错误码。

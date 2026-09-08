@@ -3,7 +3,7 @@
 [HarmonyOS-AI/HarmonyOS-Plugins](https://github.com/HarmonyOS-AI/HarmonyOS-Plugins) 是面向 Claude Code、Codex、Qoder / Qoder CN、Cursor、TRAE CN / TraeCode IDE、TraeWork 和 OpenCode V1/V2 的 HarmonyOS 插件仓库。仓库根目录是 marketplace，每个 `plugins/<name>/` 子目录都是可独立安装、版本化和发布的插件组。
 
 仓库名称为 `HarmonyOS-Plugins`，marketplace 标识仍为 `harmonyos-ai`；安装命令中的
-`<plugin-id>@harmonyos-ai` 使用 marketplace 标识。当前包含两个插件组，共九个 Skill。
+`<plugin-id>@harmonyos-ai` 使用 marketplace 标识。当前包含三个插件组，共八个 Skill，以及一个官方知识 MCP 服务。
 
 ## 插件目录
 
@@ -14,11 +14,26 @@ HarmonyOS / ArkTS 开发工具包，包含以下共享 Skills：
 | Skill | 说明 |
 | --- | --- |
 | [arkts-rules](plugins/harmonyos-dev-toolkit/skills/arkts-rules/SKILL.md) | ArkTS 语言规则、编译约束和 TypeScript → ArkTS 迁移。 |
-| [harmonyos-docs-lookup](plugins/harmonyos-dev-toolkit/skills/harmonyos-docs-lookup/SKILL.md) | 检索内置的 HarmonyOS 官方开发文档。 |
-| [harmonyos-sdk-api-lookup](plugins/harmonyos-dev-toolkit/skills/harmonyos-sdk-api-lookup/SKILL.md) | 查询 SDK API、类型、权限和系统能力。 |
-| [harmonyos-live-preview](plugins/harmonyos-dev-toolkit/skills/harmonyos-live-preview/SKILL.md) | 在浏览器中预览和交互 ArkUI 页面，支持多设备、自定义尺寸及运行时调整，无需启动 DevEco Studio；仍需本地 HarmonyOS 工具链。 |
+| [deveco-cli](plugins/harmonyos-dev-toolkit/skills/deveco-cli/SKILL.md) | 使用 DevEco CLI 创建、构建、运行和调试应用，管理设备、模拟器及日志。需另行安装 CLI 与 HarmonyOS 工具链。 |
+
+通过 [.mcp.json](plugins/harmonyos-dev-toolkit/.mcp.json) 配置华为官方开发者知识服务 `KnowledgeMCP`，
+使用 HTTP 端点 `https://connect-api.cloud.huawei.com/api/developerknowledge/mcp`。
+服务提供 `searchDocuments` 文档搜索与 `getDocumentsById` 全文获取，配置依据
+[华为官方接入指南](https://developer.huawei.com/consumer/cn/doc/start/hosknowledgemcp-0000002664603963)。
+客户端需能访问该远程服务；当前公开配置无需填写 API Key。
+
+从 0.2.0 起移除 `harmonyos-docs-lookup`、`harmonyos-sdk-api-lookup` 及其内置文档和 SDK 数据，
+文档与 API 查询改用 `KnowledgeMCP`；离线时可使用 `devecocli docs` 查询本机已有文档。
 
 原插件 ID `harmony-skills` 已更名为 `harmonyos-dev-toolkit`。升级时需要使用新 ID 重新安装。
+
+### `harmonyos-ui-toolkit`
+
+面向 HarmonyOS 界面开发与验证的工具包，当前包含 [harmonyos-live-preview](plugins/harmonyos-ui-toolkit/skills/harmonyos-live-preview/SKILL.md)，
+保留预览 Skill 的完整脚本、参考资料和会话结束清理钩子，后续可扩展其他 UI 工具。在浏览器中预览和交互 ArkUI 页面，
+支持多设备、自定义尺寸、运行时调整及自动重建，无需启动 DevEco Studio；仍需本地 HarmonyOS 工具链。
+
+升级开发工具包后，需要预览能力的用户请另外安装 `harmonyos-ui-toolkit`，使用下方相同安装流程并替换插件 ID。
 
 ### `harmonyos-one-multi`
 
@@ -77,12 +92,12 @@ HarmonyOS-Plugins/
 
 OpenCode V1 保留按需加载工具；V2 向宿主原生 Skill 注册表注入名称、描述、正文和实际资源位置。
 两者都保留已有同名 MCP 配置；V2 还保留已有同名 Skill。MCP 不支持的字段会明确报错，避免静默丢失配置。
-当前两个插件组均只声明 Skills，未附带 MCP 服务器；MCP 生成、转换和安装能力供声明了
-`components.mcpServers` 的插件使用。
+`harmonyos-dev-toolkit` 同时声明 Skills 和 `components.mcpServers`，其余两个插件只声明 Skills。
+预览插件额外保留 Claude Code 的 `SessionEnd` 清理钩子；其他宿主可按 Skill 说明运行清理脚本。
 
 ## 安装
 
-以下以 `harmonyos-dev-toolkit` 为例，`harmonyos-one-multi` 使用相同流程。
+以下以 `harmonyos-dev-toolkit` 为例，`harmonyos-ui-toolkit` 和 `harmonyos-one-multi` 使用相同流程。
 本地安装、开发和打包示例均从仓库根目录执行；先克隆仓库：
 
 ```bash

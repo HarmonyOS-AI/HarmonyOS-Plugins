@@ -1,1 +1,0 @@
-* **[编译失败，该如何解决？](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/enterprisespace-faq-1)**

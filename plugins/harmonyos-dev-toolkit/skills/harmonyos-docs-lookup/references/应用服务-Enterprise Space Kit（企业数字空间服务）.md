@@ -1,5 +1,0 @@
-* **[Enterprise Space Kit简介](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/enterprisespace-introduction)**
-* **[开发准备](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/enterprisespace-preparations)**
-* **[空间互传](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/enterprisespace-spacedatatransfer-guide)**
-* **[空间管理](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/enterprisespace-spacemanager-guide)**
-* **[Enterprise Space Kit常见问题](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/enterprisespace-faq)**

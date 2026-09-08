@@ -1,7 +1,7 @@
 {
-  "name": "@harmonyos-ai/harmonyos-dev-toolkit",
-  "version": "0.2.0",
-  "description": "HarmonyOS and ArkTS development toolkit with language rules, DevEco CLI workflows, and official developer documentation through KnowledgeMCP.",
+  "name": "@harmonyos-ai/harmonyos-ui-toolkit",
+  "version": "0.1.0",
+  "description": "HarmonyOS UI development tools for previewing, inspecting, and interacting with ArkUI pages across device sizes.",
   "type": "module",
   "exports": "./opencode/plugin.js",
   "files": [
@@ -11,23 +11,21 @@
     ".qoder-plugin",
     ".cursor-plugin",
     ".mcp.json",
-    "./skills/",
-    "./.mcp.json"
+    "./skills/"
   ],
   "keywords": [
     "harmonyos",
     "arkts",
     "arkui",
-    "ohos",
-    "ets",
-    "skills",
-    "deveco-cli",
-    "mcp"
+    "live-preview",
+    "hot-reload",
+    "multi-device",
+    "ui-toolkit"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HarmonyOS-AI/HarmonyOS-Plugins.git",
-    "directory": "plugins/harmonyos-dev-toolkit"
+    "directory": "plugins/harmonyos-ui-toolkit"
   },
   "dependencies": {
     "@opencode-ai/plugin": "^1.14.0",

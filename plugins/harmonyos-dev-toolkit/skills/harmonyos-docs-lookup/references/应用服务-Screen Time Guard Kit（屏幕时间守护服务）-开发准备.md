@@ -1,2 +1,0 @@
-* **[配置签名](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/screentimeguard-app-signature)**
-* **[受限ACL权限申请](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/screentimeguard-permission-application)**

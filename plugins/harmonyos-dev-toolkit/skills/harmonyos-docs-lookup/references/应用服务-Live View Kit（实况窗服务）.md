@@ -1,5 +1,0 @@
-* **[Live View Kit简介](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/liveview-introduction)**
-* **[实况窗设计规范](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/liveview-design-formula)**
-* **[开发准备](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/liveview-preparations)**
-* **[开发实况窗场景](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/liveview-scenes)**
-* **[Live View Kit常见问题](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/liveview-faq)**

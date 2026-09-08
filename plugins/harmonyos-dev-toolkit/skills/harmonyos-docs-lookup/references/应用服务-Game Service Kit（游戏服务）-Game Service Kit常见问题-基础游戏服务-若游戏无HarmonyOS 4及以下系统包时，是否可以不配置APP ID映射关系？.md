@@ -1,3 +1,0 @@
-不可以。
-
-在[配置APP ID映射关系](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/gameservice-gameplayer-huawei#zh-cn_topic_0000002385861065_section3907114313255)时，请先创建草稿态的HarmonyOS 4及以下游戏，再与HarmonyOS 5.0及以上游戏进行关联。

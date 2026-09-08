@@ -1,3 +1,0 @@
-开发者接入用户身份验证服务后，可登录[AppGallery Connect](https://developer.huawei.com/consumer/cn/service/josp/agc/index.html)，在“鸿蒙支付服务 > 身份验证服务”菜单的“实名信息验证服务”、“人脸核身实人验证服务”页签下的“调用记录”查看（近7日）用户信息验证、授权相关调用记录。
-
-![](https://contentcenter-vali-drcn.dbankcdn.cn/pvt_2/DeveloperAlliance_scene_100_1/17/v3/t0tw77m3Rue-Facei-nJWA/zh-cn_image_0000002419610332.png?HW-CC-KV=V1&HW-CC-Date=20260414T032148Z&HW-CC-Expire=86400&HW-CC-Sign=66D0F0EE2FBC2FC18DF36D022083F4E466ADA7BC82C054B37E1E0A13FD144693 "点击放大")

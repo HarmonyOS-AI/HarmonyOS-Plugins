@@ -1,1 +1,0 @@
-没有，获取当前位置的经纬度可参考[获取当前位置经纬度](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/weather-service-getweather#section546501255)。

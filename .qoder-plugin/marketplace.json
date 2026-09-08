@@ -9,7 +9,7 @@
     {
       "name": "harmonyos-dev-toolkit",
       "source": "./plugins/harmonyos-dev-toolkit",
-      "description": "HarmonyOS and ArkTS development toolkit with language rules, official documentation lookup, SDK API lookup, and zero-DevEco live UI preview.",
+      "description": "HarmonyOS and ArkTS development toolkit with language rules, DevEco CLI workflows, and official developer documentation through KnowledgeMCP.",
       "category": "development",
       "tags": [
         "harmonyos",
@@ -18,8 +18,8 @@
         "ohos",
         "ets",
         "skills",
-        "live-preview",
-        "hot-reload"
+        "deveco-cli",
+        "mcp"
       ]
     },
     {
@@ -36,6 +36,21 @@
         "flutter",
         "foldable",
         "responsive-layout"
+      ]
+    },
+    {
+      "name": "harmonyos-ui-toolkit",
+      "source": "./plugins/harmonyos-ui-toolkit",
+      "description": "HarmonyOS UI development tools for previewing, inspecting, and interacting with ArkUI pages across device sizes.",
+      "category": "development",
+      "tags": [
+        "harmonyos",
+        "arkts",
+        "arkui",
+        "live-preview",
+        "hot-reload",
+        "multi-device",
+        "ui-toolkit"
       ]
     }
   ]

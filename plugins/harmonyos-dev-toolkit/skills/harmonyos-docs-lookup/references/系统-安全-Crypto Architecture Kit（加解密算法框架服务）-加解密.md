@@ -1,3 +1,0 @@
-* **[加解密介绍](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/crypto-encryption-decryption-overview)**
-* **[加解密算法规格](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/crypto-encrypt-decrypt-spec)**
-* **[加解密开发指导](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/crypto-encrypt-decrypt-dev)**

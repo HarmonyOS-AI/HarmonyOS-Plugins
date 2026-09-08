@@ -1,1 +1,0 @@
-出现此现象时，优先排查接入意图框架的代码是否被混淆。接入意图框架的代码文件不可被混淆。关于混淆的详细内容请参考[应用代码混淆](https://developer.huawei.com/consumer/cn/doc/best-practices/bpta-app-code-ob#section13780943192313)。若排查后问题依然存在，请检查应用的业务代码是否有其他异常引发应用闪退。

@@ -1,1 +1,0 @@
-purchaseToken，purchaseOrderId最大长度不超过256。

@@ -1,1 +1,0 @@
-Access Token和Refresh Token的长度与其中编码的信息有关，目前来讲Access Token和Refresh Token的长度不会超过1024字符。

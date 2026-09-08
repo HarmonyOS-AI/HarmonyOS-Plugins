@@ -1,3 +1,0 @@
-* **[使用Image\_NativeModule完成图片解码](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/image-source-c)**
-* **[使用Image\_NativeModule完成多图对象解码](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/image-source-picture-c)**
-* **[申请图片解码内存(C/C++)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/image-allocator-type-c)**

@@ -1,3 +1,0 @@
-* **[使用ImageSource完成图片解码](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/image-decoding)**
-* **[使用ImageSource完成多图对象解码](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/image-picture-decoding)**
-* **[图片解码内存优化(ArkTS)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/image-allocator-type)**

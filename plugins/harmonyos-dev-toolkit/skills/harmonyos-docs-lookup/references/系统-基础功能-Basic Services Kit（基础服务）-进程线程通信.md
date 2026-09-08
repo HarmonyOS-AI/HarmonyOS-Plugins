@@ -1,2 +1,0 @@
-* **[使用公共事件进行进程间通信](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/common-event-communication)**
-* **[使用Emitter进行线程间通信](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/itc-with-emitter)**

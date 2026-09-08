@@ -1,3 +1,0 @@
-* **[Sensor Service Kit开发简介](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/sensorservice-kit-intro)**
-* **[传感器](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/sensor)**
-* **[振动](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/vibrator)**

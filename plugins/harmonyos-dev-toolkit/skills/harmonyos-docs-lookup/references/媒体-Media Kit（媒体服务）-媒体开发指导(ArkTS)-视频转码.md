@@ -1,3 +1,0 @@
-* **[使用AVTranscoder实现视频转码(ArkTS)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/using-avtranscoder-for-transcodering)**
-* **[创建异步线程执行AVTranscoder视频转码(ArkTS)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/avtranscoder-practice)**
-* **[转码常见问题](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/avtranscoder-faq)**

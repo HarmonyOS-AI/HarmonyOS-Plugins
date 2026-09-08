@@ -1,3 +1,0 @@
-* **[HiDebug能力概述](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/hidebug-guidelines)**
-* **[HiDebug接口使用示例(ArkTS)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/hidebug-guidelines-arkts)**
-* **[HiDebug接口使用示例(C/C++)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/hidebug-guidelines-ndk)**

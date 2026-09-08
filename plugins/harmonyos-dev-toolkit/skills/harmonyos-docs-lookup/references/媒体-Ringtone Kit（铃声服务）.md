@@ -1,2 +1,0 @@
-* **[Ringtone Kit简介](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/ringtone-introduction)**
-* **[设置铃声](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/ringtone-preparations)**

@@ -1,1 +1,0 @@
-* **[压缩与解压](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/deflate-and-inflate)**

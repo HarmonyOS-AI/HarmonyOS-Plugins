@@ -1,3 +1,0 @@
-可以，支持仅接入下载ExtensionAbility。
-
-但建议在应用进入前台时，通过[removeAllAssetDownloadTasks](https://developer.huawei.com/consumer/cn/doc/harmonyos-references/graphics-accelerate-assetdownloadmanager#zh-cn_topic_0000002214513333_zh-cn_topic_0000002137922672_section2809432393)移除系统中的所有下载任务，对于已完成下载的任务可以复用，避免重复下载。对于未完成下载的任务建议使用应用自身下载器进行重新下载。

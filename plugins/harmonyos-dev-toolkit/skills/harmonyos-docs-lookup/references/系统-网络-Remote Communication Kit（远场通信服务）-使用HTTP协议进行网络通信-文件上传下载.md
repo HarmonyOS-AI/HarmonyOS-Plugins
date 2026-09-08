@@ -1,2 +1,0 @@
-* **[快速实现上传下载](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/remote-communication-filetransferfast)**
-* **[实现请求暂停、恢复与断点续传](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/remote-communication-pauseresume)**

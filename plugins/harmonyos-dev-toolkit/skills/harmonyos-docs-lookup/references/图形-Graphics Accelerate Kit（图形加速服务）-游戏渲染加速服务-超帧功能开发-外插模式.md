@@ -1,3 +1,0 @@
-* **[概述](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/graphics-accelerate-fg-extrapolation-overview)**
-* **[OpenGL ES平台](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/graphics-accelerate-fg-extrapolation-gles)**
-* **[Vulkan平台](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/graphics-accelerate-fg-extrapolation-vulkan)**

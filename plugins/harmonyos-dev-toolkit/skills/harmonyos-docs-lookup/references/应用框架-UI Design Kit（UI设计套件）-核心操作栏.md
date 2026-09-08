@@ -1,2 +1,0 @@
-* **[设置有主按钮的组件](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/ui-design-actionbar-main-buttons)**
-* **[设置无主按钮的组件](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/ui-design-actionbar-without-master-button)**

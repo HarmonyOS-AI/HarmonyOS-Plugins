@@ -1,3 +1,0 @@
-* **[从OpenSL ES切换到OHAudio(C/C++)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/replace-opensles-by-ohaudio)**
-* **[使用OpenSL ES开发音频播放功能(C/C++)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/using-opensl-es-for-playback)**
-* **[使用OpenSL ES开发音频录制功能(C/C++)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/using-opensl-es-for-recording)**

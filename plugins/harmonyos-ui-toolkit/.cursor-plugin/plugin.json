@@ -1,0 +1,21 @@
+{
+  "name": "harmonyos-ui-toolkit",
+  "version": "0.1.0",
+  "description": "HarmonyOS UI development tools for previewing, inspecting, and interacting with ArkUI pages across device sizes.",
+  "author": {
+    "name": "HarmonyOS-AI",
+    "url": "https://github.com/HarmonyOS-AI"
+  },
+  "homepage": "https://github.com/HarmonyOS-AI/HarmonyOS-Plugins",
+  "repository": "https://github.com/HarmonyOS-AI/HarmonyOS-Plugins",
+  "keywords": [
+    "harmonyos",
+    "arkts",
+    "arkui",
+    "live-preview",
+    "hot-reload",
+    "multi-device",
+    "ui-toolkit"
+  ],
+  "skills": "./skills/"
+}

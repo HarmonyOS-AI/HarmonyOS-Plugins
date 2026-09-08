@@ -1,1 +1,0 @@
-输出不需要，仅输入需要通过OH\_NativeBuffer创建。

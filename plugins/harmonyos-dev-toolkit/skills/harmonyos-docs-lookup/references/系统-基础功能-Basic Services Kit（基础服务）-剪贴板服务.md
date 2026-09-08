@@ -1,4 +1,0 @@
-* **[申请访问剪贴板权限](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/get-pastedata-permission-guidelines)**
-* **[使用剪贴板进行复制粘贴](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/use-pasteboard-to-copy-and-paste)**
-* **[使用剪贴板进行复制粘贴 (C/C++)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/native-use-pasteboard)**
-* **[使用剪贴板进行延迟复制粘贴](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/pasteboard-time-lapse-copy-and-paste)**

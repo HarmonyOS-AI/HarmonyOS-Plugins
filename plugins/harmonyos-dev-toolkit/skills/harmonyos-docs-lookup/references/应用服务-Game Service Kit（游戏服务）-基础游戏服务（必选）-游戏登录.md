@@ -1,4 +1,0 @@
-* **[概述](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/gameservice-gameplayer-introduction)**
-* **[网络游戏登录](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/gameservice-gameplayer-network)**
-* **[单机游戏登录](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/gameservice-single-access)**
-* **[开发后自检](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/gameservice-check)**

@@ -1,2 +1,0 @@
-* **[开发者自验证](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/self-verification)**
-* **[端到端验证](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/e2e-verification)**

@@ -1,1 +1,0 @@
-* **[使用AVTranscoder实现视频转码(C/C++)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/using-ndk-avtranscoder-for-transcodering)**

@@ -1,5 +1,0 @@
-* **[Network Kit简介](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/net-mgmt-overview)**
-* **[Network Kit术语](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/network-terminology)**
-* **[访问网络](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/network-kit-data-transmission)**
-* **[连接网络](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/network-kit-network-connecttion)**
-* **[管理网络](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/network-kit-network-management)**

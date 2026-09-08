@@ -1,6 +1,0 @@
-* **[Vision Kit简介](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/vision-introduction)**
-* **[人脸活体检测](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/vision-interactiveliveness)**
-* **[卡证识别](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/vision-cardrecognition)**
-* **[文档扫描](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/vision-documentscanner)**
-* **[AI识图](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/vision-imageanalyzer)**
-* **[个人数据处理说明](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/visionkit-personal-data)**

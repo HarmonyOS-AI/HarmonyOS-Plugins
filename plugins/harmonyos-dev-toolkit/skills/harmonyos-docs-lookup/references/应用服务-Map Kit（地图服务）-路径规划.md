@@ -1,3 +1,0 @@
-* **[出行路线规划](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/map-navi-routes)**
-* **[批量算路](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/map-navi-matrix)**
-* **[轨迹绑路](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/map-navi-snap)**

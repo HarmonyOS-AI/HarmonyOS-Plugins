@@ -1,1 +1,0 @@
-可以，API密钥是开发者级别的配置，可以用于HarmonyOS元服务、HarmonyOS应用等。

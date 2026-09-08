@@ -1,1 +1,0 @@
-不会，除非开发者自己修改，修改方法请参考[修改数字商品](https://developer.huawei.com/consumer/cn/doc/app/revise-digital-products-0000001959074889)。

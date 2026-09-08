@@ -1,1 +1,0 @@
-是的，现在华为开发者联盟上要求配置的就是SHA256指纹，具体请参考[配置公钥指纹](https://developer.huawei.com/consumer/cn/doc/app/agc-help-cert-fingerprint-0000002278002933)。

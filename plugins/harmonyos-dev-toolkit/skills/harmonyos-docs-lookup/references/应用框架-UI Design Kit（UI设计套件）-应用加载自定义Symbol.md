@@ -1,1 +1,0 @@
-* **[资源注册](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/ui-design-custom-symbol-res-register)**

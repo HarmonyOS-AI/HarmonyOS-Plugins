@@ -1,5 +1,0 @@
-没有通过加载内存镜像启动的游戏，用户在游戏期间来电，来电提醒悬浮在手机正上方。
-
-通过加载内存镜像启动的游戏，用户在游戏期间来电，游戏画面会被切至后台，当前来电提醒会被全屏显示，这影响了用户的游戏体验。
-
-开发者应在onWindowStageCreate生命周期中调用[setWindowSystemBarEnable](https://developer.huawei.com/consumer/cn/doc/harmonyos-references/arkts-apis-window-window#setwindowsystembarenable9)，隐藏状态栏和导航栏，确保快速启动的游戏在来电提醒时悬浮在手机正上方。

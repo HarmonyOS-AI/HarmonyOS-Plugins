@@ -1,1 +1,0 @@
-* **[秒级启动](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/graphics-accelerate-mirror-launch)**

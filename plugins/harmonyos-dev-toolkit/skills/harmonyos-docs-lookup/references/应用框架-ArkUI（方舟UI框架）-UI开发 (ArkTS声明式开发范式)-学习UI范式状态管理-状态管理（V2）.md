@@ -1,3 +1,0 @@
-* **[管理组件拥有的状态](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-v2-manage-component-state)**
-* **[管理数据对象的状态](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-v2-manage-data-object-state)**
-* **[管理应用拥有的状态](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-v2-manage-application-state)**

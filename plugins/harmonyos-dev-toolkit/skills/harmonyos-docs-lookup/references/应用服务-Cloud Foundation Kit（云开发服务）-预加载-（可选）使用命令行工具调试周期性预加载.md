@@ -1,2 +1,0 @@
-* **[调试周期性预加载](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/cloudfoundation-commandtool-debug)**
-* **[错误码](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/cloudfoundation-commandtool-errorcode)**

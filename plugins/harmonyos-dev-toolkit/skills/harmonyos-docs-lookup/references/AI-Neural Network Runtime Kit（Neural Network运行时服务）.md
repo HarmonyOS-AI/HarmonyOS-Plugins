@@ -1,2 +1,0 @@
-* **[Neural Network Runtime Kit简介](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/neural-network-runtime-kit-introduction)**
-* **[Neural Network Runtime对接AI推理框架开发指导](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/neural-network-runtime-guidelines)**

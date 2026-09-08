@@ -1,1 +1,0 @@
-做了调整，具体调整规则请参见[换算规则](https://developer.huawei.com/consumer/cn/doc/distribution/app/agc-help-conversion-rule-description-0000001146614687)。

@@ -1,1 +1,0 @@
-Screen Time Guard Kit中的应用选择页功能支持拉起具有不同功能的应用页面。

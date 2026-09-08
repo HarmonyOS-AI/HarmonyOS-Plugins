@@ -1,2 +1,0 @@
-* **[基本准备工作](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/applinking-basic-preparation)**
-* **[开通App Linking服务](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/applinking-enable-applinking)**

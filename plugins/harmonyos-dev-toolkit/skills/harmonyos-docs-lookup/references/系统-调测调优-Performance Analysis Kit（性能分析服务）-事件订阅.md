@@ -1,4 +1,0 @@
-* **[HiAppEvent介绍](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/hiappevent-intro)**
-* **[使用HiAppEvent订阅事件](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/event-subscription)**
-* **[HiAppEvent常见问题](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/hiappevent-faq)**
-* **[使用FaultLogExtensionAbility订阅事件](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/fault-log-extension-app-events-arkts)**

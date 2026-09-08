@@ -1,2 +1,0 @@
-* **[Mechanic Kit简介](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/mechanic-kit-intro)**
-* **[智能拍摄跟踪开发指南](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/camera-tracking-guide)**

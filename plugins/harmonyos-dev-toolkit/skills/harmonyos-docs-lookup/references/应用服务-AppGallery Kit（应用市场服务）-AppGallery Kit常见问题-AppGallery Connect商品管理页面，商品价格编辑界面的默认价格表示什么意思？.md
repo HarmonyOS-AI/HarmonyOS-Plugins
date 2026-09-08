@@ -1,1 +1,0 @@
-该默认价格在[AppGallery Connect](https://developer.huawei.com/consumer/cn/service/josp/agc/index.html)页面其他地方涉及商品价格展示时使用。

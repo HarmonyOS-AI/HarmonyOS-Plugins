@@ -1,3 +1,0 @@
-* **[播控特性简介](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/distributed-playback-overview)**
-* **[投播组件开发指导](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/distributed-playback-guide)**
-* **[扩展屏投播开发指导](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/avsession-extended-screen)**

@@ -1,2 +1,0 @@
-* **[转换指定页面或指定区域为图片](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/pdf-get-img)**
-* **[转换整个PDF文档为图片](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/pdf-convert-img)**

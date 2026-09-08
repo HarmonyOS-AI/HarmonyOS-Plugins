@@ -1,1 +1,0 @@
-请检查[申请钥匙卡片](https://developer.huawei.com/consumer/cn/doc/harmonyos-references/wallet-rest-api-carkey#section129511211195)的请求参数的serialNumber和organizationPassId字段是否都是唯一的。

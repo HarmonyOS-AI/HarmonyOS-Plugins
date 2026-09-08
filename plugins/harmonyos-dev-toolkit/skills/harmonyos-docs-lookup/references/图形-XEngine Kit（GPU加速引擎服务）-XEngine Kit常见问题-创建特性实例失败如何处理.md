@@ -1,2 +1,0 @@
-1. 请使用查询接口[HMS\_XEG\_GetString](https://developer.huawei.com/consumer/cn/doc/harmonyos-references/xengine-kit-xengine#hms_xeg_getstring)或[HMS\_XEG\_EnumerateDeviceExtensionProperties](https://developer.huawei.com/consumer/cn/doc/harmonyos-references/xengine-kit-xengine#hms_xeg_enumeratedeviceextensionproperties)确认XEngine是否支持该扩展。
-2. 如果查询支持该扩展，请[联系我们](https://developer.huawei.com/consumer/cn/support/feedback/#/)。

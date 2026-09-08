@@ -1,4 +1,0 @@
-* **[ArkTS运行时概述](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-runtime-overview)**
-* **[GC垃圾回收](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/gc-introduction)**
-* **[ArkTS模块化](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-runtime-module)**
-* **[ArkTS运行时常见问题](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts-runtime-faq)**

@@ -1,1 +1,0 @@
-* **[应用间配置共享 (ArkTS)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/share-config)**

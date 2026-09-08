@@ -1,4 +1,0 @@
-* **[概述](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/gestures-share-overview)**
-* **[打开设备侧隔空传送开关](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/gestures-share-open)**
-* **[可信任设备间传输](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/gestures-share-trust)**
-* **[分享App Linking直达应用](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/gestures-share-scenes)**

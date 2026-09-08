@@ -1,3 +1,0 @@
-* **[视频缩放](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/generate-super-resolution-video)**
-* **[视频动态元数据生成](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/generate-video-dynamic-metadata)**
-* **[视频色彩空间转换](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/video-csc)**

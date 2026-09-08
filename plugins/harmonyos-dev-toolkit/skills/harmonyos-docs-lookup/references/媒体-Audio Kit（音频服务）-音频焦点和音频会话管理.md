@@ -1,3 +1,0 @@
-* **[音频焦点介绍](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/audio-playback-concurrency)**
-* **[音频会话管理](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/audio-session-management)**
-* **[使用OHAudio开发音频会话功能(C/C++)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/using-ohaudio-for-session)**

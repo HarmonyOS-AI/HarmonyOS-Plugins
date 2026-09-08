@@ -1,2 +1,0 @@
-* **[启动本地云函数](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/cloudfoundation-start-local-function)**
-* **[调用本地云函数](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/cloudfoundation-call-local-function)**

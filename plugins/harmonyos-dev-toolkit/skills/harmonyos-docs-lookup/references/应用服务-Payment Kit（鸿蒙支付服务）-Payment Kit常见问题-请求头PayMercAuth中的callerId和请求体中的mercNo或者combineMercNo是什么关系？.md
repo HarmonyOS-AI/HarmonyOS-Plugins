@@ -1,1 +1,0 @@
-callerId和mercNo或者combineMercNo都是请求发起方商户号。

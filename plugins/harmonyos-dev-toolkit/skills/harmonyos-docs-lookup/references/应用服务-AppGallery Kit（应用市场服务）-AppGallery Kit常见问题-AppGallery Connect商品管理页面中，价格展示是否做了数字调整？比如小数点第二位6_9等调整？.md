@@ -1,1 +1,0 @@
-做了调整，具体调整规则请参见[换算规则描述](https://developer.huawei.com/consumer/cn/doc/app/describe-0000001958955133)。

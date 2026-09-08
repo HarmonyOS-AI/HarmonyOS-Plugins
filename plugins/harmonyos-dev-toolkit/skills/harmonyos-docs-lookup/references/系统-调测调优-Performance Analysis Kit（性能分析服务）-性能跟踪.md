@@ -1,4 +1,0 @@
-* **[HiTraceMeter介绍](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/hitracemeter-intro)**
-* **[使用HiTraceMeter跟踪性能（ArkTS）](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/hitracemeter-guidelines-arkts)**
-* **[使用HiTraceMeter跟踪性能（C/C++）](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/hitracemeter-guidelines-ndk)**
-* **[查看HiTraceMeter日志](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/hitracemeter-view)**

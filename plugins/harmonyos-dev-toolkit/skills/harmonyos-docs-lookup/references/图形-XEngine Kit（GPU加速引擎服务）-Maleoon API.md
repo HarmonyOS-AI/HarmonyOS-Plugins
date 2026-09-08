@@ -1,1 +1,0 @@
-* **[高性能GPU排序](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/xengine-kit-high-performance-gpu-sorting)**

@@ -1,8 +1,0 @@
-* **[Core Vision Kit简介](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/core-vision-introduction)**
-* **[通用文字识别](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/core-vision-text-recognition)**
-* **[人脸检测](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/core-vision-face-detector)**
-* **[人脸比对](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/core-vision-face-comparator)**
-* **[主体分割](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/core-vision-subject-segmentation)**
-* **[多目标识别](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/core-vision-object-detection)**
-* **[骨骼点检测](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/core-vision-skeleton-detection)**
-* **[个人数据处理说明](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/corevisionkit-personal-data)**

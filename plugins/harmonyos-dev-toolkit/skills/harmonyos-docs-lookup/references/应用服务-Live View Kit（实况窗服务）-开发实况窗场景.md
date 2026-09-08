@@ -1,3 +1,0 @@
-* **[开发实况窗须知](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/liveview-scenes-intro)**
-* **[构建本地实况窗](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/liveview-create-locally)**
-* **[通过Push Kit更新实况窗](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/liveview-update-by-push)**

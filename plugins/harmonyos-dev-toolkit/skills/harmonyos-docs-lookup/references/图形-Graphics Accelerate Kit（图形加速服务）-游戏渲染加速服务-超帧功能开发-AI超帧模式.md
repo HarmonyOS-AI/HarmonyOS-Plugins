@@ -1,2 +1,0 @@
-* **[概述](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/graphics-accelerate-fg-ai-overview)**
-* **[Vulkan平台](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/graphics-accelerate-fg-ai-vulkan)**

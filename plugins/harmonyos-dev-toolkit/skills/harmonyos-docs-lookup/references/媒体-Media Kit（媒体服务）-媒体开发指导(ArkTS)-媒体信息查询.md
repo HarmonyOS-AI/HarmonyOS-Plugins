@@ -1,2 +1,0 @@
-* **[使用AVMetadataExtractor提取音视频元数据信息(ArkTS)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/avmetadataextractor)**
-* **[使用AVImageGenerator提取视频指定时间图像(ArkTS)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/avimagegenerator)**

@@ -1,4 +1,0 @@
-* **[Audio Vivid能力介绍](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/audiovivid-intro)**
-* **[Audio Vivid解封装](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/audiovivid-avdemuxer)**
-* **[Audio Vivid解码](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/audiovivid-audiodecoder)**
-* **[Audio Vivid播放](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/audiovivid-audiorenderer)**

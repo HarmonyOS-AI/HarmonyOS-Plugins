@@ -1,10 +1,10 @@
 {
   "name": "harmonyos-dev-toolkit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "displayName": "HarmonyOS Dev Toolkit",
-  "description": "HarmonyOS and ArkTS development toolkit with language rules, official documentation lookup, SDK API lookup, and zero-DevEco live UI preview.",
-  "shortDescription": "ArkTS rules, HarmonyOS docs and API lookup, plus live ArkUI preview",
-  "longDescription": "A HarmonyOS and ArkTS development toolkit with compilable ArkTS language rules, fast lookup across the bundled official documentation and SDK API references, and a zero-DevEco live preview for rendering and interacting with ArkUI pages in a browser.",
+  "description": "HarmonyOS and ArkTS development toolkit with language rules, DevEco CLI workflows, and official developer documentation through KnowledgeMCP.",
+  "shortDescription": "ArkTS rules, DevEco CLI workflows, and official KnowledgeMCP",
+  "longDescription": "Develop HarmonyOS applications with compilable ArkTS language rules and DevEco CLI guidance for project creation, builds, deployment, devices, emulators, and logs. Query current official development guides and API references through Huawei KnowledgeMCP.",
   "author": {
     "name": "HarmonyOS-AI",
     "url": "https://github.com/HarmonyOS-AI"
@@ -18,8 +18,8 @@
     "ohos",
     "ets",
     "skills",
-    "live-preview",
-    "hot-reload"
+    "deveco-cli",
+    "mcp"
   ],
   "category": "Developer Tools",
   "capabilities": [
@@ -29,12 +29,13 @@
   ],
   "defaultPrompt": [
     "Check this ArkTS code against HarmonyOS language rules.",
-    "Look up a HarmonyOS SDK API and its permissions.",
-    "Preview this ArkUI page live in the browser."
+    "Build and run this HarmonyOS application with DevEco CLI.",
+    "Look up a HarmonyOS API and its permissions using KnowledgeMCP."
   ],
   "brandColor": "#CE0E2D",
   "components": {
-    "skills": "./skills/"
+    "skills": "./skills/",
+    "mcpServers": "./.mcp.json"
   },
   "opencode": {
     "packageName": "@harmonyos-ai/harmonyos-dev-toolkit",

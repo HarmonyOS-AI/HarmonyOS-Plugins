@@ -1,5 +1,0 @@
-* **[USB设备管理](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/devicemanager)**
-* **[USB控制传输](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/controltransfer)**
-* **[USB中断传输](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/interrupttransfer)**
-* **[USB批量传输](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/bulktransfer)**
-* **[USB实时传输](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/isochronoustransfer)**

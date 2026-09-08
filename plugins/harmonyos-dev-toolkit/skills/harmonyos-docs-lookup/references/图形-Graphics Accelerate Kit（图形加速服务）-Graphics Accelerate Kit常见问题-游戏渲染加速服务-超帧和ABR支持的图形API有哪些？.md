@@ -1,1 +1,0 @@
-目前超帧接口支持OpenGL ES和Vulkan图形API平台。ABR接口仅支持OpenGL ES图形API平台，暂不支持Vulkan平台。

@@ -1,2 +1,0 @@
-* **[坐标纠偏](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/map-convert-coordinate)**
-* **[距离计算](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/map-calculate-distance)**

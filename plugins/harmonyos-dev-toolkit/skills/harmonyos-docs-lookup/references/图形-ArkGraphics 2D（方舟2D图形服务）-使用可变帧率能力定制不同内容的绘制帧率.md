@@ -1,5 +1,0 @@
-* **[可变帧率简介](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/displaysync-overview)**
-* **[请求动画绘制帧率](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/displaysync-animation)**
-* **[请求UI绘制帧率](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/displaysync-ui)**
-* **[请求自绘制内容绘制帧率](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/displaysync-xcomponent)**
-* **[NativeDisplaySoloist开发指导 (C/C++)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/displaysoloist-native-guidelines)**

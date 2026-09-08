@@ -1,5 +1,0 @@
-* **[播放](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/media-playback-c)**
-* **[录制](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/media-recording-c)**
-* **[媒体信息查询](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/media-info-c)**
-* **[视频转码](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/media-transcoder-c)**
-* **[视频处理](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/videoprocessing-guidelines)**

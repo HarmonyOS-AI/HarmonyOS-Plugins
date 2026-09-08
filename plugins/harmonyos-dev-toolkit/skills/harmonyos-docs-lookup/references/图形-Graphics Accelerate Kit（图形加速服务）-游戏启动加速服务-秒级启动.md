@@ -1,3 +1,0 @@
-* **[业务概述](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/graphics-accelerate-launch-introduction)**
-* **[开发准备](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/graphics-accelerate-launch-prepare)**
-* **[实现游戏启动加速](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/graphics-accelerate-launch-development)**

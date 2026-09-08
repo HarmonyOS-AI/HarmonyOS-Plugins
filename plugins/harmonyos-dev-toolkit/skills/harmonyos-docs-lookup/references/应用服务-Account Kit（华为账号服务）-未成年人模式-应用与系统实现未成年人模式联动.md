@@ -1,4 +1,0 @@
-* **[应用与系统联动切换未成年人模式](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/account-system-minorsprotection)**
-* **[应用内开启未成年人模式](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/account-app-turn-on-minorsprotection)**
-* **[应用内关闭未成年人模式](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/account-app-turn-off-minorsprotection)**
-* **[应用内调整未成年人模式设置](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/account-password-minorsprotection)**

@@ -1,2 +1,0 @@
-* **[Contacts Kit简介](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/contacts-intro)**
-* **[使用picker管理联系人](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/contacts-addcontactviaui)**

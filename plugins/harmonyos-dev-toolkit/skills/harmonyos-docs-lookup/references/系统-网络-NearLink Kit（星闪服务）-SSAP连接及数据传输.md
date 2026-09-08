@@ -1,2 +1,0 @@
-* **[SSAP服务端](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/nearlink-ssap-server-connect)**
-* **[SSAP客户端](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/nearlink-ssap-client-connect)**

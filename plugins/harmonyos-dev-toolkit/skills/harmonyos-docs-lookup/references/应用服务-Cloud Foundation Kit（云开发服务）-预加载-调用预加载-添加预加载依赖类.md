@@ -1,2 +1,0 @@
-* **[预加载工具类](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/cloudfoundation-prefetch-tool-class)**
-* **[预加载实现类](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/cloudfoundation-prefetch-implementation-class)**

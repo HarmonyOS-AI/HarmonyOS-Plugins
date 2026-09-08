@@ -1,1 +1,0 @@
-GET请求需要对path url进行签名，例如[查询支付订单](https://developer.huawei.com/consumer/cn/doc/harmonyos-references/payment-sys-query-order)的待签名内容是：“/api/v2/aggr/transactions/orders/{sysTransOrderNo}”。

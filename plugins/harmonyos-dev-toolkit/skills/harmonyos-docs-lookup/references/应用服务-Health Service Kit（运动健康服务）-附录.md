@@ -1,1 +1,0 @@
-* **[标志使用规范](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/health-logo-usage-regulations)**

@@ -1,4 +1,0 @@
-* **[使用PixelMap完成图像变换](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/image-transformation)**
-* **[使用PixelMap完成位图操作](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/image-pixelmap-operation)**
-* **[使用VideoProcessingEngine完成图片超分](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/image-processing-arkts)**
-* **[编辑图片EXIF信息](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/image-tool)**

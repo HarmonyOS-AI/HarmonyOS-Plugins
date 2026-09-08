@@ -1,4 +1,0 @@
-* **[开发适用USB协议的设备驱动](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/usb-ddk-guidelines)**
-* **[开发适用HID协议的设备驱动](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/hid-ddk-guidelines)**
-* **[开发适用串口协议的设备驱动](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/usb-serial-ddk-guidelines)**
-* **[开发使用SCSI协议的设备驱动](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/scsi-peripheral-ddk-guidelines)**

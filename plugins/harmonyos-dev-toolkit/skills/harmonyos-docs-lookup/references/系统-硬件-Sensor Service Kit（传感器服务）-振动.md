@@ -1,3 +1,0 @@
-* **[振动开发概述](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/vibrator-overview)**
-* **[振动开发指导(ArkTS)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/vibrator-guidelines)**
-* **[振动开发指导(C/C++)](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/vibrator-guidelines-capi)**

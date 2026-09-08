@@ -1,3 +1,0 @@
-* **[数据防泄漏服务简介](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/dlp-overview)**
-* **[数据防泄漏服务开发指导](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/dlp-guidelines)**
-* **[适配加密分享](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/dlp-adapting-encrypted-sharing)**

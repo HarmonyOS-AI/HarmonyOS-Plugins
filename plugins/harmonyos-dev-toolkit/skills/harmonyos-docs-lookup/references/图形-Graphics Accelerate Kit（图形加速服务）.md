@@ -1,5 +1,0 @@
-* **[Graphics Accelerate Kit简介](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/graphics-accelerate-introduction)**
-* **[游戏渲染加速服务](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/graphics-accelerate-rendering)**
-* **[游戏资源加速服务](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/graphics-accelerate-assetdownload)**
-* **[游戏启动加速服务](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/graphics-accelerate-launchacceleration-service)**
-* **[Graphics Accelerate Kit常见问题](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/graphics-accelerate-faq)**

@@ -1,2 +1,0 @@
-* **[POI方案](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/intents-poi-scheme)**
-* **[Beacon（蓝牙信标设备）方案](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/intents-beacon-scheme)**

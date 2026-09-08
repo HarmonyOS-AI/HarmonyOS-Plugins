@@ -1,2 +1,0 @@
-* **[JS Crash（进程崩溃）检测](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/jscrash-guidelines)**
-* **[Cpp Crash（进程崩溃）检测](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/cppcrash-guidelines)**

@@ -1,4 +1,0 @@
-* **[AVCodec Kit简介](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/avcodec-kit-intro)**
-* **[AVCodec支持的格式](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/avcodec-support-formats)**
-* **[音视频编解码](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/audio-video-codec)**
-* **[媒体数据封装与解析](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/file-muxing-demuxing)**

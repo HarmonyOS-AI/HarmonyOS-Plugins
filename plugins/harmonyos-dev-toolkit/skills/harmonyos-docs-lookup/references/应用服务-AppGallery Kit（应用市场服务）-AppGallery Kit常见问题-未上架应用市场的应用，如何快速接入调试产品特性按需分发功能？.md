@@ -1,1 +1,0 @@
-推荐使用[邀请测试](https://developer.huawei.com/consumer/cn/doc/app/agc-help-invite-test-0000002270829393)。

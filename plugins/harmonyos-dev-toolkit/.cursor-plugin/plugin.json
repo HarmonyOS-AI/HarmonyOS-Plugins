@@ -1,7 +1,7 @@
 {
   "name": "harmonyos-dev-toolkit",
-  "version": "0.1.0",
-  "description": "HarmonyOS and ArkTS development toolkit with language rules, official documentation lookup, SDK API lookup, and zero-DevEco live UI preview.",
+  "version": "0.2.0",
+  "description": "HarmonyOS and ArkTS development toolkit with language rules, DevEco CLI workflows, and official developer documentation through KnowledgeMCP.",
   "author": {
     "name": "HarmonyOS-AI",
     "url": "https://github.com/HarmonyOS-AI"
@@ -15,8 +15,9 @@
     "ohos",
     "ets",
     "skills",
-    "live-preview",
-    "hot-reload"
+    "deveco-cli",
+    "mcp"
   ],
-  "skills": "./skills/"
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json"
 }

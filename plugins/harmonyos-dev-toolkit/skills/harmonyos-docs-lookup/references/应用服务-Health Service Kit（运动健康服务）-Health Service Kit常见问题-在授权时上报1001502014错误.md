@@ -1,3 +1,0 @@
-确保授权请求参数中的数据类型已经在**Health Service Kit**卡片中申请相应的权限，申请步骤请参考[申请运动健康服务](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/health-apply)，数据类型对应的权限参考[权限说明](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/health-permission-description)。
-
-更多错误码请参考[ArkTS API错误码](https://developer.huawei.com/consumer/cn/doc/harmonyos-references/errorcode-healthservice)。

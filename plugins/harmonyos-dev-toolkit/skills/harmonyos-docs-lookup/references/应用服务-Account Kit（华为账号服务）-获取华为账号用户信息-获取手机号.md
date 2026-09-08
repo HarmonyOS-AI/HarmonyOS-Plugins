@@ -1,2 +1,0 @@
-* **[概述](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/account-get-phone-overview)**
-* **[快速验证](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/account-get-phonenumber)**
