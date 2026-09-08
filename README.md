@@ -1,6 +1,9 @@
-# HarmonyOS-AI Plugin Marketplace
+# HarmonyOS-Plugins
 
-面向 Claude Code、Codex、Qoder CN、Cursor、TRAE CN 和 OpenCode V1/V2 的 HarmonyOS 插件仓库。仓库根目录是 marketplace，每个 `plugins/<name>/` 子目录都是可独立安装、版本化和发布的插件组。
+[HarmonyOS-AI/HarmonyOS-Plugins](https://github.com/HarmonyOS-AI/HarmonyOS-Plugins) 是面向 Claude Code、Codex、Qoder / Qoder CN、Cursor、TRAE CN / TraeCode IDE、TraeWork 和 OpenCode V1/V2 的 HarmonyOS 插件仓库。仓库根目录是 marketplace，每个 `plugins/<name>/` 子目录都是可独立安装、版本化和发布的插件组。
+
+仓库名称为 `HarmonyOS-Plugins`，marketplace 标识仍为 `harmonyos-ai`；安装命令中的
+`<plugin-id>@harmonyos-ai` 使用 marketplace 标识。当前包含两个插件组，共九个 Skill。
 
 ## 插件目录
 
@@ -10,10 +13,10 @@ HarmonyOS / ArkTS 开发工具包，包含以下共享 Skills：
 
 | Skill | 说明 |
 | --- | --- |
-| `arkts-rules` | ArkTS 语言规则、编译约束和 TypeScript → ArkTS 迁移。 |
-| `harmonyos-docs-lookup` | 检索内置的 HarmonyOS 官方开发文档。 |
-| `harmonyos-sdk-api-lookup` | 查询 SDK API、类型、权限和系统能力。 |
-| `harmonyos-live-preview` | 在浏览器中预览和交互 ArkUI 页面，无需启动 DevEco Studio。 |
+| [arkts-rules](plugins/harmonyos-dev-toolkit/skills/arkts-rules/SKILL.md) | ArkTS 语言规则、编译约束和 TypeScript → ArkTS 迁移。 |
+| [harmonyos-docs-lookup](plugins/harmonyos-dev-toolkit/skills/harmonyos-docs-lookup/SKILL.md) | 检索内置的 HarmonyOS 官方开发文档。 |
+| [harmonyos-sdk-api-lookup](plugins/harmonyos-dev-toolkit/skills/harmonyos-sdk-api-lookup/SKILL.md) | 查询 SDK API、类型、权限和系统能力。 |
+| [harmonyos-live-preview](plugins/harmonyos-dev-toolkit/skills/harmonyos-live-preview/SKILL.md) | 在浏览器中预览和交互 ArkUI 页面，支持多设备、自定义尺寸及运行时调整，无需启动 DevEco Studio；仍需本地 HarmonyOS 工具链。 |
 
 原插件 ID `harmony-skills` 已更名为 `harmonyos-dev-toolkit`。升级时需要使用新 ID 重新安装。
 
@@ -22,7 +25,7 @@ HarmonyOS / ArkTS 开发工具包，包含以下共享 Skills：
 [HarmonyOS 一多适配插件](plugins/harmonyos-one-multi/README.md)，从 `hm-service-agent` 原样迁移，
 完整保留一多流程编排、ArkUI、相机、H5 和 Flutter 五个 Skill 的内容、运行脚本、模板与代码资产。
 原评测保存在 `evals/plugins/harmonyos-one-multi/`，通过逐文件 SHA-256 校验迁移内容一致。
-插件可独立安装，四个宿主的安装方式与下方示例相同，插件 ID 使用 `harmonyos-one-multi`。
+插件可独立安装，各宿主的安装方式与下方示例相同，插件 ID 使用 `harmonyos-one-multi`。
 
 ## 默认支持范围
 
@@ -74,10 +77,21 @@ HarmonyOS-Plugins/
 
 OpenCode V1 保留按需加载工具；V2 向宿主原生 Skill 注册表注入名称、描述、正文和实际资源位置。
 两者都保留已有同名 MCP 配置；V2 还保留已有同名 Skill。MCP 不支持的字段会明确报错，避免静默丢失配置。
+当前两个插件组均只声明 Skills，未附带 MCP 服务器；MCP 生成、转换和安装能力供声明了
+`components.mcpServers` 的插件使用。
 
 ## 安装
 
 以下以 `harmonyos-dev-toolkit` 为例，`harmonyos-one-multi` 使用相同流程。
+本地安装、开发和打包示例均从仓库根目录执行；先克隆仓库：
+
+```bash
+git clone https://github.com/HarmonyOS-AI/HarmonyOS-Plugins.git
+cd HarmonyOS-Plugins
+```
+
+示例中的 `/absolute/path/to/HarmonyOS-Plugins` 替换为实际克隆路径；通过远程 marketplace
+安装时无需先克隆仓库。依赖 SDK、模拟器或设备的 Skill 另需准备其说明中要求的工具链。
 
 ### Claude Code
 
@@ -116,7 +130,8 @@ qodercn plugins install ./plugins/harmonyos-dev-toolkit
 ```
 
 Qoder CN 的插件上传入口导入 `npm run plugins:pack` 生成的
-`dist/harmonyos-dev-toolkit-0.1.0/harmonyos-dev-toolkit-0.1.0.zip`。
+`dist/harmonyos-dev-toolkit-<version>/harmonyos-dev-toolkit-<version>.zip`，
+其中 `<version>` 取自插件的 `plugin.config.json`。
 ZIP 根目录直接包含 `.qoder-plugin/plugin.json`，无额外目录嵌套。
 Agent SDK 可继续将 `plugins/harmonyos-dev-toolkit` 的绝对路径作为 local plugin path。
 
@@ -199,7 +214,8 @@ V2 包导出 `{ id, setup }` 原生插件契约，直接注册 Skill 和 MCP，�
 
 ## 打包分发
 
-需要 Node.js、npm 和 Python 3.12+（可用 `PYTHON` 指定 Python 命令）。
+仓库维护与验证使用 Node.js 22+、npm 和 Python 3.12+。打包脚本和一多 Python 契约测试可用
+`PYTHON` 指定 Python 命令；跨宿主归档测试直接调用 `python3`，也需保证该命令可用。
 
 ```bash
 npm install
@@ -225,12 +241,16 @@ npm run plugins:pack -- harmonyos-dev-toolkit # 只选择插件，仍输出所�
 Skill 的用例、fixture 和 grader 放在镜像路径 `evals/plugins/<plugin>/skills/<skill>/`。评测可以
 依赖生产 Skill，生产 Skill 不得反向依赖 `evals/`。
 
-当前 `harmonyos-live-preview` 的确定性评测可以单独或整体运行：
+当前有五个评测目标：live-preview、一多插件迁移与独立加载，以及一多 workflow、UI、camera
+三个 Skill 的契约测试。可以单独运行 live-preview，也可以运行全部目标：
 
 ```bash
 npm run evals:live-preview
 npm run evals
 ```
+
+运行器递归发现 `evals/` 下的 `eval.config.json`，按路径排序并串行执行同目录的 `run.mjs`，
+任一目标失败即停止。目录规范和当前目标见 [评测说明](evals/README.md)。
 
 评测配置、用例和 grader 应提交版本控制；`.eval-runs/`、`.eval-cache/` 和生成报告属于运行产物，
 默认不提交。真实 HarmonyOS 工具链产生的工程与构建缓存继续放在被忽略的 `.skill-workspaces/`。
@@ -254,22 +274,24 @@ npm run plugins:create -- my-plugin \
 npm run plugins:sync
 ```
 
+修改 `marketplace.config.json` 或 `scripts/templates/` 后也需运行同步命令；生成的清单和适配器
+应随源配置一起提交。`plugins:pack` 会先同步全部插件，再打包选中的插件。
+
 ## 验证
 
 ```bash
-npm test
-npm run evals
 npm run test:all
-npm run plugins:validate
-python3 /Users/legend/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py \
-  plugins/harmonyos-dev-toolkit
-claude plugin validate plugins/harmonyos-dev-toolkit
-node --check plugins/harmonyos-dev-toolkit/opencode/plugin.js
 ```
 
-`npm test` 只运行 marketplace/manifest 的快速单元测试；`npm run evals` 运行各 Skill 的行为评测；
-`plugins:validate` 会检查插件名与目录一致性、版本格式、清单是否由公共配置同步生成、marketplace
-路径、Skill 入口、MCP JSON、Skill 元数据及全部适配器模板。跨宿主测试还会验证 Skills-only、MCP-only、混合插件创建、V1/V2 加载、TRAE 安装冲突和实际 ZIP/tgz 内容。
+`test:all` 依次执行以下检查，也可单独运行：
+
+| 命令 | 实际检查范围 |
+| --- | --- |
+| `npm test` | `scripts/tests/*.test.mjs`：配置与 marketplace、Skills-only / MCP-only / 混合插件创建、OpenCode V1/V2 加载、TRAE 安装与冲突处理、实际 ZIP/tgz 内容。 |
+| `npm run evals` | `evals/` 下全部已注册目标，包括 Skill 行为与契约测试、一多迁移内容 SHA-256 校验及独立插件加载。 |
+| `npm run plugins:validate` | 插件名与目录、版本格式、生成清单与适配器同步状态、marketplace 路径、Skill 入口与元数据、MCP JSON 及 V1/V2 内容加载。 |
+
+安装了 Claude Code 时，可补充运行 `claude plugin validate plugins/harmonyos-dev-toolkit`。
 
 ## 官方规范与验收边界
 

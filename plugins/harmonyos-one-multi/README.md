@@ -1,10 +1,12 @@
 # HarmonyOS 一多适配
 
-独立插件 `harmonyos-one-multi`，同时提供 Codex、Claude Code、Qoder 和 OpenCode 清单。
+`HarmonyOS-Plugins` 仓库中的独立插件 `harmonyos-one-multi`，包含五个 Skill。
+提供 Claude Code、Codex、Qoder / Qoder CN、Cursor 清单、TRAE CN / TraeCode IDE 安装器，
+以及 OpenCode V1/V2 入口；仓库打包命令还会生成 Qoder 插件 ZIP 和 TraeWork 单 Skill ZIP。
 从 `hm-service-agent` 的 `skills/harmonyos-one-multi` 原样迁入，五个 Skill 的说明、知识、
 脚本、代码资产和模板均保持原内容。
 
-| Skill | 保留能力 |
+| Skill | 能力 |
 | --- | --- |
 | [harmonyos-workflow-multi](skills/harmonyos-workflow-multi/SKILL.md) | 工程与页面扫描、路由发现、分批 SPEC、高保真确认、任务账本、静态检查、设备验证取证和 HTML 报告。 |
 | [harmonyos-ui-multi](skills/harmonyos-ui-multi/SKILL.md) | ArkUI 断点、响应式布局、窗口、安全区、键盘、折展悬停、方向、无障碍与高保真方案及代码资产。 |
@@ -22,8 +24,15 @@ H5 的源目录名为 `harmonyos-h5-multi`，原 `SKILL.md` 标识为 `hmos-mult
 ## 使用
 
 通过仓库 marketplace 安装 `harmonyos-one-multi`，或将本目录作为本地插件交给宿主加载。
-OpenCode 入口是 `opencode/plugin.js`，按需加载工具名是 `harmonyos_one_multi_skill`。
-各宿主的安装方法见仓库根目录安装说明，将示例插件 ID 换成 `harmonyos-one-multi`。
+各宿主的安装方法见 [仓库安装说明](../../README.md#安装)，将示例插件 ID 换成 `harmonyos-one-multi`；
+marketplace 标识仍为 `harmonyos-ai`。
+
+| OpenCode 版本 | 入口 | npm 包 | 加载方式 |
+| --- | --- | --- | --- |
+| V1 | `opencode/plugin.js` | `@harmonyos-ai/harmonyos-one-multi` | 通过 `harmonyos_one_multi_skill` 工具按需加载。 |
+| V2 | `opencode-v2/plugin.js` | `@harmonyos-ai/harmonyos-one-multi-v2` | 注册原生 Skill，卸载时释放注册。 |
+
+npm 包需发布后才能通过包名安装；本地加载可使用上述入口。当前插件只声明 Skills，未附带 MCP 服务器。
 
 局部问题直接使用相应领域 Skill；需要工程级分析、分批交付、验证和报告时使用 workflow。
 需要把流程运行资源放入目标工程时，执行：
@@ -43,6 +52,14 @@ python3 <插件目录>/skills/harmonyos-workflow-multi/scripts/install-to-projec
 npm run evals
 npm run plugins:validate
 ```
+
+只运行本插件的迁移完整性、独立加载和 npm 包内容检查：
+
+```bash
+node evals/plugins/harmonyos-one-multi/run.mjs
+```
+
+workflow、UI 和 camera 的契约测试由各自评测目录中的 `run.mjs` 执行，`npm run evals` 会一并运行。
 
 迁移来源、完整的 230 个文件映射和 SHA-256 保存在
 `evals/plugins/harmonyos-one-multi/migration-inventory.json`，迁移评测核对每个文件内容一致。
