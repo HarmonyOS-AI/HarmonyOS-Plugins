@@ -85,7 +85,7 @@ cd HarmonyOS-Plugins
 qodercn plugins install ./plugins/harmonyos-dev-toolkit
 ```
 
-使用 ZIP 导入时，按下方“获取导入包”生成插件包，再在客户端的插件导入入口选择它。
+使用 ZIP 导入时，从下方“获取导入包”的 GitHub Releases 下载插件包，再在客户端的插件导入入口选择它。
 
 #### Cursor
 
@@ -109,7 +109,7 @@ node plugins/harmonyos-dev-toolkit/trae/install.mjs --project /absolute/path/to/
 
 #### TraeWork
 
-按下方“获取导入包”生成 Skill ZIP，在插件市场的技能页逐个上传。文档查询或设备控制所需的 MCP
+从下方“获取导入包”的 GitHub Releases 下载 Skill ZIP，在插件市场的技能页逐个上传。文档查询或设备控制所需的 MCP
 连接在客户端单独配置；依赖 SDK 和设备的任务需在具备这些环境的本机执行。
 
 #### OpenCode
@@ -135,7 +135,20 @@ V2：将插件路径加入应用工程的 `opencode.jsonc`，保留已有配置�
 
 #### 获取导入包
 
-需要 Node.js 22+、npm 和 Python 3。在仓库目录执行：
+打开 [GitHub Releases](https://github.com/HarmonyOS-AI/HarmonyOS-Plugins/releases)，在对应版本的 **Assets** 中下载：
+
+| 文件 | 用途 |
+| --- | --- |
+| `<插件名>-<插件版本>.zip` | Qoder CN 直接导入；其他客户端可解压后使用其中的清单和安装脚本。 |
+| `<插件名>-trae-work-<技能名>-<插件版本>.zip` | TraeWork 单技能导入，按需逐个下载上传。 |
+| `harmonyos-ai-<插件名>-<插件版本>.tgz` | OpenCode V1 npm 包。 |
+| `harmonyos-ai-<插件名>-v2-<插件版本>.tgz` | OpenCode V2 npm 包。 |
+| `DOWNLOADS.md` / `SHA256SUMS.txt` | 本次发布的文件清单 / SHA-256 校验和。 |
+
+首次发布后才会出现这些附件。GitHub 自动生成的 **Source code (zip)** 是整个仓库源码，不能直接作为插件导入包。
+校验下载文件时，将它们与 `SHA256SUMS.txt` 放在同一目录，运行 `shasum -a 256 -c SHA256SUMS.txt`（Linux 使用 `sha256sum -c SHA256SUMS.txt --ignore-missing`）。
+
+也可以本地构建。需要 Node.js 22+、npm 和 Python 3。在仓库目录执行：
 
 ```bash
 npm install
@@ -158,3 +171,31 @@ npm run plugins:pack -- harmonyos-dev-toolkit
 | 做一多适配 | “检查这个页面在折叠屏展开后布局是否合理，并完成适配。” |
 
 也可以直接指定 Skill，例如：“使用 `$harmonyrun` 测试当前应用”。
+
+## CI 与发布
+
+[Package plugins 流水线](https://github.com/HarmonyOS-AI/HarmonyOS-Plugins/actions/workflows/plugins.yml) 自动发现 `plugins/*/plugin.config.json`，打包全部插件，无需维护插件列表。
+
+- PR、分支推送：安装锁定依赖，执行测试、评估和清单验证，构建后上传 Actions Artifact，保留 30 天。登录 GitHub 后可在运行详情中下载 `plugin-packages-<commit SHA>`，解压外层归档后获取各个导入包。
+- 手动构建：在 Actions 中选择 **Package plugins → Run workflow**，只构建和归档。
+- 正式发布：推送 `v*` 标签，在上述检查通过后自动创建 GitHub Release，并上传可单独下载的 ZIP、TGZ、清单和校验和。标签含 `-` 时标记为预发布。已存在的 Release 不会被覆盖，重发请使用新标签。
+
+发布前，按需更新各插件 `plugin.config.json` 的版本，运行 `npm run plugins:sync`，提交生成文件。仓库发布标签代表整批插件的发布，各插件归档仍使用自身版本号。例如：
+
+```bash
+git tag v0.3.0
+git push origin v0.3.0
+```
+
+将示例标签替换为尚未使用的发布版本。流水线使用 GitHub 自带的 `GITHUB_TOKEN`，仅发布任务授予 `contents: write`；无需配置个人访问令牌。仓库需启用 GitHub Actions，并允许工作流创建 Release。
+
+本地复现完整打包流程：
+
+```bash
+npm ci
+npm run test:all
+npm run plugins:pack
+npm run plugins:release-assets
+```
+
+面向下载的文件生成在 `dist/release/`；`dist/` 已被 Git 忽略。

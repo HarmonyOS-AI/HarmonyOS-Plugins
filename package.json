@@ -13,7 +13,8 @@
     "evals": "node scripts/run-evals.mjs",
     "evals:live-preview": "node evals/plugins/harmonyos-test-toolkit/skills/harmonyos-live-preview/run.mjs",
     "test:all": "npm test && npm run evals && npm run plugins:validate",
-    "plugins:pack": "node scripts/build-distributions.mjs"
+    "plugins:pack": "node scripts/build-distributions.mjs",
+    "plugins:release-assets": "node scripts/prepare-release.mjs"
   },
   "devDependencies": {
     "yaml": "^2.8.1"
