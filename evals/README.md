@@ -19,7 +19,7 @@ evals/plugins/<plugin-name>/skills/<skill-name>/
 
 | 目标目录（相对 `evals/plugins/`） | 覆盖 |
 | --- | --- |
-| `harmonyos-ui-toolkit/skills/harmonyos-live-preview/` | 驱动命令、多设备、桥接会话、尺寸解析与运行时 resize；详见 [live-preview 评测](plugins/harmonyos-ui-toolkit/skills/harmonyos-live-preview/README.md)。 |
+| `harmonyos-test-toolkit/skills/harmonyos-live-preview/` | 驱动命令、多设备、桥接会话、尺寸解析与运行时 resize；详见 [live-preview 评测](plugins/harmonyos-test-toolkit/skills/harmonyos-live-preview/README.md)。 |
 | `harmonyos-one-multi/` | 230 个迁移文件的 SHA-256、五个 Skill 标识、隔离目录中的 OpenCode V1 加载和 npm 包内容。 |
 | `harmonyos-one-multi/skills/harmonyos-workflow-multi/` | 一多工作流 Python 契约测试。 |
 | `harmonyos-one-multi/skills/harmonyos-ui-multi/` | ArkUI 一多适配 Python 契约测试。 |

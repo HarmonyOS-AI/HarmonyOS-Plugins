@@ -1,0 +1,4 @@
+interface:
+  display_name: "HarmonyRun UI Testing"
+  short_description: "Test HarmonyOS apps on devices with HarmonyRun from PyPI"
+  default_prompt: "Use $harmonyrun to test this HarmonyOS app on a connected device, install the PyPI package with pip if needed, and verify the result with UI evidence."

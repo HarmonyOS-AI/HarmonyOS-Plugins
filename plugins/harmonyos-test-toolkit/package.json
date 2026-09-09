@@ -1,0 +1,36 @@
+{
+  "name": "@harmonyos-ai/harmonyos-test-toolkit",
+  "version": "0.2.0",
+  "description": "Test and validate HarmonyOS apps through visual checks, device interaction, and automated regression tests.",
+  "type": "module",
+  "exports": "./opencode/plugin.js",
+  "files": [
+    "*",
+    ".claude-plugin",
+    ".codex-plugin",
+    ".qoder-plugin",
+    ".cursor-plugin",
+    ".mcp.json",
+    "./skills/",
+    "./.mcp.json"
+  ],
+  "keywords": [
+    "harmonyos",
+    "testing",
+    "validation",
+    "regression-testing",
+    "visual-testing",
+    "device-testing",
+    "harmonyrun",
+    "arkui"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarmonyOS-AI/HarmonyOS-Plugins.git",
+    "directory": "plugins/harmonyos-test-toolkit"
+  },
+  "dependencies": {
+    "@opencode-ai/plugin": "^1.14.0",
+    "yaml": "^2.8.1"
+  }
+}

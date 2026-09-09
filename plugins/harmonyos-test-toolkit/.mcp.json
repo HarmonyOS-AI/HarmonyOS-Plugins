@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "harmonyrun": {
+      "command": "harmonyrun",
+      "args": ["mcp", "serve"]
+    }
+  }
+}

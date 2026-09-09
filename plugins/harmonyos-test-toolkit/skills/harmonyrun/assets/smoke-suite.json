@@ -1,0 +1,23 @@
+{
+  "suite": {
+    "id": "app-smoke",
+    "name": "应用首页冒烟测试",
+    "app_package": "com.example.app"
+  },
+  "test_cases": [
+    {
+      "id": "home-smoke",
+      "title": "首页主内容可见",
+      "level": "L0",
+      "preconditions": "应用已安装，测试账号已完成登录。",
+      "test_steps": [
+        {
+          "action": "打开应用并进入首页。",
+          "checkpoint": "首页已加载，主内容和导航入口可见。"
+        }
+      ],
+      "expected_result": "首页主内容和导航入口可见，没有阻断使用的错误弹窗。",
+      "postconditions": "保持在首页。"
+    }
+  ]
+}

@@ -29,10 +29,10 @@
       "category": "Developer Tools"
     },
     {
-      "name": "harmonyos-ui-toolkit",
+      "name": "harmonyos-test-toolkit",
       "source": {
         "source": "local",
-        "path": "./plugins/harmonyos-ui-toolkit"
+        "path": "./plugins/harmonyos-test-toolkit"
       },
       "policy": {
         "installation": "AVAILABLE",

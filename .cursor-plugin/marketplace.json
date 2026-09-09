@@ -16,9 +16,9 @@
       "description": "HarmonyOS multi-device adaptation with project workflows, ArkUI, camera, H5, and Flutter knowledge, reusable assets, verification tools, and reports."
     },
     {
-      "name": "harmonyos-ui-toolkit",
-      "source": "./plugins/harmonyos-ui-toolkit",
-      "description": "HarmonyOS UI development tools for previewing, inspecting, and interacting with ArkUI pages across device sizes."
+      "name": "harmonyos-test-toolkit",
+      "source": "./plugins/harmonyos-test-toolkit",
+      "description": "Test and validate HarmonyOS apps through visual checks, device interaction, and automated regression tests."
     }
   ]
 }

@@ -1,0 +1,22 @@
+{
+  "name": "harmonyos-test-toolkit",
+  "version": "0.2.0",
+  "displayName": "HarmonyOS Test & Validation",
+  "description": "Test and validate HarmonyOS apps through visual checks, device interaction, and automated regression tests.",
+  "author": {
+    "name": "HarmonyOS-AI",
+    "url": "https://github.com/HarmonyOS-AI"
+  },
+  "homepage": "https://github.com/HarmonyOS-AI/HarmonyOS-Plugins",
+  "repository": "https://github.com/HarmonyOS-AI/HarmonyOS-Plugins",
+  "keywords": [
+    "harmonyos",
+    "testing",
+    "validation",
+    "regression-testing",
+    "visual-testing",
+    "device-testing",
+    "harmonyrun",
+    "arkui"
+  ]
+}

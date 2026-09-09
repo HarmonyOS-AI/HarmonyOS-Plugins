@@ -1,0 +1,41 @@
+{
+  "name": "harmonyos-test-toolkit",
+  "version": "0.2.0",
+  "description": "Test and validate HarmonyOS apps through visual checks, device interaction, and automated regression tests.",
+  "author": {
+    "name": "HarmonyOS-AI",
+    "url": "https://github.com/HarmonyOS-AI"
+  },
+  "homepage": "https://github.com/HarmonyOS-AI/HarmonyOS-Plugins",
+  "repository": "https://github.com/HarmonyOS-AI/HarmonyOS-Plugins",
+  "keywords": [
+    "harmonyos",
+    "testing",
+    "validation",
+    "regression-testing",
+    "visual-testing",
+    "device-testing",
+    "harmonyrun",
+    "arkui"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "HarmonyOS Test & Validation",
+    "shortDescription": "Validate layouts, test app flows, and verify fixes",
+    "longDescription": "Verify HarmonyOS app changes with layout and interaction checks, device tests, and repeatable regression suites. Use live preview to check visual results and HarmonyRun to reproduce issues and validate app flows with screenshots and test reports.",
+    "developerName": "HarmonyOS-AI",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Validate this page layout and interaction across screen sizes.",
+      "Reproduce this issue on a HarmonyOS device and verify the fix.",
+      "Run regression tests for this app and report failures with evidence."
+    ],
+    "brandColor": "#CE0E2D"
+  }
+}

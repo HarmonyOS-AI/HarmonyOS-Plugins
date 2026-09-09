@@ -39,18 +39,19 @@
       ]
     },
     {
-      "name": "harmonyos-ui-toolkit",
-      "source": "./plugins/harmonyos-ui-toolkit",
-      "description": "HarmonyOS UI development tools for previewing, inspecting, and interacting with ArkUI pages across device sizes.",
+      "name": "harmonyos-test-toolkit",
+      "source": "./plugins/harmonyos-test-toolkit",
+      "description": "Test and validate HarmonyOS apps through visual checks, device interaction, and automated regression tests.",
       "category": "development",
       "tags": [
         "harmonyos",
-        "arkts",
-        "arkui",
-        "live-preview",
-        "hot-reload",
-        "multi-device",
-        "ui-toolkit"
+        "testing",
+        "validation",
+        "regression-testing",
+        "visual-testing",
+        "device-testing",
+        "harmonyrun",
+        "arkui"
       ]
     }
   ]
