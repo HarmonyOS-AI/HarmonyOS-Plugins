@@ -46,6 +46,7 @@ REQUIRED_RUNTIME_FILES = (
     "scripts/project-scan.py",
     "scripts/task-ledger.py",
     "scripts/render-report.py",
+    "scripts/quality-assessment.py",
     "scripts/verification/preflight.py",
     "scripts/verification/evidence-session.py",
     "scripts/verification/prepare-device.py",

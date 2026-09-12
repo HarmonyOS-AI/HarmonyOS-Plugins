@@ -1,9 +1,9 @@
 # 一多适配 HTML 报告
 
-报告由 `$OM/scripts/render-report.py` 确定性生成。脚本只读取 `$OM/decisions.json` 与
-`$OM/evidence/index.json`：前者提供范围、问题、实际修改和验证结果，后者提供环境、命令、
+报告由 `$OM/scripts/render-report.py` 确定性生成。报告内容从 `$OM/decisions.json` 与
+`$OM/evidence/index.json` 派生：前者提供范围、问题、实际修改和验证结果，后者提供环境、命令、
 证据与执行过程。报告阶段不重新分析源码、不执行测试、不修改账本或 evidence，也不维护第二份
-问题清单。相同输入重复生成时，统计、排序、结论和主体内容必须一致。
+问题清单。启用质量评估时，额外只读计算源码、路由与证据文件哈希以检查有效性；不分析或重测源码。相同输入与文件内容重复生成时，统计、排序、结论和主体内容必须一致。
 
 ## 固定产物与命令
 
@@ -36,6 +36,7 @@ JSON；`testConclusion` 仅用于写回账本，向用户展示时使用后两�
 |---|---|
 | 任务头部 | `task`、当前 `batch`、目标形态、报告档位和流程执行状态 |
 | 指标卡 | `issues` 聚合的问题、已修改、验证项、未验证和实际修改文件去重数；整卡可点击并跳转到对应报告章节 |
+| 适配质量 | 可选质量目标、固定标准覆盖与证据计算的等级；展示每形态等级、失败/未验证与升级差距，旧账本为未评估；与报告 tier 及验证 L1/L2/L3 独立 |
 | 适配概述 | 批次页面、公共依赖、风险及任务决策 |
 | 本批修改 | 每个 Issue 用 `problem + rootCause` 表示修改前，用 `changeSummary + changedFiles` 表示修改后；`proposal` 只放在折叠详情中 |
 | 验证矩阵 | `verificationPlan` 按 `form + checkId` 连接 `verificationResults` 和 evidence ID |
@@ -101,3 +102,5 @@ data URI。没有截图时完全隐藏图片区；报告阶段不得启动设备
 全部批次进入终态后生成最终汇总。汇总报告只做汇总聚合，不重跑测试、不修改批次结论；包括任务
 状态、批次执行状态与链接、页面/问题/验证统计、累计实际文件数、未完成批次和遗留问题。任一批次
 未通过、停止或没有有效批次报告时，整体结论均为未通过。
+
+质量评级的输入、规则、命令与源码失效语义见 [质量契约](quality-levels.md)。JSON 输出新增 `quality`，不得用它覆盖 `testConclusion`、`flowStatus` 或 `verificationState`。质量检查与修复 Issue 独立，无 Issue 但存在质量计划时可生成评估报告。

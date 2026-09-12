@@ -1,6 +1,6 @@
 ---
 name: harmonyos-workflow-multi
-description: 判断 HarmonyOS 一多适配请求是直接修复、全量分析还是按预定流程交付。范围和预期明确的局部问题交给对应领域 Skill；用户要求分析页面集、目录、模块或全工程，或明确要求工程扫描、分批 SPEC、高保真、完整验证与报告时使用本 Skill。流程负责编排，具体 UI、Camera、H5 修法来自独立领域 Skill。当前不编排 2in1/PC 适配。
+description: 判断 HarmonyOS 一多适配请求是直接修复、全量分析还是按预定流程交付。范围和预期明确的局部问题交给对应领域 Skill；用户要求分析页面集、目录、模块或全工程，或明确要求质量分层评估、工程扫描、分批 SPEC、高保真、完整验证与报告时使用本 Skill。流程负责编排，具体 UI、Camera、H5 修法来自独立领域 Skill。当前不编排 2in1/PC 适配。
 ---
 
 # HarmonyOS 一多全流程
@@ -9,11 +9,15 @@ description: 判断 HarmonyOS 一多适配请求是直接修复、全量分析�
 
 本 Skill 是可选的工程级流程，不是所有一多问题的唯一入口。当用户只提出现象、目标页面和预期结果都明确的局部问题时，应直接使用命中的领域 Skill，不创建 `.onemulti`、批次或报告。
 
-本 Skill 只定义范围、扫描、批次、确认、施工顺序、验证证据和报告契约。不在这里推断断点、布局、Camera API 或 H5 CSS 修法。进入问题诊断、方案、施工和领域验证时，必须加载与当前问题匹配的独立领域 Skill。
+本 Skill 只定义范围、扫描、批次、确认、施工顺序、质量目标、验证证据和报告契约。不在这里推断断点、布局、Camera API 或 H5 CSS 修法。进入问题诊断、方案、施工和领域验证时，必须加载与当前问题匹配的独立领域 Skill。
 
 当前支持手机、折叠屏和平板形态，不支持 2in1/PC。范围或冻结验证计划明确包含 2in1/PC 时，记录为当前不支持并停止对应项，不得映射成其他设备继续执行。
 
 **待办约束：** 用户可见 Todo 固定为五项，与下文五步一一对应。前置准备、构建、扫描等不单列；多批次复用第二至第五项，仅更新批次标识和状态。
+
+## 质量目标
+
+完整适配或用户要求质量评估时，读取 [质量分层契约](references/quality-levels.md)，按基础可用、自适应优化、场景增强确定目标。完整适配未指定时建议自适应优化并在方案中说明；仅分析不配置运行目录，局部修复不扩成全量评级。等级只针对明确页面和形态，不能由修复项通过率推断。
 
 ## 前置准备
 
@@ -48,13 +52,13 @@ python3 $OM/scripts/project-scan.py . --json
 
 核实候选页面和动态路由，按 [路由表契约](references/route-map.md) 生成 `$OM/output/route-map.json`，再依页面依赖、公共组件和风险划分批次。本步只确定范围与计划，不生成具体 Issue 或修法。
 
-本步不为具体修法检索官方文档。
+本步不为具体修法检索官方文档。任务初始化后按质量契约配置目标；接续任务复用已有质量配置。
 
 按 [任务账本](references/task-ledger.md) 使用 `bootstrap` 初始化 `$OM/decisions.json`；用户已要求高保真时，将对应批次的 `hifiRequired` 写为 `true`。多批任务询问用户先生成第一批 SPEC，还是先生成全部 SPEC；单批任务直接进入第二步。
 
 ### 2. 逐批生成并确认 SPEC
 
-按确认模式为当前批或全部批次加载命中的领域 Skill，由领域知识确定现象、证据、根因、方案、计划文件和验证方法。写入 `decisions.json` 的各批 `issues` 就是 SPEC，不生成第二份 PRD/SPEC。
+按确认模式为当前批或全部批次加载命中的领域 Skill，由领域知识确定现象、证据、根因、方案、计划文件和验证方法。写入 `decisions.json` 的各批 `issues` 就是修复 SPEC，不生成第二份 PRD/SPEC。启用质量评估时，同时生成完整 `qualityChecks`，覆盖原本正常与待修复的能力；具体场景和适用性纳入同一次 SPEC 确认。
 
 这是官方文档检索的主要阶段：当领域 Skill 判断 API、版本、系统行为或知识缺口需要核实时，按该领域 Skill 的规则执行 `devecocli docs search/read`；不得用搜索摘要替代领域诊断。
 
@@ -74,7 +78,7 @@ python3 $OM/scripts/project-scan.py . --json
 
 ### 4. 验证、修复并回写证据
 
-完整读取 [验证流程](references/verification.md)，只执行已确认 `verificationPlan` 中的形态、路由和检查项。构建、静态检查、设备运行、多模态、证据和结果写回均由流程 Skill 执行；具体问题的验收标准来自对应领域知识。
+完整读取 [验证流程](references/verification.md)，只执行已确认 `verificationPlan` 与可选 `qualityChecks` 中的形态、路由和检查项。质量检查不受已修改 Issue 过滤，具体执行与取证按质量契约；仅基础测试时不得填写运行通过。构建、静态检查、设备运行、多模态、证据和结果写回均由流程 Skill 执行；具体问题的验收标准来自对应领域知识。
 
 只修复有证据表明由本批修改引起的问题，每批最多 5 轮；连续两轮无新增证据或根因进展时停止。可修复问题继续下一轮，不因首轮失败直接收尾。验证通过、无可继续自动修复项或达到停止条件后，记录遗留问题并进入报告；无法形成可靠证据时记为未验证，不得用编译成功代替运行或视觉结论。
 
@@ -99,6 +103,7 @@ python3 $OM/scripts/render-report.py $OM --summary
 ## 资源路由
 
 - 页面与路由扫描：[page-inventory.md](references/page-inventory.md)、[route-map.md](references/route-map.md)。
+- 质量目标、标准覆盖和评级：[quality-levels.md](references/quality-levels.md)。
 - 账本与状态：[task-ledger.md](references/task-ledger.md)。
 - 高保真编排：[hifi-delivery.md](references/hifi-delivery.md)。
 - 验证与证据：[verification.md](references/verification.md)、[multimodal-common-issues.md](references/multimodal-common-issues.md)。

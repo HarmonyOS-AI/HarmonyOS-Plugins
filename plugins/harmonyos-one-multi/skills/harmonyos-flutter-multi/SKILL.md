@@ -39,3 +39,7 @@ description: Design, implement, diagnose, and validate Flutter multi-device adap
 | OHOS 原生/引擎能力 | `ohos-platform/index.md` |
 | 断点/DPI 十大策略全文 | `references/dpi-guide.md` |
 | 验收与取证 | `validation/index.md`；按 ID 验收 `validation/ux-px-checklist.md` |
+
+## 质量分层
+
+用户要求完整适配、质量评估或指定等级时，读取 [质量目标与领域验收](references/quality-levels.md)。沿用当前范围和实现路线，区分目标等级与证据已证明的等级；局部修复不自动启动全量评级。

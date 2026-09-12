@@ -76,6 +76,7 @@ def main() -> int:
         "verificationState": model["verificationState"],
         "output": str(output),
         "counts": model["counts"],
+        "quality": {key: value for key, value in model["quality"].items() if key != "rows"},
     }
     if model["kind"] == "batch":
         result["batchId"] = model["batch"]["batchId"]

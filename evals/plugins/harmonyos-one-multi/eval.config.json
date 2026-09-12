@@ -18,6 +18,11 @@
       "id": "behavior-harness",
       "type": "deterministic",
       "entry": "tests/behavior-harness.test.mjs"
+    },
+    {
+      "id": "quality-assessment",
+      "type": "deterministic",
+      "entry": "tests/quality-assessment.test.mjs"
     }
   ]
 }

@@ -268,3 +268,7 @@ python3 $OM/scripts/task-ledger.py put-verification $OM/decisions.json B01-UI-00
 ## 非交互模式
 
 无法向用户确认时，只处理明确范围，必要选择通过 `put-decision` 写入 `decisions` 且 `by=assumed`。结构方案可以采用影响最小、可逆且沿用现有工程的选项，但不能把 `assumed` 写成 `user`。无法完成真实形态验证时，问题保持 `not_verified`，任务结论为未通过。当前批报告生成后如果无法获取用户明确的继续确认，必须停止，不得通过 `by=assumed`、汇总 SPEC 确认或任务自动化要求替代批次间确认。
+
+## 可选质量扩展
+
+完整质量评估使用 `task.quality`（standardVersion/targetGrade/enhancements）和 `batches[].qualityChecks`（完整页面×形态×标准计划），详细字段与专用原子写入命令见 [质量契约](quality-levels.md)。不添加虚假 Issue，也不把运行结果和证据元数据复制进账本。schema v3 旧数据保持有效，无扩展时为未评估；变更目标需显式重编计划，历史证据不自动迁移。

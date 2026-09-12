@@ -11,6 +11,8 @@ import shutil
 import tempfile
 from typing import Any, Callable
 
+from onemulti.quality import validate_quality
+
 DEFAULT_TARGET_FORMS = ("phone", "foldable", "tablet")
 
 
@@ -27,7 +29,7 @@ TASK_FIELDS = {
 }
 BATCH_FIELDS = {
     "batchId", "pages", "dependencies", "predecessors", "domains",
-    "risk", "status", "specConfirmed", "testConclusion", "hifiRequired",
+    "risk", "status", "specConfirmed", "testConclusion", "hifiRequired", "qualityChecks",
 }
 ISSUE_FIELDS = {
     "issueId", "batchId", "page", "component", "domain", "affectedPages",
@@ -261,7 +263,7 @@ def _validate_task(task: object, errors: list[str]) -> None:
     if not isinstance(task, dict):
         errors.append("task 必须是对象")
         return
-    if set(task) != TASK_FIELDS:
+    if set(task) - {"quality"} != TASK_FIELDS:
         errors.append(f"task 字段必须且只能是: {sorted(TASK_FIELDS)}")
     if not isinstance(task.get("taskId"), str) or not SAFE_ID.fullmatch(task.get("taskId", "")):
         errors.append("task.taskId 只能包含字母、数字、点、下划线和连字符")
@@ -527,6 +529,8 @@ def validate_ledger(ledger: object) -> list[str]:
                     f"应为 {batch_id}"
                 )
 
+    if not errors:
+        errors.extend(validate_quality(ledger))
     return errors
 
 

@@ -116,3 +116,7 @@ node scripts/scan-h5-adaptation.mjs <源码目录>
 - `references/troubleshoot.md`：基础定位无法形成可证伪根因时读取。
 - `references/test-prompts.md`：修改 description、边界、路由或禁止模式后，用于回归触发和决策行为。
 - `assets/responsive-shell/`：新建普通响应式页面骨架且项目没有更合适模板时复制并按现有设计改造；不要用它覆盖已有页面结构。
+
+## 质量分层
+
+用户要求完整适配、质量评估或指定等级时，读取 [质量目标与领域验收](references/quality-levels.md)。沿用当前范围和实现路线，区分目标等级与证据已证明的等级；局部修复不自动启动全量评级。

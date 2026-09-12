@@ -13,6 +13,8 @@ import re
 from typing import Any
 
 from .ledger import validate_ledger
+from .quality_evidence import quality_model, validate_quality_entry
+from .quality_reporting import render_quality
 
 
 class ReportError(ValueError):
@@ -84,6 +86,10 @@ def validate_evidence(index: dict[str, Any], ledger: dict[str, Any], om_root: Pa
     for entry in entries:
         if not isinstance(entry, dict):
             raise ReportError("evidence entries 中存在非对象")
+        try:
+            validate_quality_entry(entry)
+        except ValueError as error:
+            raise ReportError(str(error)) from error
         evidence_id = entry.get("evidenceId")
         if not isinstance(evidence_id, str) or not evidence_id or evidence_id in evidence_ids:
             raise ReportError(f"evidenceId 缺失或重复: {evidence_id}")
@@ -107,6 +113,14 @@ def validate_evidence(index: dict[str, Any], ledger: dict[str, Any], om_root: Pa
         for link in entry["links"]:
             if not isinstance(link, dict) or not link:
                 raise ReportError(f"{evidence_id} 包含无效 link")
+            if "qualityCheckId" in link:
+                if (set(link) != {"batchId", "qualityCheckId"}
+                        or link["batchId"] not in {b["batchId"] for b in ledger["batches"]}
+                        or not isinstance(link["qualityCheckId"], str)
+                        or not SAFE_TOKEN.fullmatch(link["qualityCheckId"])
+                        or entry["type"] != "quality_result"):
+                    raise ReportError(f"{evidence_id} 包含无效质量检查引用")
+                continue
             if "decisionId" in link and link["decisionId"] not in decision_ids:
                 raise ReportError(f"{evidence_id} 引用了不存在的 decision")
             if "issueId" not in link:
@@ -278,7 +292,7 @@ def batch_model(
     issues = issues_for(ledger, batch_id)
     evidence = entries_for(index, ledger, batch_id)
     stopped = batch.get("status") == "stopped"
-    if not issues and not stopped:
+    if not issues and not stopped and not batch.get("qualityChecks"):
         raise ReportError(f"{batch_id} 没有问题清单，不能生成报告")
     if not stopped and any(item.get("changeStatus") == "pending" for item in issues):
         raise ReportError(f"{batch_id} 仍有 pending 问题，不能生成报告")
@@ -368,6 +382,7 @@ def batch_model(
         "baselineIssues": baseline,
         "screenshots": screenshots(evidence, om_root),
         "artifacts": artifact_paths(ledger, om_root, batch_id),
+        "quality": quality_model(ledger, index, om_root, batch_id),
     }
 
 
@@ -435,6 +450,7 @@ def summary_model(ledger: dict[str, Any], index: dict[str, Any], om_root: Path) 
         "onlyMultimodalSkipped": only_multimodal_skipped_state,
         "counts": counts,
         "artifacts": artifact_paths(ledger, om_root, None),
+        "quality": quality_model(ledger, index, om_root),
     }
 
 
@@ -552,6 +568,7 @@ def render_navigation(model: dict[str, Any]) -> str:
     if model["kind"] == "batch":
         sections = [
             ("结论", "#conclusion"),
+            ("适配质量", "#quality"),
             ("适配概述", "#overview"),
             ("本批修改", "#changes"),
             ("验证结果", "#validation"),
@@ -579,6 +596,7 @@ def render_navigation(model: dict[str, Any]) -> str:
         f'<a href="{href}">{esc(name)}</a>'
         for name, href in (
             ("任务结论", "#conclusion"),
+            ("适配质量", "#quality"),
             ("任务总览", "#task-overview"),
             ("批次总览", "#batch-overview"),
             ("未完成批次", "#incomplete-batches"),
@@ -724,8 +742,8 @@ def render_batch(model: dict[str, Any]) -> str:
     history = render_history(model["baselineIssues"])
     artifacts = render_artifacts(model["artifacts"])
     if model["tier"] == "compact":
-        return conclusion + overview + issues + validation + artifacts
-    return conclusion + overview + issues + validation + execution + unresolved + pending_validation + deferred + history + artifacts
+        return conclusion + render_quality(model) + overview + issues + validation + artifacts
+    return conclusion + render_quality(model) + overview + issues + validation + execution + unresolved + pending_validation + deferred + history + artifacts
 
 
 def render_issue(issue: dict[str, Any], all_screenshots: list[dict[str, Any]]) -> str:
@@ -954,6 +972,7 @@ def render_summary(model: dict[str, Any]) -> str:
     )
     return (
         conclusion
+        + render_quality(model)
         + task_overview
         + f'<section class="section" id="batch-overview"><h2>批次总览</h2><div class="batch-grid">{cards}</div></section>'
         + render_incomplete_batches(model["batches"])

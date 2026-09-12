@@ -21,6 +21,12 @@ H5 的源目录名为 `harmonyos-h5-multi`，原 `SKILL.md` 标识为 `hmos-mult
 无需读取原仓库或安装其他 HarmonyOS Skill 插件。执行脚本需 Python 3 或 Node.js；构建、设备操作与
 官方文档查询继续使用原流程规定的 `devecocli` 及相应 SDK、设备环境。
 
+## 质量分层
+
+完整适配可设置基础可用（ready）、自适应优化（optimized）或场景增强（differentiated）目标。标准覆盖全部计划页面和形态，原本正常的能力也需验证；按证据逐级计算等级，缺设备、仅编译或局部修复不会自动达标。增强体验按业务选择专项，当前评级范围为手机、折叠屏和平板。
+
+领域 Skill 提供相应验收指导；workflow 的 [质量契约](skills/harmonyos-workflow-multi/references/quality-levels.md) 管理完整检查清单、证据与报告。旧账本兼容并显示未评估。这是插件标准，不是 Google 或鸿蒙官方认证。
+
 ## 使用
 
 通过仓库 marketplace 安装 `harmonyos-one-multi`，或将本目录作为本地插件交给宿主加载。

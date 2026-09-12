@@ -94,3 +94,7 @@ devecocli build
 本 Skill 覆盖 stride 花屏、SysCap、热启动恢复、折叠切镜、折展防拉伸、PhotoOutput、AVRecorder 基础状态机、旋转和叠加控件。设备公开规格只用于确定测试范围，不能替代运行时能力查询。
 
 RTC 远端旋转协商、多摄并发、高阶 Scene Mode、高级编码参数和 NDK 相机接口不属于通用处理范围。命中这些问题时按 [能力边界](references/camera-capabilities.md#能力边界)核对 SDK、业务链路和设备条件，不直接套用单路 ArkTS 相机方案。
+
+## 质量分层
+
+用户要求完整适配、质量评估或指定等级时，读取 [质量目标与领域验收](references/quality-levels.md)。沿用当前范围和实现路线，区分目标等级与证据已证明的等级；局部修复不自动启动全量评级。

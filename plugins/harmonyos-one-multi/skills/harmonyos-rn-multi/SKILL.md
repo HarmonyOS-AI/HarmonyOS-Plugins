@@ -157,3 +157,7 @@ node scripts/scan-rn-adaptation.mjs <工程根目录>
 - `assets/responsive-shell/`：新建普通响应式 RN 页面且项目没有更合适封装时复制并按现有架构改造；其中 `useDesignUnits.ts` 展示可响应 window 的设计单位，不要照搬示例阈值，也不要覆盖已有导航、主题或 breakpoint 实现。
 - `assets/recipes/`：10 个按场景选择的 TSX recipe；Fold/Avoid 通过注入式 port 隔离包版本，业务代码不得据此虚构原生 API。
 - `scripts/test-scan-rules.mjs`：扫描器专项回归，使用临时 fixture 验证新增规则并自动清理。
+
+## 质量分层
+
+用户要求完整适配、质量评估或指定等级时，读取 [质量目标与领域验收](references/quality-levels.md)。沿用当前范围和实现路线，区分目标等级与证据已证明的等级；局部修复不自动启动全量评级。

@@ -61,7 +61,7 @@ python3 $OM/scripts/verification/run-foundation.py . --round <1..5> \
 
 执行 `preflight.py begin .`，校验待验证问题、修改范围和账本指定的当前批次路由，并冻结本轮验证边界。施工期检查缺失或失败不阻断进入验证，在本步补跑或修复；源码变化需要重建时直接执行，不退回第三步。
 
-验证边界仅包含 `changeStatus=modified` 的问题。
+修复验证边界仅包含 `changeStatus=modified` 的问题。启用质量评估时，另按 [质量契约](quality-levels.md) 执行已确认的 `qualityChecks`，其范围覆盖批次内未修改但评级必需的能力；复用测试授权，不借评级扩大修复范围。
 
 - `stage=boundary_failed`：进入 `STOPPED`。
 - `stage=route_failed`：进入 `STATIC_ONLY`，L3 计划项写 `reason=route_table_invalid`。
