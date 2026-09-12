@@ -10,7 +10,7 @@
 | [harmonyos-workflow-multi](skills/harmonyos-workflow-multi/SKILL.md) | 工程与页面扫描、路由发现、分批 SPEC、高保真确认、任务账本、静态检查、设备验证取证和 HTML 报告。 |
 | [harmonyos-ui-multi](skills/harmonyos-ui-multi/SKILL.md) | ArkUI 断点、响应式布局、窗口、安全区、键盘、折展悬停、方向、无障碍与高保真方案及代码资产。 |
 | [harmonyos-camera-multi](skills/harmonyos-camera-multi/SKILL.md) | 相机能力探测、折叠切镜、Session 与输出流、旋转镜像、Surface、预览比例和 stride 问题。 |
-| [hmos-multidevice-h5-layout](skills/hmos-multidevice-h5-layout/SKILL.md) | H5/WebView 响应式布局、动态 REM、媒体、安全区、键盘、动态窗口和 ArkTS-H5 联动；含扫描器与页面模板。 |
+| [harmonyos-h5-multi](skills/harmonyos-h5-multi/SKILL.md) | H5/WebView 响应式布局、动态 REM、媒体、安全区、键盘、动态窗口和 ArkTS-H5 联动；含扫描器与页面模板。 |
 | [harmonyos-flutter-multi](skills/harmonyos-flutter-multi/SKILL.md) | Flutter 原生与 HADSS 两条路线、OHOS 宿主集成、折叠屏/Pura X、DPI、LTPO、代码示例与验收用例。 |
 | [harmonyos-rn-multi](skills/harmonyos-rn-multi/SKILL.md) | React Native for OpenHarmony 多设备布局：动态窗口与父约束、断点与动态样式、RTL、Modal/Portal、折叠连续性、安全区与官方自适应组件。 |
 
@@ -25,7 +25,7 @@ H5 的源目录名为 `harmonyos-h5-multi`，原 `SKILL.md` 标识为 `hmos-mult
 
 完整适配可设置基础可用（ready）、自适应优化（optimized）或场景增强（differentiated）目标。标准覆盖全部计划页面和形态，原本正常的能力也需验证；按证据逐级计算等级，缺设备、仅编译或局部修复不会自动达标。增强体验按业务选择专项，当前评级范围为手机、折叠屏和平板。
 
-领域 Skill 提供相应验收指导；workflow 的 [质量契约](skills/harmonyos-workflow-multi/references/quality-levels.md) 管理完整检查清单、证据与报告。旧账本兼容并显示未评估。这是插件标准，不是 Google 或鸿蒙官方认证。
+本插件定义统一的适配质量分级：workflow 的 [质量契约](skills/harmonyos-workflow-multi/references/quality-levels.md) 集中维护等级定义、达标规则、证据与报告；领域 Skill 只提供自身的验收要点，不重复定义分级。旧账本兼容并显示未评估。
 
 ## 使用
 

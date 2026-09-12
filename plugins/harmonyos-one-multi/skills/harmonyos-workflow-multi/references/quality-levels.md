@@ -2,12 +2,15 @@
 
 ## 语义与范围
 
-标准版本 `one-multi-1` 是本插件的体验要求，不是 Google 或鸿蒙官方认证。借鉴来源：
+本插件定义三级适配质量体系，标准版本为 `one-multi-1`。本文件统一维护等级含义、适用范围、逐级达标规则与证据契约；各领域只维护自身的验收要点。
 
-- [Adaptive App Quality](https://developer.android.com/docs/quality-guidelines/adaptive-app-quality)：分层、适用性和测试对应关系。
-- [Google adaptive skill](https://github.com/android/skills/blob/main/jetpack-compose/adaptive/SKILL.md)：实现路线与截图验证，不是跨平台质量认证算法。
+| 等级 | 体验目标 |
+|---|---|
+| 基础可用 `ready` | 在目标形态下可完成核心任务，窗口和形态变化后保持业务状态。 |
+| 自适应优化 `optimized` | 在基础可用之上，使布局、导航和交互适合当前可用空间及输入方式。 |
+| 场景增强 `differentiated` | 在自适应优化之上，利用设备能力改善明确的业务场景。 |
 
-质量从低到高为 `ready` 基础可用、`optimized` 自适应优化、`differentiated` 场景增强。不要复用验证手段 L1/L2/L3 或报告版式 `tier`。不复制 Android API、dp 阈值和系统行为到鸿蒙实现。
+等级逐级满足，高级能力不能抵消基础缺陷。质量等级独立于验证手段 L1/L2/L3 和报告版式 `tier`。实现方式、尺寸阈值与运行行为按领域知识和当前工程核实。
 
 完整一多适配未指定等级时，建议 optimized，并在本次范围/SPEC 中说明；用户要求局部修复或只分析时不自动配置评级、不安装运行目录。明确要求基础适配时选择 ready；明确选择增强体验才配置 differentiated。目标等级不代替具体结构方案确认，不因升档强制分栏、迁移框架或新增依赖。
 
@@ -15,7 +18,7 @@
 
 ## 标准目录与领域责任
 
-可执行标准 ID、等级和适用性以 `scripts/onemulti/quality.py` 的 `CATALOG` 为准，不由 Agent 自行增删门槛。workflow 只保存跨框架的预期体验；根因、API 和修法按领域 skill 的 `references/quality-levels.md` 与原有知识路由提供。
+可执行标准 ID、等级和适用性以 `scripts/onemulti/quality.py` 的 `CATALOG` 为准，不由 Agent 自行增删门槛。workflow 只保存跨框架的预期体验；根因、API 和修法按各领域的质量验收文件（`quality-acceptance.md`） 与原有知识路由提供。
 
 | 等级 | 标准与计划内容 |
 |---|---|

@@ -117,6 +117,6 @@ node scripts/scan-h5-adaptation.mjs <源码目录>
 - `references/test-prompts.md`：修改 description、边界、路由或禁止模式后，用于回归触发和决策行为。
 - `assets/responsive-shell/`：新建普通响应式页面骨架且项目没有更合适模板时复制并按现有设计改造；不要用它覆盖已有页面结构。
 
-## 质量分层
+## 质量验收
 
-用户要求完整适配、质量评估或指定等级时，读取 [质量目标与领域验收](references/quality-levels.md)。沿用当前范围和实现路线，区分目标等级与证据已证明的等级；局部修复不自动启动全量评级。
+用户要求完整适配、质量评估或指定等级时，读取 [本领域质量验收](references/quality-acceptance.md)，提供适用检查项、预期行为和证据要求。独立使用时只评价当前领域与范围，区分目标和已验证结果；局部修复不自动启动全量评级。

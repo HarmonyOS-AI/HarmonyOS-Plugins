@@ -56,6 +56,6 @@ devecocli build
 
 任务涉及 HAP/HAR/HSP 的目标设备声明时，再读 [module-device-types.md](references/module-device-types.md)。本 Skill 不启动设备、不执行多模态测试，也不维护验证证据；构建通过只表示代码可编译，运行和视觉结果仍为未验证。
 
-## 质量分层
+## 质量验收
 
-用户要求完整适配、质量评估或指定等级时，读取 [质量目标与领域验收](references/quality-levels.md)。沿用当前范围和实现路线，区分目标等级与证据已证明的等级；局部修复不自动启动全量评级。
+用户要求完整适配、质量评估或指定等级时，读取 [本领域质量验收](references/quality-acceptance.md)，提供适用检查项、预期行为和证据要求。独立使用时只评价当前领域与范围，区分目标和已验证结果；局部修复不自动启动全量评级。
