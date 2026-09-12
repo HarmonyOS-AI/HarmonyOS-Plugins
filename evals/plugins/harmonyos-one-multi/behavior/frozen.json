@@ -1,0 +1,8 @@
+{
+  "baseline": "c7213b1b43d1d060f5e428d7278f1ba3db38ee3e",
+  "files": {
+    "cases.json": "3e0a7ab570492e57c58598567cb489c3a07a7fced6a81a42f525017d2ff7182f",
+    "rubric.json": "dc8676341160a6a6ebcccff85e1a605edba9644193a20dafc516c2592735b323",
+    "fixtures.mjs": "91fbf6ee7dbdbbd1608ba181c276a139ef2522bfe45f294549f0a90e482b0650"
+  }
+}

@@ -9,6 +9,8 @@
 
 每个批次完成第四步后运行：
 
+第四步的修复循环结束后即可生成报告，不要求验证全部通过；不是某一轮失败就跳过后续修复。渲染脚本自带账本与证据校验，不重复运行独立校验命令。未登记文件不用于报告，也不阻断生成。
+
 ```bash
 python3 $OM/scripts/render-report.py $OM --batch-id <batchId>
 ```
@@ -75,8 +77,8 @@ data URI。没有截图时完全隐藏图片区；报告阶段不得启动设备
 上述通过/未通过是写入 `batch.testConclusion` 的技术结论。用户可见报告不使用“最终结论：未通过”
 概括整个任务，而是同时展示“流程已完成”和对应的验证状态。
 
-输入无效、引用失效、已完成批次的落盘结论与重新聚合结果不一致，或 HTML 模板存在未替换占位符时，
-脚本必须失败且不得覆盖上一份有效报告。HTML 成功落盘后，Agent 才通过 `transition-batch` 将批次写为
+输入无效、引用失效或 HTML 模板存在未替换占位符时，脚本必须失败且不得覆盖上一份有效报告。
+已完成批次允许刷新，旧 `testConclusion` 不阻断重新计算。HTML 成功落盘后，Agent 才通过 `transition-batch` 将批次写为
 `completed` 并把 stdout 的候选结论写入 `batch.testConclusion`。报告文件不是 evidence artifact，
 不得写入 `$OM/evidence/index.json` 或触发重新测试。
 

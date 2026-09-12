@@ -1,13 +1,11 @@
 ---
 name: harmonyos-flutter-multi
-description: Design, implement, diagnose, and validate Flutter multi-device adaptation on HarmonyOS for phones, foldables, tablets, multi-window, safe areas, responsive layouts, and Pura X-class foldable UX. Current device scope excludes 2in1/PC. Use when work must choose between stock Flutter and HADSS implementations or requires OHOS host/framework integration. Do not use for generic Flutter UI questions unrelated to device or window adaptation.
+description: Design, implement, diagnose, and validate Flutter multi-device adaptation on HarmonyOS for phones, foldables, tablets, PCs, multi-window, safe areas, responsive layouts, and Pura X-class foldable UX. Use when work must choose between stock Flutter and HADSS implementations or requires OHOS host/framework integration. Do not use for generic Flutter UI questions unrelated to device or window adaptation.
 ---
 
 # Flutter OHOS 一多适配
 
 以窗口约束、折叠状态和业务职责驱动布局，不按机型硬编码。场景诊断与实现路线分开：`flutter-native/` 和 `hadss/` 是并列且互斥的主实现路线，不得在同一实现文档中重新混写“方案 A/方案 B”。OHOS 宿主或框架能力单独进入 `ohos-platform/`。
-
-当前设备范围是手机、折叠屏和平板。明确要求 2in1/PC 的任务应说明当前不支持，不得套用平板或超宽窗口方案冒充完成。
 
 ## 阅读路由
 

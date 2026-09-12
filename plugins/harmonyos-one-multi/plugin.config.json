@@ -2,7 +2,7 @@
   "name": "harmonyos-one-multi",
   "version": "0.1.0",
   "displayName": "HarmonyOS 一多适配",
-  "description": "HarmonyOS multi-device adaptation with project workflows, ArkUI, camera, H5, and Flutter knowledge, reusable assets, verification tools, and reports.",
+  "description": "HarmonyOS multi-device adaptation with project workflows, ArkUI, camera, H5, Flutter, and React Native (RNOH) knowledge, reusable assets, verification tools, and reports.",
   "shortDescription": "一多流程编排与 ArkUI、相机、H5、Flutter 多设备适配",
   "longDescription": "保留工程扫描、路由发现、批次 SPEC、高保真确认、任务账本、静态检查、设备验证取证与 HTML 报告，以及 ArkUI 布局、相机链路、H5 响应式和 Flutter 原生/HADSS/OHOS 宿主适配知识与代码资产。当前支持手机、折叠屏和平板，沿用原 Skill 的能力边界。",
   "author": {
@@ -18,6 +18,7 @@
     "camera",
     "h5",
     "flutter",
+    "react-native",
     "foldable",
     "responsive-layout"
   ],

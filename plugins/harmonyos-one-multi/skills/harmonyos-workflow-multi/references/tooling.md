@@ -6,7 +6,7 @@
 
 | 任务 | 命令 |
 |---|---|
-| 编译、ArkTS 语法与类型检查 | `devecocli build`；逐文件检查使用 `devecocli serve mcp` 的 `check` |
+| 编译、ArkTS 语法与类型检查 | `devecocli build`；修改过的 HSP 另用 `devecocli build --modules <模块名...>`；逐文件检查使用 `devecocli serve mcp` 的 `check` |
 | 安装与启动 | `devecocli run [--module <模块>] [--device <设备>]` |
 | 设备与模拟器 | `devecocli device list`、`devecocli emulator list\|create\|start\|stop` |
 | 日志与崩溃 | `devecocli log --level E`、`--crash --bundle-name <包名>` |
@@ -32,21 +32,23 @@
 
 ## 静态检查脚本
 
-UI 批次在 L1 构建之外执行流程内置的静态检查：
+施工后记录 L1 构建与适用的静态检查结果：
 
 ```bash
 python3 $OM/scripts/verification/run-foundation.py . --prepare-first-round \
   --check-script $OM/scripts/verification/checks/ui/static-check.py
 ```
 
-涉及模块目标设备声明时，另执行：
+脚本从本批已修改 Issue 的 `changedFiles` 定位所属模块；若包含 HSP（`module.type=shared`），先按 `build-profile.json5` 中的模块名去重执行 `devecocli build --modules <模块名...>`，再执行默认构建。没有 HSP 修改时保持原行为；第 2–5 轮修复重测同样处理。任一构建失败均记录为 L1 失败，不以默认构建成功代替 HSP 编译成功。
+
+涉及模块目标设备声明或装机失败时，可另行诊断；全工程声明检查不作为每批施工收尾的必过项：
 
 ```bash
 python3 $OM/scripts/verification/checks/ui/check-device-types.py . \
   --target-form <目标形态> --json
 ```
 
-`--check-script` 可重复提供；没有适用脚本时只执行构建。静态检查通过不代表运行或视觉正确。
+`--check-script` 可重复提供；没有适用脚本时只执行构建。检查命令返回失败码时，保留结果并进入第四步分析、修复，不反复执行相同收尾命令。静态检查通过不代表运行或视觉正确。
 
 ## 回归
 

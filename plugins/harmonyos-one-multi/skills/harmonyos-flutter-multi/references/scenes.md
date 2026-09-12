@@ -8,7 +8,7 @@ references/dpi-guide.md -> ./dpi-guide.md; SKILL.md breakpoint/strategy sections
 -->
 # OHos 多设备场景适配详细指南
 
-本文档覆盖 HarmonyOS Flutter 框架多设备开发指导中的场景，每个场景包含断点逻辑、关键能力、实现要点和代码片段。
+本文档覆盖 HarmonyOS Flutter 框架多设备开发指导中的 16 个场景，每个场景包含断点逻辑、关键能力、实现要点和代码片段。
 
 ## 断点体系说明
 
@@ -38,6 +38,7 @@ references/dpi-guide.md -> ./dpi-guide.md; SKILL.md breakpoint/strategy sections
 9. [自由多窗场景](#9-自由多窗场景)
 10. [背景氛围场景](#10-背景氛围场景)
 11. [功能交互挂件场景](#11-功能交互挂件场景)
+12. [交互归一场景](#12-交互归一场景)
 13. [导航&指南针场景](#13-导航指南针场景)
 14. [人脸识别场景](#14-人脸识别场景)
 15. [扫一扫场景](#15-扫一扫场景)
@@ -119,7 +120,7 @@ final _router = GoRouter(
 | sm | 竖屏手机：避让状态栏、导航栏、挖孔区 |
 | md | 横屏平板：避让挖孔区 |
 | lg | 折叠屏：避让状态栏、导航栏、挖孔区 |
-| xl | 平板自由窗口：避让窗口控制按钮 |
+| xl | PC：避让窗口控制按钮 |
 
 ### 关键能力
 
@@ -539,7 +540,7 @@ Widget build(BuildContext context) {
 
 ### 场景概述
 
-分屏、悬浮窗、折叠开合及平板自由多窗环境下，窗口在极窄到极宽间变化。
+分屏、悬浮窗、折叠开合及 PC 多窗环境下，窗口在极窄到极宽间变化。
 
 ### 断点逻辑（标签形态）
 
@@ -562,18 +563,18 @@ Widget build(BuildContext context) {
 **API21-（v1）**：
 
 ```typescript
-export function observeFreeWindowMode() {
+export function observePcMode() {
   if (canIUse('SystemCapability.Applications.Settings.Core')) {
     settings.registerKeyObserver(getContext(), 'window_pcmode_switch_status',
-      settings.domainName.USER_PROPERTY, () => { getFreeWindowMode(); });
+      settings.domainName.USER_PROPERTY, () => { getPcMode(); });
   }
 }
 
-export function getFreeWindowMode() {
+export function getPcMode() {
   if (canIUse('SystemCapability.Applications.Settings.Core')) {
     settings.getValue(getContext(), 'window_pcmode_switch_status',
       settings.domainName.USER_PROPERTY).then((data) => {
-        AppStorage.setOrCreate('isFreeWindowMode', data === 'true');
+        AppStorage.setOrCreate('isPCMode', data === 'true');
       });
   }
 }
@@ -684,6 +685,75 @@ bool _shouldAutoFullScreen(double width, double height) {
 const platform = MethodChannel('samples.flutter.dev/device_info');
 final String deviceType = await platform.invokeMethod('getDeviceType');
 ```
+
+---
+
+## 12. 交互归一场景
+
+### 场景概述
+
+将触摸、指针、滚轮等不同输入映射到统一交互语义。
+
+### 断点逻辑
+
+| 断点 | 交互能力 |
+|------|---------|
+| sm/md | 触摸交互（tap/long press/drag） |
+| lg/xl | 增加指针悬停(hover)、滚轮切页、Ctrl 拖动 |
+
+"类电脑"判定：逻辑宽 ≥ 1000 且高 ≥ 600。
+
+### 关键能力
+
+- `MouseRegion`（onEnter/onExit 悬浮高亮，cursor 设置）
+- `GestureDetector`（onTap/onDoubleTap/onLongPress/onScaleUpdate）
+- `LongPressDraggable`（拖拽：dragAnchorStrategy/feedback/childWhenDragging）
+- `card_swiper` 插件（轻扫切页）
+- `ScrollController` + `isScrollingNotifier`（滚动状态）
+- `Transform`（缩放/旋转）
+- `SystemMouseCursors`（光标样式）
+
+### 实现要点
+
+```dart
+// 悬浮高亮
+MouseRegion(
+  cursor: SystemMouseCursors.grab,
+  onEnter: (_) => setState(() => _hoverIndex = index),
+  onExit: (_) => { if (_hoverIndex == index) setState(() => _hoverIndex = null) },
+  child: _buildImg(highlight: _hoverIndex == index),
+)
+
+// 拖拽（关键：dragAnchorStrategy + 透明 feedback）
+LongPressDraggable<String>(
+  data: 'img-$index',
+  dragAnchorStrategy: (draggable, context, position) {
+    final box = context.findRenderObject() as RenderBox;
+    return position - box.localToGlobal(Offset.zero);
+  },
+  feedback: Material(
+    type: MaterialType.transparency,
+    child: _buildImg(highlight: true),
+  ),
+  childWhenDragging: _buildImg(highlight: false),
+  child: MouseRegion(...),
+)
+
+// 滚动监听
+WidgetsBinding.instance.addPostFrameCallback((_) {
+  if (!_controller.hasClients) return;
+  _controller.position.isScrollingNotifier.addListener(() {
+    final scrolling = _controller.position.isScrollingNotifier.value;
+    if (scrolling) { /* 正在滚动 */ }
+    else { /* 滚动结束 */ }
+  });
+});
+```
+
+### 适配要点
+
+- 收窄窗口或档位回落时，指针能力自动关闭，避免小窗误触
+- 滚轮切页仅在"类电脑"模式下启用
 
 ---
 

@@ -8,6 +8,16 @@
       "id": "portable-plugin",
       "type": "deterministic",
       "entry": "tests/portable-plugin.test.mjs"
+    },
+    {
+      "id": "p1-regression",
+      "type": "deterministic",
+      "entry": "tests/p1-regression.test.mjs"
+    },
+    {
+      "id": "behavior-harness",
+      "type": "deterministic",
+      "entry": "tests/behavior-harness.test.mjs"
     }
   ]
 }

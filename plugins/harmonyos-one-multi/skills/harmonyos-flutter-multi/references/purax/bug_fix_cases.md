@@ -205,7 +205,7 @@ LayoutBuilder(
 
 ### 通用修复方案
 
-见 `references/fold_continuity.md` 的详细方案。
+见 `references/purax/fold_continuity.md` 的详细方案。
 
 ---
 

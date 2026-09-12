@@ -22,7 +22,7 @@ Summary entry: ohos-platform/dpi-and-framework-extensions.md.
 | sm   | 320 - 599  | 手机竖屏              |
 | md   | 600 - 839  | 手机横屏 / 小折叠展开 |
 | lg   | 840 - 1439 | 平板 / 大折叠展开     |
-| xl   | ≥ 1440     | 超宽窗口              |
+| xl   | ≥ 1440     | PC / 超大屏           |
 
 ### 标准高度断点
 
@@ -57,6 +57,7 @@ Summary entry: ohos-platform/dpi-and-framework-extensions.md.
 | phone    | 直板机  | 360×800  | 1        |
 | foldable | 折叠屏  | 720×840  | 2        |
 | tablet   | 平板    | 1024×768 | 3        |
+| pc       | PC/2in1 | 1366×900 | 4        |
 
 ### 初始化与监听
 

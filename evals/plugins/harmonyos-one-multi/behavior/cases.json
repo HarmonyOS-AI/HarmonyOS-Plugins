@@ -1,0 +1,346 @@
+[
+  {
+    "id": "workflow-analysis",
+    "domain": "workflow",
+    "split": "development",
+    "fixture": "arkui",
+    "prompt": "分析 entry 模块两个页面在手机和平板上的一多问题，给出具体根因与建议。",
+    "criteria": [
+      "输出有源码依据的布局诊断和建议",
+      "分析结束，不要求确认 SPEC 或施工"
+    ],
+    "readOnly": true,
+    "noWorkflowState": true,
+    "skills": [
+      "harmonyos-workflow-multi",
+      "harmonyos-ui-multi"
+    ]
+  },
+  {
+    "id": "workflow-ci-analysis",
+    "domain": "workflow",
+    "split": "holdout",
+    "fixture": "arkui",
+    "prompt": "在不能提问的 CI 中分析 entry 模块的一多适配问题，将诊断写到 analysis.md。此次任务只需要分析报告。",
+    "criteria": [
+      "生成 analysis.md，报告具体代码问题",
+      "不修改业务源码，不创建施工账本，不捏造验证结论"
+    ],
+    "readOnly": true,
+    "noWorkflowState": true,
+    "allowedOutputs": [
+      "analysis.md"
+    ],
+    "skills": [
+      "harmonyos-workflow-multi",
+      "harmonyos-ui-multi"
+    ]
+  },
+  {
+    "id": "workflow-continuous",
+    "domain": "workflow",
+    "split": "development",
+    "fixture": "workflow",
+    "prompt": "按一多 workflow 修复 B01、B02 中已列出的固定宽度问题。我授权你在这两个页面和 phone/tablet 范围内连续完成所有批次，不要高保真，只做基础检查；已有 SPEC 的方案就是我需要的，请直接执行并生成报告。",
+    "criteria": [
+      "连续处理两个批次，无重复确认",
+      "两页固定宽度均修复，生成批次报告和汇总",
+      "保留实际验证边界，不声称设备通过"
+    ],
+    "changedPages": [
+      "B01",
+      "B02"
+    ],
+    "maxRedundantQuestions": 0,
+    "skills": [
+      "harmonyos-workflow-multi",
+      "harmonyos-ui-multi"
+    ]
+  },
+  {
+    "id": "workflow-aggregate",
+    "domain": "workflow",
+    "split": "development",
+    "fixture": "workflow",
+    "prompt": "我确认账本中 B01、B02 的全部 SPEC，授权连续处理两批、逐批基础检查并输出报告。无需高保真和设备测试，不用再问是否进入下一批。",
+    "criteria": [
+      "汇总确认后连续执行两个批次",
+      "不会用汇总确认伪造运行验证通过"
+    ],
+    "changedPages": [
+      "B01",
+      "B02"
+    ],
+    "maxRedundantQuestions": 0,
+    "skills": [
+      "harmonyos-workflow-multi",
+      "harmonyos-ui-multi"
+    ]
+  },
+  {
+    "id": "workflow-preferences",
+    "domain": "workflow",
+    "split": "development",
+    "fixture": "workflow",
+    "prompt": "先完成 B01。我已确认其 SPEC 并授权修改。高保真不用生成；测试只做基础检查，不做多模态或设备测试。完成后给我批次报告，B02 暂不处理。",
+    "criteria": [
+      "复用明确的高保真和基础测试选择，不重复询问",
+      "只完成 B01，B02 保持原样"
+    ],
+    "changedPages": [
+      "B01"
+    ],
+    "untouchedPages": [
+      "B02"
+    ],
+    "maxRedundantQuestions": 0,
+    "skills": [
+      "harmonyos-workflow-multi",
+      "harmonyos-ui-multi"
+    ]
+  },
+  {
+    "id": "workflow-resume",
+    "domain": "workflow",
+    "split": "development",
+    "fixture": "resume",
+    "prompt": "恢复现有一多任务。B01 的修改已完成，请保留，不要重做。我授权继续按现有 SPEC 完成 B02；沿用不用高保真、只做基础测试的选择。完成本批报告和最终汇总。",
+    "criteria": [
+      "不重做 B01，继续 B02",
+      "复用明确选择，不重复请求授权",
+      "不丢失已有账本记录"
+    ],
+    "changedPages": [
+      "B02"
+    ],
+    "untouchedPages": [
+      "B01"
+    ],
+    "maxRedundantQuestions": 0,
+    "skills": [
+      "harmonyos-workflow-multi",
+      "harmonyos-ui-multi"
+    ]
+  },
+  {
+    "id": "workflow-scope-change",
+    "domain": "workflow",
+    "split": "holdout",
+    "fixture": "scope-change",
+    "prompt": "按现有 SPEC 完成 B01，授权只修改 B01.ets，目标为 phone/tablet，不做高保真，只做基础检查。如需要修改共享组件或其他页面，必须先解释并问我，不能直接扩大范围。",
+    "criteria": [
+      "识别 SPEC 需要修改共享组件而超出授权",
+      "提出具体范围确认，在得到许可前不修改共享组件"
+    ],
+    "readOnly": true,
+    "requireQuestion": true,
+    "skills": [
+      "harmonyos-workflow-multi",
+      "harmonyos-ui-multi"
+    ]
+  },
+  {
+    "id": "workflow-per-batch",
+    "domain": "workflow",
+    "split": "development",
+    "fixture": "workflow",
+    "prompt": "请按一多 workflow 处理这两批，但每一批都先展示 SPEC 等我确认，当前先看 B01 的方案。不要提前施工。",
+    "criteria": [
+      "展示 B01 具体 SPEC 并询问确认",
+      "明确逐批确认时不使用连续授权跳过确认"
+    ],
+    "readOnly": true,
+    "requireQuestion": true,
+    "skills": [
+      "harmonyos-workflow-multi",
+      "harmonyos-ui-multi"
+    ]
+  },
+  {
+    "id": "h5-web-only",
+    "domain": "h5",
+    "split": "development",
+    "fixture": "web",
+    "prompt": "修复 web/index.html 在平板分屏缩窄时的横向溢出，保留现有内容和交互。",
+    "criteria": [
+      "定位根节点 min-width 造成溢出，修复最小错误约束",
+      "只改 Web 源码，不发明 ArkTS 桥接"
+    ],
+    "mustChange": [
+      "web/index.html"
+    ],
+    "skills": [
+      "hmos-multidevice-h5-layout"
+    ]
+  },
+  {
+    "id": "h5-arkts-only",
+    "domain": "h5",
+    "split": "development",
+    "fixture": "web-host",
+    "prompt": "分析这个 ArkTS Web 容器在旋转后仍保留旧宽度的问题，并给出修复与对端交接建议。仓库没有 H5 源码。",
+    "criteria": [
+      "认定 ARKTS_ONLY，定位固定容器宽度",
+      "不虚构网页函数或完整双端验证"
+    ],
+    "readOnly": true,
+    "skills": [
+      "hmos-multidevice-h5-layout"
+    ]
+  },
+  {
+    "id": "h5-hybrid-rem",
+    "domain": "h5",
+    "split": "holdout",
+    "fixture": "hybrid",
+    "prompt": "修复旋转后 H5 根字号没有更新的问题，ArkTS Web 容器与网页源码都在工程中。保留现有桥接，不要刷新页面。",
+    "criteria": [
+      "根字号依据网页 clientWidth 重算",
+      "事件生产消费一致；不使用 reload，不强造另一套断点"
+    ],
+    "mustChange": [
+      "web/index.html"
+    ],
+    "skills": [
+      "hmos-multidevice-h5-layout"
+    ]
+  },
+  {
+    "id": "h5-negative",
+    "domain": "h5",
+    "split": "development",
+    "fixture": "arkui",
+    "prompt": "分析 B01.ets 这个纯 ArkUI Row 的窄窗口溢出，只给建议。页面没有 Web 或 H5。",
+    "criteria": [
+      "定位 ArkUI 约束，不把任务交给 H5"
+    ],
+    "readOnly": true,
+    "forbiddenSkills": [
+      "hmos-multidevice-h5-layout"
+    ]
+  },
+  {
+    "id": "flutter-native",
+    "domain": "flutter",
+    "split": "development",
+    "fixture": "flutter-native",
+    "prompt": "分析此 Flutter 页的窗口适配问题，并给出保持路由和滚动位置的修复方案。项目没有适配库，要求零新增依赖。",
+    "criteria": [
+      "采用 Flutter 原生 LayoutBuilder/父约束路线",
+      "不引入 HADSS，不用机型硬编码"
+    ],
+    "readOnly": true,
+    "skills": [
+      "harmonyos-flutter-multi"
+    ]
+  },
+  {
+    "id": "flutter-hadss",
+    "domain": "flutter",
+    "split": "development",
+    "fixture": "flutter-hadss",
+    "prompt": "分析此 Flutter 页的宽窗布局问题。工程已使用 hadss_adaptive_layout，请沿用现有依赖给出修复方案。",
+    "criteria": [
+      "采用已有 HADSS 路线",
+      "按容器约束判断布局，避免无关的双路线展开"
+    ],
+    "readOnly": true,
+    "skills": [
+      "harmonyos-flutter-multi"
+    ]
+  },
+  {
+    "id": "flutter-hover",
+    "domain": "flutter",
+    "split": "development",
+    "fixture": "flutter-native",
+    "prompt": "为现有 Flutter 视频页设计半折叠悬停布局：预览和控制区位于铰链两侧，保持播放进度。项目零新增依赖，只给方案。",
+    "criteria": [
+      "悬停分区同时考虑 displayFeatures 折痕避让",
+      "保持媒体与路由状态，原生路线"
+    ],
+    "readOnly": true,
+    "skills": [
+      "harmonyos-flutter-multi"
+    ]
+  },
+  {
+    "id": "flutter-compare",
+    "domain": "flutter",
+    "split": "holdout",
+    "fixture": "flutter-native",
+    "prompt": "针对这个 Flutter 页的一多适配，请比较原生 Flutter 与 HADSS 两条路线，说明依赖代价和选择条件，只做技术选型。",
+    "criteria": [
+      "用户明确比较时可以同时讨论两条路线",
+      "不直接加入依赖或修改源码"
+    ],
+    "readOnly": true,
+    "skills": [
+      "harmonyos-flutter-multi"
+    ]
+  },
+  {
+    "id": "ui-local",
+    "domain": "ui",
+    "split": "development",
+    "fixture": "arkui",
+    "prompt": "B01.ets 中内容被底部导航条遮挡，请分析局部安全区约束和修复位置，不需要工程流程。",
+    "criteria": [
+      "定向读取 UI 避让知识并定位页面约束",
+      "不创建 workflow 账本，不声称完成运行验证"
+    ],
+    "readOnly": true,
+    "noWorkflowState": true,
+    "skills": [
+      "harmonyos-ui-multi"
+    ],
+    "forbiddenSkills": [
+      "harmonyos-workflow-multi"
+    ]
+  },
+  {
+    "id": "ui-negative",
+    "domain": "ui",
+    "split": "holdout",
+    "fixture": "type-error",
+    "prompt": "解释 type-error.ts 中 number 不能赋给 string 的类型错误，给出最小修法，不修改文件。这和设备布局无关。",
+    "criteria": [
+      "直接解释类型错误，不启动一多适配"
+    ],
+    "readOnly": true,
+    "forbiddenSkills": [
+      "harmonyos-ui-multi",
+      "harmonyos-workflow-multi"
+    ]
+  },
+  {
+    "id": "camera-stride",
+    "domain": "camera",
+    "split": "development",
+    "fixture": "camera",
+    "prompt": "分析 CameraFrames.ets 中二维码取帧花屏和行错位问题，正常预览与折叠切换都没有问题，只给诊断建议。",
+    "criteria": [
+      "按 rowStride 与 width 定位填充像素问题",
+      "说明逐行处理及释放帧，不无关扩大折叠会话诊断"
+    ],
+    "readOnly": true,
+    "skills": [
+      "harmonyos-camera-multi"
+    ]
+  },
+  {
+    "id": "camera-continuity",
+    "domain": "camera",
+    "split": "holdout",
+    "fixture": "camera",
+    "prompt": "分析 CameraSwitch.ets：折叠态前置 ID 为 2，展开态前置 ID 为 3，当前展开后却用了后置。给出保留前置意图的修法，当前没有设备。",
+    "criteria": [
+      "按位置意图和运行时 supportedCameras 选择，不硬编码 ID",
+      "目标缺失不默认 cameras[0]，缺少设备不声称运行通过"
+    ],
+    "readOnly": true,
+    "skills": [
+      "harmonyos-camera-multi"
+    ]
+  }
+]

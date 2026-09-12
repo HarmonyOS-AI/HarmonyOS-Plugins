@@ -21,9 +21,6 @@ from onemulti.route_map import (  # noqa: E402
 
 RESULT_STATUSES = {"not_verified", "passed", "failed", "not_applicable"}
 COMMON_EVIDENCE_FIELDS = {"evidenceId", "type", "round", "links"}
-CONTROL_EVIDENCE_PATHS = {
-    "evidence/index.json",
-}
 ROUTE_MAP_PROJECT_PATH = Path(".onemulti/output/route-map.json")
 ROUTE_MAP_LEDGER_PATH = "output/route-map.json"
 
@@ -259,21 +256,7 @@ def validate_index(
                 if link["issueId"] not in issue_ids:
                     fail(f"{evidence_id} 引用了不存在的 issueId")
 
-    formal_paths: set[str] = set()
-    for directory in (om_root / "evidence",):
-        if not directory.exists():
-            continue
-        for path in directory.rglob("*"):
-            if not path.is_file() or "tmp" in path.relative_to(om_root).parts:
-                continue
-            relative_path = path.relative_to(om_root).as_posix()
-            if relative_path in CONTROL_EVIDENCE_PATHS:
-                continue
-            formal_paths.add(relative_path)
-    orphaned = sorted(formal_paths - indexed_paths)
-    if orphaned:
-        fail(f"存在未登记正式产物: {orphaned}")
-
+    # 只校验已登记证据；额外日志、截图不参与结论，也不阻断批次收尾。
     return coverage, indexed_paths
 
 

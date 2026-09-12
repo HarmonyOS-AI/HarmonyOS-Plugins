@@ -1,0 +1,13 @@
+{
+  "target": {
+    "plugin": "harmonyos-one-multi",
+    "skill": "harmonyos-flutter-multi"
+  },
+  "suites": [
+    {
+      "id": "deterministic",
+      "type": "deterministic",
+      "entry": "resources.test.mjs"
+    }
+  ]
+}

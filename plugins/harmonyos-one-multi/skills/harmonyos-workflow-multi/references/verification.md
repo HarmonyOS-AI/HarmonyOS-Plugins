@@ -13,7 +13,7 @@
 → ④ 在确认范围内修复
 → ⑤ 重建并重测
 → ⑥ 更新本轮结果并判断是否继续
-→ 退出时校验正式 evidence 与 decisions
+→ 循环结束后写回遗留结果并进入报告
 → 若使用模拟器则关闭模拟器
 ```
 
@@ -22,9 +22,10 @@
 ```bash
 python3 $OM/scripts/verification/preflight.py begin .
 python3 $OM/scripts/verification/preflight.py record-multimodal . [--available --description "<模型实际看到的内容>"]
-# 无论探测成功或失败，返回 next=ask-test-scope 时都展示一道双选题并等待用户选择
+# next=wait-model-switch：按下文失败提示处理，仅文字提示，不调用选项卡
+# next=ask-test-scope：展示一道双选题并等待用户选择
 python3 $OM/scripts/verification/preflight.py record-test-scope . --choice <basic_and_multimodal|basic_only>
-# 探测失败后选择 basic_and_multimodal 时，使用同一个 record-multimodal 入口重新探测
+# 用户切换后明确继续多模态测试：先记录 basic_and_multimodal，再重新探测；通过后不重复询问
 # 用户选择多模测试后：匹配设备会直接复用或启动
 python3 $OM/scripts/verification/prepare-device.py .
 # 仅在没有匹配设备且用户选择自动安装后执行
@@ -32,7 +33,7 @@ python3 $OM/scripts/verification/prepare-device.py . --auto-install
 # 用户明确指定其他设备时可覆盖自动选择
 python3 $OM/scripts/verification/prepare-device.py . --use-device "<identifier>"
 python3 $OM/scripts/verification/prepare-device.py . --instance-name "<existing-instance>"
-# 设备准备完成并进入 FULL 后执行
+# 确定 STATIC_ONLY / FULL 后进入本轮检查；STATIC_ONLY 不启动设备
 python3 $OM/scripts/verification/run-foundation.py . --round <1..5> \
   [--check-script $OM/scripts/verification/checks/ui/static-check.py]
 ```
@@ -40,6 +41,8 @@ python3 $OM/scripts/verification/run-foundation.py . --round <1..5> \
 任一步骤执行失败时，优先参考[多模态验证常见问题集合](./multimodal-common-issues.md)进行排查。
 
 ## 前置校验
+
+已完成任务的补测先按 [接续与新任务](./task-ledger.md#接续与新任务) 刷新相关批次状态，再执行 `begin`；不因原状态为 `completed` 转人工验证。
 
 开始前须满足：
 
@@ -51,12 +54,12 @@ python3 $OM/scripts/verification/run-foundation.py . --round <1..5> \
 | 条件                                                         | 模式          | 动作                                          |
 | ------------------------------------------------------------ | ------------- | --------------------------------------------- |
 | 无法从既有账本确定当前批次或修改边界                         | `STOPPED`     | 停止测试；保留错误和原账本                    |
-| 步骤三正式 L1/L2 已通过，但用户明确只选基础测试或设备准备只允许基础测试 | `STATIC_ONLY` | 复用 L1/L2；依赖 L3 的计划项写 `not_verified` |
-| 步骤三正式 L1/L2、多模态、用户授权和一台典型设备均已就绪     | `FULL`        | 首轮执行 L3；修复轮执行 L1–L3                 |
+| 用户明确只选基础测试或设备准备只允许基础测试 | `STATIC_ONLY` | 保留 L1/L2 结果并处理可修复问题；依赖 L3 的计划项写 `not_verified` |
+| 多模态、用户授权和一台典型设备均已就绪     | `FULL`        | 执行基础检查与可执行的 L3；修复后重测                 |
 
 ### 1. 建立当前批次验证边界
 
-执行 `preflight.py begin .`，校验待验证问题、修改范围、步骤三 L1/L2 evidence 和账本指定的当前批次路由，并冻结本轮验证边界。
+执行 `preflight.py begin .`，校验待验证问题、修改范围和账本指定的当前批次路由，并冻结本轮验证边界。施工期检查缺失或失败不阻断进入验证，在本步补跑或修复；源码变化需要重建时直接执行，不退回第三步。
 
 验证边界仅包含 `changeStatus=modified` 的问题。
 
@@ -87,7 +90,7 @@ JSON
 3. 宿主成功提交图片，且模型准确描述可见内容，才算通过。
 4. 识别成功时运行 `record-multimodal --available --description "<实际描述>"`；识别失败时运行不带 `--available` 的 `record-multimodal`。
 
-`record-multimodal` 根据冻结计划项数量在内部计算确认后的预计时间，并直接返回：
+首次探测成功时，`record-multimodal` 根据冻结计划项数量计算预计时间，并返回：
 
 ```json
 {
@@ -98,9 +101,18 @@ JSON
 }
 ```
 
-若探测失败，中断会话并告知用户：当前模型未通过多模态能力探测。如需执行多模态交互测试，请先配置并切换支持图片理解的模型。若用户表示已切换，使用同一个 `record-multimodal` 入口重新读取并识别图片，再次失败则再次中断并展示失败提示。
+探测失败返回 `next=wait-model-switch`。**不得调用询问工具或选项卡**，使用以下文字提示：
 
-若探测成功，继续执行第3步。
+> 当前模型未通过图片理解探测，请选择后续测试方式：
+>
+> 1. **仅基础测试（默认方案）**：保留构建和静态检查结果，多模态测试标记为未验证，继续生成报告。请回复“仅基础测试”。
+> 2. **继续多模态测试**：请先切换到支持图片理解的模型，再回复“切换完，继续执行多模态测试”。
+
+用户选择仅基础测试，或当前任务已明确授权“默认同意、不等待”时，执行 `record-test-scope --choice basic_only`，保留 L1/L2 结果，将 L3 标记为未验证；基础检查若有可修复问题，仍按下文循环处理，结束后生成报告。否则必须以文字回复结束当前轮，等待用户选择或切换模型。
+
+等待期间保留当前批次与已有 L1/L2 结果，不准备设备、不自动重试，也不视为用户跳过测试。用户切换后明确继续，先执行 `record-test-scope --choice basic_and_multimodal` 记录其授权，再重新读取探测图片并执行 `record-multimodal`；通过后直接进入步骤 4，不重复询问，再次失败则仍按上述失败分支处理。
+
+首次探测成功则继续步骤 3。
 
 ### 3. 通过 ask 卡片确认测试范围
 
@@ -180,11 +192,11 @@ JSON
 
 ### 1. 执行允许的测试层
 
-首轮 `STATIC_ONLY` 直接复用步骤三 L1/L2，首轮 `FULL` 在快照有效时执行 L3。发生测试期修复后，第 2–5 轮仍从该入口完整执行 L1–L3。
+每轮从 `run-foundation.py` 入口执行。首轮可复用本批同源码且已通过的 L1/L2；缺失、失败或源码变化时自动补跑，不作为流程门禁。`STATIC_ONLY` 不执行 L3；`FULL` 在构建成功后执行 L3，静态检查失败本身不禁止设备验证。修复后第 2–5 轮重跑基础检查与受影响的 L3 项。
 
 | 层级 | 执行内容 | 通过标准 | 结果证据 |
 |---|---|---|---|
-| L1 构建 | 在工程根执行 `devecocli build` | 退出码为 0，构建和类型检查通过，并生成预期产物 | 命令、退出码、日志、产物路径或失败摘要 |
+| L1 构建 | 本批修改涉及 HSP 时，先执行 `devecocli build --modules <修改过的 HSP 模块名...>`，再执行 `devecocli build`；模块识别由 `run-foundation.py` 完成 | 所有构建命令退出码为 0，构建和类型检查通过，并生成预期产物 | 命令、退出码、日志、产物路径或失败摘要 |
 | L2 静态检查 | 执行流程内与当前问题匹配的静态检查脚本；没有适用脚本时记为不适用 | 已执行脚本成功且无阻断级结果，或明确记录不适用原因 | 脚本路径、参数、退出码、输出、规则 ID、文件位置或不适用原因 |
 | L3 设备运行验证 | 将构建产物安装到选定设备并启动入口 Ability；根据 `verificationPlan.routeId` 从已冻结 JSON 路由表读取有序步骤，逐步进入目标页面，构造计划要求的形态和状态，采集截图并对照 `check` 判定 | 安装和启动成功，应用处于可交互状态且无启动崩溃；所有路径步骤及中间页面断言通过，目标页面可达，截图和计划内交互结果符合预期 | 设备信息、命令、退出码、进程状态、运行日志或失败摘要，以及 `form + checkId + routeId`、实际步骤、失败 stepId、页面及形态信息、截图、交互结果和判断依据 |
 
@@ -249,7 +261,7 @@ hdc shell rm -rf data/local/tmp/install_dir
 
 * 只执行 `verificationPlan` 要求的形态命令，执行过程中只登记判断结果。**失败原因分析、源码读取和代码修改在当前轮次全部结束后执行**。
 
-* 优先使用图片完成判断。只有图片无法判断时，在沙箱外获取当前页面的完整组件树。
+* 多模态能力探测通过后，优先使用图片完成判断；只有图片无法判断时，再在沙箱外获取当前页面的完整组件树辅助判断。
 
   ```bash
   devecocli ui layout --format json --mode full --depth 0 > "$OM/evidence/<batchId>/round-<N>/<name>-component-tree.json"
@@ -258,12 +270,7 @@ hdc shell rm -rf data/local/tmp/install_dir
   结合组件类型、文本、可见状态和 `bounds` 判断，并将文件登记为 `type=component_tree`。组件树与截图使用相同的 `issueId + form + checkId`。
 
 * 完成本轮全部 L3 计划项后，用一次 `record-batch` 原子登记本轮全部截图、可选组件树和逐项结果。
-  全部结果均为 `passed` 时直接进入本轮收尾；存在 `failed / not_verified` 时，才统一读取本轮未通过证据和日志，进入“关联问题并分析失败原因”。源码仍按下一节的最小读取规则处理。
-
-  ```bash
-  python3 $OM/scripts/verification/run-foundation.py . --round <1..5> \
-    [--check-script $OM/scripts/verification/checks/ui/static-check.py]
-  ```
+  本轮基础检查和适用 L3 项均通过时结束验证；存在 `failed / not_verified` 时，统一读取未通过证据并分析是否可修复。没有修改代码时不重复执行基础检查命令；可修复时继续下一轮，不直接生成报告。源码仍按下一节的最小读取规则处理。
 
 ### 2. 记录证据和结果
 
@@ -281,7 +288,7 @@ python3 $OM/scripts/verification/evidence-session.py record-batch . --input - <<
 JSON
 ```
 
-顶层 `round` 统一提供当前批次内的轮次；新产物的路径必须与当前 `batchId`一致。命令不记录工程根 `cwd`，成功命令不记录 `stdout/stderr`，失败时才保留必要的`reason/stdout/stderr`。结果的 `reason` 只在非 `passed` 时填写。结果允许逐项增量写入，轮次收尾和第五步最终校验时再检查完整计划对账。
+顶层 `round` 统一提供当前批次内的轮次；新产物的路径必须与当前 `batchId`一致。命令不记录工程根 `cwd`，成功命令不记录 `stdout/stderr`，失败时才保留必要的`reason/stdout/stderr`。结果的 `reason` 只在非 `passed` 时填写。结果允许逐项增量写入，循环结束后补齐未执行项及原因，报告脚本负责最终对账。
 
 #### evidence 索引格式
 
@@ -309,7 +316,7 @@ JSON
 
 重测只处理上一轮 `failed`，以及因可修复的前置层失败而 `not_verified` 的校验点。
 
-修复后依次重跑 L1、L2、L3。任一层失败时停止后续层级。L1/L2 通过后，L3 重新安装并启动应用，仅重跑与修改点及受影响公共依赖对应的计划项并重新采集截图；已通过且不受影响的 L3 计划项不重跑。
+修复后依次重跑 L1、L2 和可执行的 L3。构建或安装失败时，记录错误并将依赖该产物的 L3 项记为未验证；仍分析能否修复并继续下一轮。静态检查失败不一律停止 L3。L3 仅重跑与修改点及受影响公共依赖对应的计划项并重新采集截图；已通过且不受影响的 L3 计划项不重跑。
 
 保留修复前后的证据，并以重测结果更新对应 issue 的 `verificationResults`。问题级验证结论始终按完整计划实时聚合，不额外写入 `verifyStatus`。
 
@@ -317,11 +324,11 @@ JSON
 
 本轮结束时用一次 `record-batch` 写入证据和逐项结果，并聚合本轮状态。
 
-同一失败连续两轮没有新增证据或根因判断时退出；第 5 轮结束后不再继续。
+有本批范围内可自动修复的问题时继续下一轮，不因某轮失败直接结束验证。全部通过、无可继续自动修复项、同一失败连续两轮没有新增证据或根因进展，或第 5 轮结束时退出；失败和未验证结果如实保留，不要求全绿才能收尾。
 
 ## 结束验证并写回结果
 
-最后一次 `record-batch` 成功即代表当前批次目标 issue 的冻结计划、逐项结果和非通过原因已正确写回。批次、页面、任务、孤立证据和报告资格统一交给第五步规定的全局校验器检查。
+循环结束后，用 `record-batch` 写回最终结果；无法执行的计划项标记未验证并说明原因。随后进入第五步，报告脚本检查输入结构和引用，不以检查全部通过作为收尾条件。未登记的额外文件不作为证据，也不阻断报告。
 
 ### 关闭模拟器
 

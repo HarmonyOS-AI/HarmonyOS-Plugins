@@ -13,7 +13,7 @@ class RouteMapError(ValueError):
 
 TOP_FIELDS = {"schemaVersion", "routes", "unresolved"}
 ROUTE_FIELDS = {"routeId", "batchId", "targetPage", "steps"}
-COMMON_STEP_FIELDS = {"stepId", "action", "expectPage"}
+COMMON_STEP_FIELDS = {"stepId", "action", "desc", "expectPage"}
 ACTION_FIELDS = {
     "launch": {"target"},
     "tap": {"locator"},
@@ -63,6 +63,8 @@ def _validate_step(step: object, location: str) -> None:
         raise RouteMapError(f"{location} 存在未知字段: {sorted(set(step) - allowed)}")
     if not _text(step.get("stepId")):
         raise RouteMapError(f"{location}.stepId 不能为空")
+    if not _text(step.get("desc")):
+        raise RouteMapError(f"{location}.desc 必须是非空字符串")
     if "expectPage" in step and not _text(step["expectPage"]):
         raise RouteMapError(f"{location}.expectPage 必须是非空字符串")
 

@@ -11,7 +11,7 @@
 | **camera-05** | XComponent 旋转后错位或黑屏 | SurfaceRect/SurfaceRotation 未随方向更新 | 同时监听窗口和 display 变化，每次旋转更新 Surface |
 | **camera-06** | 页面热启动（后台返回）黑屏 | 只在 `aboutToAppear` 初始化，`onPageShow` 未恢复相机 | `onPageShow` 中判 Session 存在则请求统一重建队列；`aboutToDisappear` 通过同一队列释放监听与资源 |
 | **camera-07** | 预览花屏堆叠（图像行偏移错位） | ImageReceiver 取帧未处理 stride，把填充字节当像素 | 运行时取 `rowStride` 与 `width` 比对，去除无效像素，见 [预览帧 stride 花屏](camera-frames.md#预览帧-stride-花屏) |
-| **camera-08** | 阔折叠外屏选后置崩溃 | 未处理"目标位置相机不存在" | 运行中保持当前相机并提示不可用；仅在首次启动且产品策略明确允许时受控选择其他位置，同时同步业务状态 |
+| **camera-08** | 阔折叠外屏选后置崩溃 | 未处理"目标位置相机不存在" | 用户主动切镜且当前相机仍可用时保留原预览并提示不可用；折展导致旧相机失效时保留位置意图并串行释放旧链；仅在首次启动且产品策略明确允许时受控选择其他位置，同时同步业务状态 |
 | **camera-09** | 录像方向与持握不一致 | `AVMetadata.videoOrientation` 未按重力角度设置，或预览/录像分辨率宽高比不一致 | 录像开始前取重力角映射 rotation；两条输出流分辨率宽高比保持一致 |
 | **camera-10** | 不支持设备上直接崩溃 | 未做 SysCap 能力检测与错误码兜底 | `canIUse` + 能力查询 + 801 错误码降级，见 [能力检测](camera-capabilities.md#能力检测是两套机制不是一套) |
 | **camera-11** | 折展后预览拉伸/压扁 | 流 Profile 与 Surface 矩形比例不同源，或重建读了 `windowSizeChange` 缓存的过期断点 | 双端锁同一基准比例并 letterbox 拟合；重建时实时计算基准，见 [折展防拉伸链路](camera-fold.md#折展防拉伸链路) |

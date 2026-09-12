@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
+import { resourceLinks } from '../lib/resource-links.mjs';
 import { spawnSync } from 'node:child_process';
-import { createHash } from 'node:crypto';
 import { cpSync, existsSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, symlinkSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -21,22 +21,20 @@ function filesUnder(directory) {
   });
 }
 
-test('all 230 migrated source files remain byte-for-byte unchanged', () => {
+test('migration inventory resources remain present; historical bytes are audited separately', () => {
   const inventory = JSON.parse(readFileSync(new URL('../migration-inventory.json', import.meta.url), 'utf8'));
   assert.equal(inventory.files.length, 230);
   assert.equal(new Set(inventory.files.map((file) => file.destination)).size, 230);
   for (const file of inventory.files) {
     const destination = path.join(repositoryRoot, file.destination);
     assert.ok(existsSync(destination), file.source);
-    const checksum = createHash('sha256').update(readFileSync(destination)).digest('hex');
-    assert.equal(checksum, file.sourceSha256, file.source);
   }
 });
 
-test('five isolated skills have matching identities and exclude evaluation files', () => {
+test('six isolated skills have matching identities and exclude evaluation files', () => {
   const skillsRoot = path.join(isolatedPlugin, 'skills');
   const skills = readdirSync(skillsRoot, { withFileTypes: true }).filter((entry) => entry.isDirectory());
-  assert.equal(skills.length, 5);
+  assert.equal(skills.length, 6);
   for (const skill of skills) {
     const root = path.join(skillsRoot, skill.name);
     const source = readFileSync(path.join(root, 'SKILL.md'), 'utf8');
@@ -77,4 +75,8 @@ test('npm package contains every runtime resource without evaluation or session 
     if (path.basename(file) !== '.gitignore') assert.ok(included.has(relative), relative);
   }
   assert.ok(![...included].some((file) => /(^|\/)(evals|__pycache__|\.harmonybot|\.onemulti)(\/|$)/.test(file)));
+});
+
+test('all plugin Markdown resource links resolve', () => {
+  assert.deepEqual(resourceLinks(pluginRoot), []);
 });

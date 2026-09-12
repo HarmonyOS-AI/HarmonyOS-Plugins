@@ -43,6 +43,7 @@
     "risk": "low",
     "status": "pending",
     "specConfirmed": false,
+    "hifiRequired": false,
     "testConclusion": "not_run"
   }],
   "issues": []
@@ -56,14 +57,14 @@
 | `task` | 记录本次范围、目标形态、确认模式、路由图、整体状态和当前批次 |
 | `decisions` | 保存用户确认与无法交互时的假设，不承担施工状态 |
 | `pages` | 保存页面发现结果、类型、模块、公共依赖和所属批次 |
-| `batches` | 保存批次范围、依赖、顺序、风险和执行状态 |
+| `batches` | 保存批次范围、高保真要求、依赖、顺序、风险和执行状态 |
 | `issues` | 保存问题清单型 SPEC、施工状态和精简验证结论 |
 
 证据索引独立保存为 `$OM/evidence/index.json`。账本不保存 evidence 元数据、证据 ID 汇总、执行时间、命令输出、截图路径、归因过程或轮次记录。
 
-`task.confirmationMode` 只取 `batch / aggregate`，在第一步批次计划展示后由用户选择：`batch` 表示第二步只先生成当前批详细 SPEC，`aggregate` 表示第二步先生成全部批次详细 SPEC 并统一确认。它只控制 SPEC 生成和确认时机，不取消批次间的用户继续确认；两种模式都必须按依赖顺序完成“当前批施工 → 验证 → 批次报告 → 用户明确同意继续”后再开始下一批。单批任务使用 `batch`，无需询问模式。
+`task.confirmationMode` 只取 `batch / aggregate`，在第一步批次计划展示后由用户选择：`batch` 表示第二步先生成当前批详细 SPEC 及要求的高保真，`aggregate` 表示第二步先生成全部批次详细 SPEC 和所有要求的批次高保真，再统一确认。它只控制方案生成和确认时机，不取消批次间的用户继续确认；两种模式都必须按依赖顺序完成“当前批施工 → 验证 → 批次报告 → 用户明确同意继续”后再开始下一批。单批任务使用 `batch`，无需询问模式。
 
-`task.targetForms` 必须反映本次实际设备范围。用户只说“一多适配”而未限定设备时，默认写入 `phone / foldable / tablet`；用户明确只要求其中一种或两种时，只写明确范围，不自动追加其他设备。模块安装能力再按 `$OM/references/module-device-types.md` 映射，不能把 `targetForms` 直接等同于固定的 `deviceTypes` 数组。
+`task.targetForms` 必须反映本次实际设备范围。用户只说“一多适配”而未限定设备时，默认写入 `phone / foldable / tablet`；用户明确只要求其中一种或两种时，只写明确范围，不自动追加其他设备。模块安装能力再按 `../harmonyos-ui-multi/references/module-device-types.md` 映射，不能把 `targetForms` 直接等同于固定的 `deviceTypes` 数组。
 
 ## 决策与路由图
 
@@ -83,6 +84,8 @@
 ## 批次和问题
 
 批次至少记录 `batchId`、`pages`、`dependencies`、`risk`、`status` 和 `specConfirmed`。公共组件批必须排在依赖页面之前，不能把尚未确认的后续批次作为当前批的前置条件。
+
+`batches[].hifiRequired` 是布尔值，默认 `false`；用户要求或选择高保真时，将对应批次设为 `true`，全部需要则全部设为 `true`。它只记录交付要求，不代表已生成或已确认；任务级不重复保存。生成与设备覆盖按 [高保真流程契约](hifi-delivery.md)，设备范围复用 `task.targetForms`。可用 `transition-batch` 单独更新 `{"batch":{"hifiRequired":true}}`，无需改变批次状态。
 
 每个问题至少包含：
 
@@ -143,7 +146,7 @@ Issue 只维护一组施工状态：
 
 问题级验证结论不落盘，读取时由完整计划与精简结果聚合。`not_modified` 且没有验证结果时直接派生为不适用；其他问题存在 `failed` 则为失败，任一计划项缺少结果或存在 `not_verified` 则为未验证，全部适用计划项通过则为通过，全部计划项不适用则为不适用。额外、重复、字段超集或无法匹配计划的结果均使账本校验失败。
 
-`not_modified` 或 `blocked` 必须填写 `notChangedReason`；`failed` 或 `not_verified` 必须说明失败/缺失原因并转人工。只有 `source=batch_regression`，或 `execution_found` 且能通过已登记的 `changedFiles`、`changeSummary`、日志和文件依赖明确归因到当前批的问题，才进入自动修复。
+`not_modified` 或 `blocked` 必须填写 `notChangedReason`；`failed` 或 `not_verified` 必须说明失败/缺失原因。能明确归因到本批修改且可在确认范围内修复的问题继续验证修复循环；达到停止条件后，遗留问题再转人工，不因首轮失败直接结束。
 
 ## 任务、批次与证据状态
 
@@ -160,7 +163,7 @@ Issue 只维护一组施工状态：
 
 `task.status` 的聚合规则只有三条：没有批次或全部批次为 `pending` 时是 `planning`；只要任务已开始且仍有批次未终止，就是 `executing`；全部批次均为 `completed/stopped` 时是 `completed`。这里的 `completed` 仅表示任务流程已经收口，不代表测试通过；被停止的范围和失败结论仍从批次及报告读取。`bootstrap`、`put-batch` 和 `transition-batch` 会自动刷新该字段，`set-task` 不接受 `status`。
 
-`$OM/evidence/index.json` 使用 verification 文档定义的 schema v3。每个条目至少包含稳定 `evidenceId`、`type`、`round`、`links`，并选择结构化 `data` 或直接 `path`。L3 evidence 的 `links` 必须包含 `issueId + form + checkId`。`passed` 需要与检查内容相符的可靠 evidence，可使用命令、日志、截图或 `component_tree`，不强制截图或截图与组件树配对。报告前由第五步检查关联键、孤立文件和文件存在性。
+`$OM/evidence/index.json` 使用 verification 文档定义的 schema v3。每个条目至少包含稳定 `evidenceId`、`type`、`round`、`links`，并选择结构化 `data` 或直接 `path`。L3 evidence 的 `links` 必须包含 `issueId + form + checkId`。`passed` 需要与检查内容相符的可靠 evidence，可使用命令、日志、截图或 `component_tree`，不强制截图或截图与组件树配对。报告脚本检查关联键和已登记文件存在性；未登记文件不参与结论。
 
 同一执行事实只保存一次：环境和命令结果写入索引条目，轮次过程写入索引；报告只做汇总，不复制完整日志或逐步操作记录。
 
@@ -172,11 +175,13 @@ Issue 只维护一组施工状态：
 - 任务完成：全部计划批次进入终态；任一批次测试未通过，任务测试结论未通过。
 
 `task-ledger.py validate` 只校验 Schema、字段取值、页面/批次/问题引用和路由关联；`validate-state.py`
-额外校验证据索引、计划结果对应关系、正式文件登记和通过项证据。两者不判断当前应该处于哪个流程阶段，
+用于按需排查证据索引、计划结果对应关系和已登记文件。两者不判断当前应该处于哪个流程阶段，
 也不阻止 Agent 按本 Skill 更新状态。批次页面仍必须回指同一 `batchId`，问题页面必须属于问题批次，
 每个验证路由必须实际到达问题的 `page` 或 `affectedPages`；恰好命中页面账本的
 `affectedPages/plannedFiles/changedFiles` 也必须绑定该批次。`pending → executing → completed`、
 终止时进入 `stopped` 等顺序属于 Skill 流程规则，由 Agent 按五步执行。
+
+批次状态与确认由 Agent 按用户意图维护；验证入口、证据写回、补充回归和报告刷新不因 `completed` 或未处于 `executing` 而拒绝执行。
 
 ## 页面记录
 
@@ -190,24 +195,38 @@ Issue 只维护一组施工状态：
 
 1. 确认范围并完成基线、页面和路由分析后，生成 `$OM/output/route-map.json`，再只根据页面、公共依赖、顺序和风险生成 `batches`，通过 `bootstrap` 一次性写入 task、决策、页面和批次；本步不生成 `issues` 或具体修法。
 2. 展示批次计划；多批任务由用户选择先生成第一批详细 SPEC，或先生成全部批次详细 SPEC，并写入 `task.confirmationMode`。
-3. 进入第二步后，对选定批次进行具体问题分析，一次性写入该批 `issues`；该问题清单就是 SPEC，整批确认只更新 `batch.specConfirmed`，当前批同时进入 `executing`。
+3. 进入第二步后，对选定批次进行具体问题分析，一次性写入该批 `issues`；该问题清单就是 SPEC。读取并按用户要求更新 `hifiRequired`，完成本次确认范围内要求的 HTML 后一并交付；确认后更新 `batch.specConfirmed`，当前批同时进入 `executing`。
 4. 每组修改后立即写 `changeStatus`、实际文件和摘要；施工中发现的新问题可继续使用 `put-issues` 追加到当前批次，再按其实际处理结果回写。
 5. 每轮验证后用一次 `record-batch` 原子更新 `$OM/evidence/index.json` 和账本中的逐项结果；轮次产物按批次位于 `evidence/<batchId>/round-N/`。
-6. 退出时校验正式索引与账本，实时聚合验证结论；不创建或搬运临时 evidence 会话文件。
-7. 当前批验证结束后立即校验统计，通过 `render-report.py` 生成或刷新 `$OM/adaptation-report-<batchId>.html`；生成成功后才将批次写为 `completed` 并展示 HTML 预览。只有用户明确同意继续，才切换 `task.currentBatch`。
-8. 全部批次进入 `completed/stopped` 后，从最新账本生成 `$OM/adaptation-summary.html`，即使只有一个批次也生成；任务结束后连同 HTML 报告和 evidence 目录归档到 `.onemulti/history/<taskId>/`。
+6. 修复循环结束后写回最终结果和遗留原因，失败或未验证不阻断收尾；不创建或搬运临时 evidence 会话文件。
+7. 通过 `render-report.py` 校验输入并生成或刷新 `$OM/adaptation-report-<batchId>.html`；生成成功后才将批次写为 `completed` 并展示 HTML 预览。只有用户明确同意继续，才切换 `task.currentBatch`。
+8. 全部批次进入 `completed/stopped` 后，从最新账本生成 `$OM/adaptation-summary.html`，即使只有一个批次也生成；完成后保留账本、证据和报告，供后续查询或继续处理。
 
 两次写入均采用“同目录临时文件 → JSON 解析与关联校验 → 原子替换”：先完成 evidence 索引，再写账本结论。任一步失败都保留上一个有效版本及临时文件。恢复任务时从 `task.currentBatch`、`batch.status`、`changeStatus` 和 evidence 索引继续，不重复施工已通过项。
 
-账本和 evidence 写入后必须调用随 Skill 安装的校验器，不依赖宿主仓库脚本：
+写入命令和报告脚本自带校验，无需每次额外执行；需要排查数据问题时可运行：
 
 ```bash
-python3 $OM/scripts/validate-state.py .               # 校验正式账本、索引、完整计划和通过项证据
+python3 $OM/scripts/validate-state.py .               # 排查账本、索引及已登记文件
 ```
 
-校验器检查 Schema、字段取值、计划与结果一一对应、证据关联、文件哈希和孤立正式产物，不负责阻断流程状态更新。Agent 不直接
-拼接局部 JSON 后覆盖整个文件；所有写入采用同目录临时文件，经上述校验后再原子替换。命令失败时
+校验器检查 Schema、字段取值、计划与结果关联、证据引用和文件存在性，不要求测试全部通过。Agent 不直接
+拼接局部 JSON 后覆盖整个文件；所有写入采用同目录临时文件，经写入命令校验后再原子替换。数据写入失败时
 保留原文件并停止本次写入。
+
+## 接续与新任务
+
+任务完成后的后续请求由 Agent 结合原范围、Issue 和用户意图判断，不因 `completed` 拒绝继续：
+
+- **延续任务**：保留原产物，用 `set-task` 定位相关 `currentBatch`，通过 `transition-batch` 将待处理批次改为 `executing`、`testConclusion=not_run`，脚本同步刷新 `task.status`。方案需调整时改为 `pending`、`specConfirmed=false`，回到第二步确认。仅补测则保留 SPEC 与施工结果，从第四步 `preflight.py begin` 重新检查当前代码证据、模型和设备；结束后刷新批次及汇总报告。
+- **新任务**：先告知将清理旧任务产物，再执行下面的 `reset`；然后重新扫描、生成路由与计划，用 `bootstrap` 创建新账本。不要先生成新产物再清理，也不要回退上次已修改的业务代码。
+- 仅查询不修改状态；意图不明确时先询问，不能猜测后删除。
+
+```bash
+python3 $OM/scripts/task-ledger.py reset $OM/decisions.json
+```
+
+`reset` 仅接受工程内的 `.onemulti/decisions.json`：删除该目录内的账本、证据、报告、输出和临时文件，保留 `SKILL.md`、`scripts/`、`references/`、`assets/` 及 Git 元数据；不清理工程其他目录，不创建备份，删除不可恢复。
 
 ## 账本命令
 

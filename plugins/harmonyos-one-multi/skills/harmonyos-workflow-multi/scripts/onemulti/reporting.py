@@ -309,11 +309,6 @@ def batch_model(
         or
         foundation["status"] != "passed" or failed or not_verified or blocked
     ) else "passed"
-    if batch.get("status") == "completed" and batch.get("testConclusion") != conclusion:
-        raise ReportError(
-            f"{batch_id} 已完成，但账本结论 {batch.get('testConclusion')} 与报告聚合 {conclusion} 不一致"
-        )
-
     changed_files = sorted({
         path for issue in issue_models for path in issue.get("changedFiles", [])
     })

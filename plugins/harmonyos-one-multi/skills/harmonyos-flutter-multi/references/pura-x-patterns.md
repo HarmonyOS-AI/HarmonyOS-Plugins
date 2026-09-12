@@ -539,9 +539,9 @@ double cappedSc(double design, double designScale) {
 
 | 模式/场景 | 入口 |
 | --- | --- |
-| 悬停分屏 PX-01 | `P-HOVER-SPLIT` + [hover_state_interaction.md](./purax/hover_state_interaction.md) + [assets/folder_stack_example.dart](assets/folder_stack_example.dart) |
+| 悬停分屏 PX-01 | `P-HOVER-SPLIT` + [hover_state_interaction.md](./purax/hover_state_interaction.md) + [examples/hadss/folder_stack.dart](../examples/hadss/folder_stack.dart) |
 | 折痕避让 PX-02 | [crease_avoidance.md](./purax/crease_avoidance.md) |
-| 断点布局 PX-03 | [breakpoint_layout.md](./purax/breakpoint_layout.md) + [assets/breakpoint_listener.dart](assets/breakpoint_listener.dart) |
+| 断点布局 PX-03 | [breakpoint_layout.md](./purax/breakpoint_layout.md) + [examples/hadss/breakpoint_listener.dart](../examples/hadss/breakpoint_listener.dart) |
 | 开合连续 PX-04 | `P-FOLD-CONTINUITY` + [fold_continuity.md](./purax/fold_continuity.md) |
 | 折展修 bug PX-05 | [bug_fix_cases.md](./purax/bug_fix_cases.md) |
 | 信箱 PX-06 | `P-NO-LETTERBOX` + [scbcompatible_letterbox.md](./purax/scbcompatible_letterbox.md) |

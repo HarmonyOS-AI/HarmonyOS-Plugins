@@ -54,30 +54,35 @@ python3 $OM/scripts/project-scan.py . --json
     {
       "stepId": "S01",
       "action": "launch",
+      "desc": "启动应用，进入首页入口 Index",
       "target": "entry/EntryAbility",
       "expectPage": "Index"
     },
     {
       "stepId": "S02",
       "action": "tap",
+      "desc": "点击底部“首页”页签",
       "locator": { "by": "text", "value": "首页" },
       "expectPage": "HomePage"
     },
     {
       "stepId": "S03",
       "action": "swipe",
+      "desc": "在首页向上滑动，找到新闻区域的“更多”入口",
       "direction": "up",
       "distance": "medium"
     },
     {
       "stepId": "S04",
       "action": "tap",
+      "desc": "点击新闻区域的“更多”，进入新闻列表",
       "locator": { "by": "text", "value": "更多" },
       "expectPage": "NewsListPage"
     },
     {
       "stepId": "S05",
       "action": "tap",
+      "desc": "点击“南京交通新进展”新闻，进入详情页",
       "locator": { "by": "text", "value": "南京交通新进展" },
       "expectPage": "NewsDetail"
     }
@@ -95,7 +100,10 @@ python3 $OM/scripts/project-scan.py . --json
 | `steps` | 非空有序数组；数组顺序就是执行顺序 |
 | `stepId` | 当前路径内唯一，使用 `S01`、`S02` 递增 |
 | `action` | 仅使用 `launch / tap / swipe / input / back / wait` |
+| `desc` | 必填非空字符串，放在 `action` 后，用简短中文说明具体动作和操作对象 |
 | `expectPage` | 页面跳转后填写，用于中途失败定位；不发生跳转时可省略 |
+
+`desc` 必须与动作参数一致，只用于说明动作；执行仍按 `action` 及其参数，不以描述替代定位器或页面断言。
 
 动作参数：
 

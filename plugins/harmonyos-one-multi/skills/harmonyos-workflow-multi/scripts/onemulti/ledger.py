@@ -27,7 +27,7 @@ TASK_FIELDS = {
 }
 BATCH_FIELDS = {
     "batchId", "pages", "dependencies", "predecessors", "domains",
-    "risk", "status", "specConfirmed", "testConclusion",
+    "risk", "status", "specConfirmed", "testConclusion", "hifiRequired",
 }
 ISSUE_FIELDS = {
     "issueId", "batchId", "page", "component", "domain", "affectedPages",
@@ -127,7 +127,7 @@ def normalize_page(item: dict[str, Any], existing: dict[str, Any] | None = None)
 
 
 def normalize_batch(item: dict[str, Any]) -> dict[str, Any]:
-    """为批次补齐执行和测试状态。"""
+    """为批次补齐交付要求、执行和测试状态。"""
     batch = deepcopy(item)
     batch.setdefault("pages", [])
     batch.setdefault("dependencies", [])
@@ -136,6 +136,8 @@ def normalize_batch(item: dict[str, Any]) -> dict[str, Any]:
     batch.setdefault("risk", "unknown")
     batch.setdefault("status", "pending")
     batch.setdefault("specConfirmed", False)
+    # 这是用户的高保真交付要求，不表示 HTML 已生成或已确认。
+    batch.setdefault("hifiRequired", False)
     batch.setdefault("testConclusion", "not_run")
     return batch
 
@@ -363,6 +365,8 @@ def validate_ledger(ledger: object) -> list[str]:
             errors.append(f"batches[{batch_id}].status 非法: {batch.get('status')}")
         if not isinstance(batch.get("specConfirmed"), bool):
             errors.append(f"batches[{batch_id}].specConfirmed 必须是布尔值")
+        if not isinstance(batch.get("hifiRequired", False), bool):
+            errors.append(f"batches[{batch_id}].hifiRequired 必须是布尔值")
         if batch.get("testConclusion") not in TEST_CONCLUSIONS:
             errors.append(f"batches[{batch_id}].testConclusion 非法: {batch.get('testConclusion')}")
 
@@ -666,9 +670,6 @@ def add_deferred_regression(ledger: dict[str, Any], issue_id: str, raw: dict[str
     current_batch = ledger.get("task", {}).get("currentBatch")
     if issue.get("batchId") != current_batch:
         raise LedgerError("只能为当前批次 issue 记录延后回归")
-    batch = batch_by_id(ledger, issue["batchId"])
-    if batch.get("status") != "executing" or not batch.get("specConfirmed"):
-        raise LedgerError("延后回归只能在当前批次执行阶段记录")
     item = deepcopy(raw)
     key = (item["page"], item["batchId"])
     issue.setdefault("deferredRegressions", [])
@@ -682,20 +683,27 @@ def add_deferred_regression(ledger: dict[str, Any], issue_id: str, raw: dict[str
         issue["deferredRegressions"].append(item)
 
 
-def archive_ledger(path: str, history_root: str | None = None) -> str:
-    ledger = load_ledger(path)
-    om_root = os.path.dirname(os.path.abspath(path))
-    root = os.path.abspath(history_root or os.path.join(om_root, "history"))
-    destination = os.path.join(root, ledger["task"]["taskId"])
-    if os.path.exists(destination):
-        raise LedgerError(f"归档已存在: {destination}")
-    os.makedirs(destination, exist_ok=False)
-    shutil.copy2(path, os.path.join(destination, "decisions.json"))
-    for name in ("output", "evidence"):
-        source = os.path.join(om_root, name)
-        if os.path.isdir(source):
-            shutil.copytree(source, os.path.join(destination, name))
-    evidence = os.path.join(om_root, "evidence")
-    if os.path.isdir(evidence):
-        shutil.rmtree(evidence)
-    return destination
+def reset_task_outputs(path: str) -> list[str]:
+    """开始新任务前清理工程内的旧产物；是否为新任务由 Agent 判断。
+
+    只接受专用 .onemulti 目录，避免误删工程或 Skill 源码。保留安装的运行资源，
+    其余账本、证据、报告、扫描结果和临时输入全部清理；符号链接只删除链接本身。
+    """
+    ledger_path = os.path.abspath(path)
+    om_root = os.path.dirname(ledger_path)
+    if (os.path.basename(ledger_path) != "decisions.json"
+            or os.path.basename(om_root) != ".onemulti"
+            or os.path.islink(om_root) or os.path.islink(ledger_path)):
+        raise LedgerError("reset 只允许清理工程内非符号链接的 .onemulti/decisions.json")
+    preserved = {"SKILL.md", "assets", "references", "scripts", ".git"}
+    removed: list[str] = []
+    for name in sorted(os.listdir(om_root)):
+        if name in preserved:
+            continue
+        target = os.path.join(om_root, name)
+        if os.path.islink(target) or not os.path.isdir(target):
+            os.unlink(target)
+        else:
+            shutil.rmtree(target)
+        removed.append(target)
+    return removed

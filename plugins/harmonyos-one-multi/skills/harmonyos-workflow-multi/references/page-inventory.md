@@ -91,7 +91,7 @@ python3 $OM/scripts/project-scan.py <工程根> --json
 
 ## 页面类型分类
 
-词汇对齐 `$OM/references/layout-strategies.md` 现有分类，不新造体系：
+词汇对齐 `../harmonyos-ui-multi/references/layout-strategies.md` 现有分类，不新造体系：
 `list-page` / `detail-page` / `form-page` / `home-nav` / `media-page` / `other` / `unknown`。
 
 启发式信号（按优先级）：

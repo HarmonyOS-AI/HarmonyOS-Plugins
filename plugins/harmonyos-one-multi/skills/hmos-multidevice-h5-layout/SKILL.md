@@ -1,6 +1,6 @@
 ---
 name: hmos-multidevice-h5-layout
-description: 审查并修改 HarmonyOS WebView/H5 页面的多设备响应式布局、动态 REM、图片/视频适配及必要的 ArkTS 容器或桥接代码。当前覆盖手机、折叠屏和平板，不覆盖 2in1/PC。用户提到 H5、Web 组件、viewport、REM、折叠/旋转/分屏后布局异常、响应式媒体或 ArkTS-H5 联动时使用；纯 ArkUI 页面不使用。
+description: 审查并修改 HarmonyOS WebView/H5 页面的多设备响应式布局、动态 REM、图片/视频适配及必要的 ArkTS 容器或桥接代码。用户提到 H5、Web 组件、viewport、REM、折叠/旋转/分屏后布局异常、响应式媒体或 ArkTS-H5 联动时使用；纯 ArkUI 页面不使用。
 ---
 
 # HarmonyOS H5 多设备响应式适配
@@ -8,8 +8,6 @@ description: 审查并修改 HarmonyOS WebView/H5 页面的多设备响应式布
 ## 适用范围与所有权
 
 处理现有 H5 工程中的 HTML、CSS、JavaScript/TypeScript、前端框架源码，以及确有必要的 HarmonyOS ArkTS Web 容器和桥接代码。保留项目已有框架、构建方式、设计语言、桥接机制和业务行为。
-
-当前设备范围是手机、折叠屏和平板。明确要求 2in1/PC 的任务应说明当前不支持，不得套用平板或普通宽屏方案冒充完成。
 
 - **ArkTS** 负责 Web 组件的外部布局与容器可用区域，以及 Web 无法可靠获得的系统语义、生命周期和事件传输。
 - **H5** 负责 layout viewport 内部的 DOM、CSS、断点、REM 和媒体候选选择。
@@ -33,7 +31,7 @@ description: 审查并修改 HarmonyOS WebView/H5 页面的多设备响应式布
 1. **区分外部容器与内部页面**：先确认异常来自 ArkTS Web 组件尺寸，还是 H5 viewport 内的布局约束。
 2. **先自适应，后响应式**：伸缩、换行或滚动能解决时修组件约束；页面骨架、导航位置或信息层级变化时才增加断点。
 3. **按内容选择断点**：连续缩放找到拥挤、溢出或空间浪费的区间，不把设备型号直接写入规则。
-4. **CSS 优先于 JS**：视觉重排使用 Grid、Flex、media/container query；业务逻辑确实依赖布局状态时才使用 JS。已有动态 REM 生成器需要在 layout viewport 宽度变化后重新运行。
+4. **CSS 优先于 JS**：视觉重排使用 Grid、Flex、media/container query；业务逻辑确实依赖布局状态时才使用 JS。动态 REM 只作为存量移动设计坐标系的兼容层：先判断根字号是否失效、公式是否有界，再让宽屏新增空间由重复、挪移、缩进或分栏布局接管。
 5. **同时检查宽和高**：宽而短的横屏窗口不能只套用宽屏规则；必要时叠加方向、高度或宽高比条件。
 6. **保护窄屏基线**：使用 mobile-first 增强，不改变直板机的 DOM 阅读顺序、核心交互和业务状态。
 7. **按媒体语义选机制**：先区分内容图、装饰背景和视频，再选择流式 CSS、`srcset/sizes`、`picture` 或 `image-set()`。
@@ -46,25 +44,26 @@ description: 审查并修改 HarmonyOS WebView/H5 页面的多设备响应式布
 - 禁止让高频事件直接重建大段 DOM；视觉变化交给 CSS，必要写入合并到动画帧。
 - 禁止修改未提供且无法定位的另一端源码，或虚构桥接 API、事件名、载荷字段和 DOM 函数。
 - 禁止用原生物理宽高替代 H5 的 `document.documentElement.clientWidth`；原生尺寸只能作为容器诊断或事件元数据。
+- 禁止仅因目标设备更宽就提高动态 REM 的缩放上限；这会把字号、图片、间距和圆角整体放大，不能替代宽屏结构适配。
 - 禁止让承载必要信息的图片只存在于 CSS background；使用有有效替代文本的语义图片。
 
 ## 场景路由
 
 完成 `H5-00` 后，根据首个错误约束选择一个主场景；只有确有独立关联根因时才添加次场景。只读取命中场景的资源。
 
-| 场景 | 命中条件 | 必读资源 | 不要读取 |
-| --- | --- | --- | --- |
-| `H5-01` 组件自适应 | Flex/Grid 子项溢出、文本截断、媒体拉伸、横向滚动 | `references/responsive-layout.md` | 宽屏专章，除非页面骨架也变化 |
-| `H5-02` 页面响应式 | 单双栏、导航迁移、列表增列、宽屏留白 | `references/responsive-layout.md` | 键盘专章，除非存在遮挡 |
-| `H5-03` 横屏与短屏 | 横向窗口、宽而短、首屏不可操作 | `references/wide-screen-landscape.md` | 兼容专章，除非已证明是特性差异 |
-| `H5-04` 安全区与键盘 | 系统区域、输入框或固定操作栏被遮挡 | `references/safe-area-and-keyboard.md` | 宽屏专章，除非同时需要结构重排 |
-| `H5-05` 动态窗口 | 分屏、旋转或 resize 后未更新、状态丢失 | `references/responsive-layout.md` | 无关场景资源 |
-| `H5-06` Web 兼容 | CSS/API 在最低目标内核行为不同 | `references/compatibility-matrix.md` | 未证明相关的布局专章 |
-| `H5-07` 动态 REM | 根字号只在启动时计算，切换窗口后沿用旧值 | `references/rem-responsive.md` | 无结构异常时不读宽屏专章 |
-| `H5-08` ArkTS-H5 联动 | Web 容器约束、JSBridge、系统事件或双端时序 | `references/arkts-h5-coordination.md` | 无关 UI 专章 |
-| `H5-09` 响应式媒体 | 图片模糊/过大/裁切错误，或视频随窗口被破坏 | `references/responsive-media.md` | 资源不依赖原生时不读联动专章 |
+| 场景                  | 命中条件                                                                             | 必读资源                               | 不要读取                                              |
+| --------------------- | ------------------------------------------------------------------------------------ | -------------------------------------- | ----------------------------------------------------- |
+| `H5-01` 组件自适应    | Flex/Grid 子项溢出、文本截断、媒体拉伸、横向滚动                                     | `references/responsive-layout.md`      | 宽屏专章，除非页面骨架也变化                          |
+| `H5-02` 页面响应式    | 单双栏、导航迁移、列表增列、宽屏留白                                                 | `references/responsive-layout.md`      | 键盘专章，除非存在遮挡                                |
+| `H5-03` 横屏与短屏    | 横向窗口、宽而短、首屏不可操作                                                       | `references/wide-screen-landscape.md`  | 兼容专章，除非已证明是特性差异                        |
+| `H5-04` 安全区与键盘  | 系统区域、输入框或固定操作栏被遮挡                                                   | `references/safe-area-and-keyboard.md` | 宽屏专章，除非同时需要结构重排                        |
+| `H5-05` 动态窗口      | 分屏、旋转或 resize 后未更新、状态丢失                                               | `references/responsive-layout.md`      | 无关场景资源                                          |
+| `H5-06` Web 兼容      | CSS/API 在最低目标内核行为不同                                                       | `references/compatibility-matrix.md`   | 未证明相关的布局专章                                  |
+| `H5-07` 动态 REM      | 已有动态根字号未随 viewport 更新，或公式、缩放上限、构建期 px→rem 与运行时尺寸不一致 | `references/rem-responsive.md`         | 根字号符合既定公式但页面结构仍异常时，改选 `H5-01/02` |
+| `H5-08` ArkTS-H5 联动 | Web 容器约束、JSBridge、系统事件或双端时序                                           | `references/arkts-h5-coordination.md`  | 无关 UI 专章                                          |
+| `H5-09` 响应式媒体    | 图片模糊/过大/裁切错误，或视频随窗口被破坏                                           | `references/responsive-media.md`       | 资源不依赖原生时不读联动专章                          |
 
-核心判断框架无法确认根因时读取 `references/troubleshoot.md`。修改真实工程前可运行：
+基础流程无法确认根因时读取 `references/troubleshoot.md`。修改真实工程前可运行：
 
 ```bash
 node scripts/scan-h5-adaptation.mjs <源码目录>
@@ -72,16 +71,16 @@ node scripts/scan-h5-adaptation.mjs <源码目录>
 
 扫描器只提供启发式线索：退出码 `1` 表示发现高风险项，不表示脚本执行失败。输入模式、根因和修复仍以源码调用链、computed style 与复现实验为准。
 
-## 新适配方法
+## 新适配流程
 
 1. **建立源码地图**：定位 Web 入口、组件、样式、布局状态代码，以及可用时的 ArkTS Web 组件、父布局、窗口监听和桥接注册。
 2. **记录基线**：记录窄屏结构、阅读顺序、滚动容器、固定元素、媒体 slot 和核心操作。
-3. **寻找断裂点**：连续改变 Web 容器宽高，区分外部容器约束、组件不可收缩、页面结构不足和媒体资源选择问题。
+3. **寻找断裂点**：连续改变 Web 容器宽高，区分外部容器约束、组件不可收缩、页面结构不足、动态 REM 过度缩放和媒体资源选择问题。
 4. **读取专项资源**：选择主场景后完整读取对应 reference；不要预加载其他场景。
 5. **实施最小适配**：先修根约束，再增加必要的结构重排、状态同步或跨层契约；不为未发生的问题增加设备分支。
 6. **执行回归**：验证窄屏、目标窗口、临界状态和动态切换；确认布局、状态、焦点与监听生命周期连续。
 
-## 问题定位方法
+## 问题定位流程
 
 1. **收集可比较证据**：记录正常与异常状态的 Web 容器尺寸、viewport、目标元素 rect、滚动尺寸、computed style，以及相关事件和媒体数据。
 2. **定位首个错误约束**：从第一个越界或未更新节点向父级和生产链检查，不从最终被遮挡元素直接叠加补丁。
@@ -93,6 +92,7 @@ node scripts/scan-h5-adaptation.mjs <源码目录>
 
 - 直板机窄屏的结构、操作、滚动和视觉无退化。
 - 目标窗口及关键临界状态无重叠、截断、意外横向滚动或错误裁切。
+- 宽屏新增空间主要由布局变化利用；字号、图片、间距和圆角不会随 viewport 无上限整体放大。
 - 旋转、折叠和连续 resize 后无需刷新，业务状态不丢失。
 - 修改未越过输入模式允许的层级；未提供的对端有可执行交接项。
 - 新增监听器、observer 和动画帧任务在页面或组件卸载时释放。

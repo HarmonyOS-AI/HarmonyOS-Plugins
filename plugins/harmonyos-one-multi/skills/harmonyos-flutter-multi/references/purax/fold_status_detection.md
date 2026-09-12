@@ -65,7 +65,7 @@ AvoidAreaApi.removeAvoidAreaListener(_onAvoidAreaChanged);
 | sm | 320 - 600 | 手机竖屏、PuraX 折叠态外屏 |
 | md | 600 - 840 | 手机横屏、PuraX 展开态、小平板 |
 | lg | 840 - 1440 | 平板横屏、PuraX 桌面模式 |
-| xl | > 1440 | 超宽窗口 |
+| xl | > 1440 | 大屏/PC |
 
 ### 高度断点
 

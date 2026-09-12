@@ -20,7 +20,18 @@
 
 ## 组织方式
 
-同一页面的手机基线和全部目标形态放在同一 HTML 中按页面分节展示。文件位置与命名由调用方决定。
+先读取需求或调用方提供的目标设备类型，按下表生成默认预览。同一 HTML 按页面分节，文件位置与命名由调用方决定。
+
+| 设备类型 | 默认展示设备 | 默认形态 |
+|---|---|---|
+| `phone` | 直板机 | 竖屏 |
+| `foldable` | 普通双折叠（如 Mate X6/X7） | 内屏展开、竖屏 |
+| `foldable` | 阔折叠 Pura X Max | 内屏展开、横屏 |
+| `tablet` | 平板 | 横屏 |
+
+包含 `phone / foldable / tablet` 时，**每个页面固定展示以上四张预览**，按表中顺序排列；不能只在首个页面凑齐四种。部分设备范围只保留对应类型的预览及手机基线，`foldable` 始终包含普通双折叠和阔折叠。
+
+默认直接展示正常态，不询问形态选择，不提供横竖屏、折展或悬停等状态选择器，也不额外生成外屏、三折叠或其他方向的画布。只有用户明确要求其他预览形态时才调整；SPEC 或验证计划中的其他状态不自动扩展预览。此规则只决定高保真展示，不改变适配和测试范围；设备矩阵仅用于查取对应参数，不穷举其中所有设备与状态。
 
 ## 固定文档骨架
 
@@ -77,13 +88,23 @@ HTML 必须保留以下结构和标识：
     <div class="compare">
       <div class="device-frame" data-device="phone-sm"
         style="--canvas-width:374px;--canvas-height:827px;--preview-scale:.5;--preview-width:187px;--preview-height:413.5px;--stage-height:419.5px">
-        <div class="screen-wrap"><div class="screen"><div class="device-ui">手机基线 UI</div></div></div>
-        <div class="anno">手机基线说明</div>
+        <div class="screen-wrap"><div class="screen"><div class="device-ui">直板机竖屏基线 UI</div></div></div>
+        <div class="anno">直板机 · 竖屏</div>
       </div>
-      <div class="device-frame" data-device="target-device"
+      <div class="device-frame" data-device="foldable-portrait"
         style="--canvas-width:711px;--canvas-height:798px;--preview-scale:.45;--preview-width:319.95px;--preview-height:359.1px;--stage-height:419.5px">
-        <div class="screen-wrap"><div class="screen"><div class="device-ui">目标设备 UI</div></div></div>
-        <div class="anno">目标设备说明</div>
+        <div class="screen-wrap"><div class="screen"><div class="device-ui">普通双折叠展开态 UI</div></div></div>
+        <div class="anno">Mate X6/X7 · 内屏展开 · 竖屏</div>
+      </div>
+      <div class="device-frame" data-device="foldable-wide-landscape"
+        style="--canvas-width:939px;--canvas-height:664px;--preview-scale:.34;--preview-width:319.26px;--preview-height:225.76px;--stage-height:419.5px">
+        <div class="screen-wrap"><div class="screen"><div class="device-ui">阔折叠展开态 UI</div></div></div>
+        <div class="anno">Pura X Max · 内屏展开 · 横屏</div>
+      </div>
+      <div class="device-frame" data-device="tablet-landscape"
+        style="--canvas-width:1137px;--canvas-height:711px;--preview-scale:.28;--preview-width:318.36px;--preview-height:199.08px;--stage-height:419.5px">
+        <div class="screen-wrap"><div class="screen"><div class="device-ui">平板横屏 UI</div></div></div>
+        <div class="anno">平板 · 横屏</div>
       </div>
     </div>
   </section>
@@ -96,7 +117,7 @@ HTML 必须保留以下结构和标识：
 
 `--canvas-width/--canvas-height` 使用目标窗口的逻辑尺寸；`--preview-scale` 在两个方向使用同一缩放比例，`--preview-width/--preview-height` 为缩放后的展示尺寸；同一 `.compare` 的 `--stage-height` 统一取最大设备外框高度，使各设备屏幕底边对齐。
 
-同一页面的手机基线和全部目标设备必须放在同一个可横向滚动的 `.compare` 中，不得拆成上下互不对应的多个页面段落。
+上述骨架示例覆盖三类设备、四张预览，实际尺寸按 `device-matrix.md` 对应行取值。每个页面按默认映射或用户明确指定的预览形态，在同一个可横向滚动的 `.compare` 中展示，不得拆成上下互不对应的多个页面段落。
 
 ## 生成规则
 
@@ -136,7 +157,7 @@ HTML 交付前至少确认：
 - `topbar`、`rule-strip`、`overview`、`hifi-page`、`compare`、`implementation-map` 和 `acceptance` 均存在；
 - 需求范围内每个页面和变化都能在 HTML 中找到；
 - `implementation-map` 中的页面、计划文件、目标形态和视觉效果相互一致；
-- 至少包含手机基线和用户指定的全部目标形态；
+- 逐个 `hifi-page` 核对设备覆盖：全量三类设备默认恰好四张预览，分别为直板机竖屏、普通双折叠展开竖屏、Pura X Max 展开横屏、平板横屏；无默认状态选择器或擅自增加的形态，用户明确指定的例外按需求核对；
 - 设计沿用工程现有体系，新增布局符合 vp/fp、8vp 网格、文字对比度和 48vp 触摸目标要求；
 - 目标形态已体现系统栏、软键盘、折痕和字体缩放等与本批问题相关的安全区域；
 - 每个设备的首尾内容、最后一行列表或网格、底部操作和安全间距均完整可见；预期滚动的区域应明确表现为可滚动，不得被设备框静默裁切；

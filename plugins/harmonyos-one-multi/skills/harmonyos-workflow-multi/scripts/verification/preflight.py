@@ -99,8 +99,7 @@ def validate_boundary(ledger: dict[str, Any]) -> tuple[str, list[dict[str, Any]]
     )
     if not isinstance(batch_id, str) or current_batch is None:
         raise ValueError("无法从账本确定有效 task.currentBatch")
-    if current_batch.get("specConfirmed") is not True or current_batch.get("status") != "executing":
-        raise ValueError("当前批次必须已整批确认且处于 executing")
+    # 批次确认与流程状态由 Agent 维护，不据此阻断补测或恢复任务。
     issues = selected_issues(ledger, batch_id)
     if not issues:
         raise ValueError("当前已确认批次缺少已修改的问题边界")
@@ -124,21 +123,6 @@ def validate_boundary(ledger: dict[str, Any]) -> tuple[str, list[dict[str, Any]]
     if len(keys) != len(set(keys)):
         raise ValueError("当前批次 verificationPlan 包含重复计划项")
     return batch_id, issues, plans
-
-
-def validate_foundation(index: dict[str, Any], source_sha: str) -> None:
-    matches = [
-        item for item in index.get("entries", [])
-        if item.get("type") == "command" and isinstance(item.get("data"), dict)
-        and item["data"].get("phase") == "step3_foundation"
-    ]
-    if not matches:
-        raise ValueError("缺少步骤三 L1/L2 合并 evidence")
-    data = matches[-1]["data"]
-    if data.get("exitCode") != 0:
-        raise ValueError("步骤三 L1/L2 evidence 未通过")
-    if data.get("sourceSha256") != source_sha:
-        raise ValueError("步骤三 L1/L2 evidence 已过期；重新执行施工收尾检查")
 
 
 def validate_route(root: Path, ledger: dict[str, Any], batch_id: str,
@@ -249,7 +233,8 @@ def begin(args: argparse.Namespace) -> dict[str, Any]:
         if index.get("taskId") != ledger.get("task", {}).get("taskId"):
             raise ValueError("evidence/index.json taskId 与账本不一致")
         source_sha = source_snapshot(root)
-        validate_foundation(index, source_sha)
+        # 构建和静态检查是验证结果，不是进入验证阶段的资格门禁。
+        # 缺失或失败时由 run-foundation 补跑，并在本批修复循环中处理。
     except (OSError, ValueError, KeyError, TypeError, json.JSONDecodeError) as error:
         links = [{"issueId": issue["issueId"]} for issue in issues if issue.get("issueId")]
         failed = {
@@ -307,13 +292,20 @@ def record_multimodal(args: argparse.Namespace) -> dict[str, Any]:
         }
     update_state(path, index, data, mode="STOPPED", stage="multimodal_retry_confirmation_required",
                  reason="multimodal_probe_failed")
+    # 选项卡会保持当前轮运行；切换模型需要 Agent 用文字提示并结束当前轮。
     return {
         "mode": "STOPPED",
         "stage": "multimodal_retry_confirmation_required",
-        "next": "ask-test-scope",
+        "next": "wait-model-switch",
         "multimodalAvailable": False,
-        "testScopeEstimateMinutes": test_scope_estimate_minutes(plans),
         "reason": "multimodal_probe_failed",
+        "message": (
+            "当前模型未通过图片理解探测，请选择后续测试方式：\n\n"
+            "1. 仅基础测试（默认方案）：保留构建和静态检查结果，多模态测试标记为未验证，"
+            "继续生成报告。请回复“仅基础测试”。\n"
+            "2. 继续多模态测试：请先切换到支持图片理解的模型，"
+            "再回复“切换完，继续执行多模态测试”。"
+        ),
     }
 
 

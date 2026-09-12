@@ -6,7 +6,7 @@
     "required_outcomes": [
       "使用 workflow 组织范围、SPEC、确认、施工、验证和报告",
       "在诊断、方案和修复时加载 UI 领域 Skill",
-      "SPEC 与高保真合并确认"
+      "将对应批次 hifiRequired 写为 true，SPEC 与高保真合并确认"
     ],
     "forbidden_claims": [
       "因为只有一页就跳过 workflow",
@@ -15,18 +15,23 @@
   },
   {
     "id": "large-project-batch-adaptation",
-    "prompt": "把一个 30 多页的手机商城适配到平板和折叠屏，不要逐页反复确认。",
+    "prompt": "把一个 30 多页的手机商城分十批适配到平板和折叠屏，使用 aggregate 汇总确认；所有批次都要先生成高保真，每份展示直板机、折叠屏和平板，不要逐页反复确认。",
     "should_trigger": true,
     "required_outcomes": [
       "生成并核实页面清单和 route-map.json",
       "按公共依赖和页面类型组织批次",
+      "所有批次 hifiRequired=true，task.targetForms 记录 phone/foldable/tablet",
+      "先生成全部 SPEC 和十份批次 HTML，再统一确认；每份 HTML 的每个页面固定展示直板机竖屏、普通双折叠展开竖屏、Pura X Max 展开横屏、平板横屏四张预览",
       "每批依次完成 SPEC、确认、施工、验证和报告",
       "用户同意后才开始下一批"
     ],
     "forbidden_claims": [
       "在批次规划时提前生成具体问题和修法",
       "先完成所有批次施工再统一验证",
-      "批次 SPEC 已汇总确认就自动执行后续批次"
+      "批次 SPEC 已汇总确认就自动执行后续批次",
+      "仅生成 B01 高保真或后续批次自行减少设备形态",
+      "仅首个页面包含四种默认形态，或默认增加外屏、悬停、三折叠、其他方向和状态选择器",
+      "用施工后补生成 HTML 代替施工前确认"
     ]
   },
   {

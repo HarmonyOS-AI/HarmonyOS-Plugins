@@ -64,25 +64,31 @@ def scan(project: str) -> dict:
     page_to_node: dict[str, str] = {}
     builder_index: dict[str, str] = {}
     route_map_count = 0
+    counted_maps: set[str] = set()
     pages = build_page_inventory(project)
 
-    # 第一层：route_map.json 是命名路由的权威注册来源。
-    for path in iter_files(project, ("route_map.json",)):
+    def register_route_table(path: str, module_root: str) -> bool:
+        """登记一张路由表文件；同一 route id 只索引一次，返回表内容是否有效。"""
+        nonlocal route_map_count
         data = _load_json5(path)
         if not isinstance(data, dict) or not isinstance(data.get("routerMap"), list):
-            continue
-        route_map_count += 1
-        module_root = module_root_for(path)
+            return False
+        real = os.path.realpath(path)
+        if real not in counted_maps:
+            counted_maps.add(real)
+            route_map_count += 1
         module = os.path.basename(module_root) or "."
         for item in data["routerMap"]:
             if not isinstance(item, dict) or not isinstance(item.get("name"), str):
                 continue
             name = item["name"]
+            node_id = f"route:{module}:{name}"
+            if node_id in nodes:
+                continue
             source = item.get("pageSourceFile")
             page = None
             if isinstance(source, str):
                 page = os.path.relpath(os.path.join(module_root, source), project)
-            node_id = f"route:{module}:{name}"
             add_node(nodes, {
                 "id": node_id,
                 "kind": "route",
@@ -98,6 +104,47 @@ def scan(project: str) -> dict:
             builder = item.get("buildFunction")
             if isinstance(builder, str):
                 builder_index[builder] = node_id
+        return True
+
+    def router_map_issue(module_file: str, reference: object, reason: str) -> None:
+        unresolved.append({
+            "source": module_file,
+            "target": reference if isinstance(reference, str) else str(reference),
+            "type": "router-map",
+            "reason": reason,
+            "evidence": {"file": module_file, "snippet": f"routerMap: {reference}"},
+        })
+
+    # 第一层：route_map.json 是命名路由的权威注册来源。
+    for path in iter_files(project, ("route_map.json",)):
+        register_route_table(path, module_root_for(path))
+
+    # 第一层补充：module.json5 的 routerMap 引用解析。route_map.json 文件名
+    # 只覆盖 DevEco 默认名；工程使用任意 profile 名时，以 module.json5 的
+    # ``routerMap: "$profile:xxx"`` 引用为准（page-inventory.md 的既定契约）。
+    for module_file in iter_files(project, ("module.json5",)):
+        module_doc = _load_json5(module_file)
+        if not isinstance(module_doc, dict) or not isinstance(module_doc.get("module"), dict):
+            continue
+        reference = module_doc["module"].get("routerMap")
+        if reference is None:
+            continue
+        rel_module = os.path.relpath(module_file, project)
+        profile = None
+        if isinstance(reference, str) and reference.startswith("$profile:"):
+            profile = reference.split(":", 1)[1]
+        if not profile or profile in {".", ".."} or any(sep in profile for sep in ("/", "\\")):
+            router_map_issue(rel_module, reference, "router-map-reference-invalid")
+            continue
+        src_main = os.path.dirname(module_file)
+        # pageSourceFile 相对模块根记录；module.json5 位于 <模块>/src/main/ 下，
+        # 向上两级才是模块根，与文件名层 module_root_for 的口径一致。
+        module_root = os.path.dirname(os.path.dirname(src_main))
+        table = os.path.join(src_main, "resources", "base", "profile", f"{profile}.json")
+        if not os.path.isfile(table):
+            router_map_issue(rel_module, reference, "router-map-file-missing")
+        elif not register_route_table(table, module_root):
+            router_map_issue(rel_module, reference, "router-map-content-invalid")
 
     # 第二层：main_pages.json 提供 Stage 模型入口页。
     for registry in find_page_registries(project):

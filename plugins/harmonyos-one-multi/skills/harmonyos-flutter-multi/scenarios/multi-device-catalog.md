@@ -15,6 +15,7 @@
 | 自由多窗 | 窗口监听 + setWindowDecorVisible | lg/xl 左侧竖标签，sm/md 底栏 |
 | 背景氛围 | LayoutBuilder + BoxFit | 父容器宽度自适应 |
 | 功能交互挂件 | SafeArea + SystemChrome + MethodChannel | 组件尺寸按断点递增 |
+| 交互归一 | MouseRegion + GestureDetector + LongPressDraggable | lg+ 启用指针悬停/滚轮 |
 | 导航&指南针 | OhosView + MethodChannel + 传感器 | 网格/罗盘直径按断点递增 |
 | 人脸识别 | MethodChannel + VisionKit | 固定布局，小屏间距调整 |
 | 扫一扫 | mobile_scanner + image_picker | 按钮尺寸按断点递增 |

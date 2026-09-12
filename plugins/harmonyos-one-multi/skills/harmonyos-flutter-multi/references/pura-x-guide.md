@@ -273,7 +273,7 @@ final isWide = s.width >= 600;
 
 | 信号 | 判定 | 处理 |
 | --- | --- | --- |
-| 左右是**系统色渐变/模糊墙纸**、有**三点把手**、WMS 有 `SCBCompatible` 且应用窗窄 | **UX-11 / PX-06** | 改 `module.json5` / 窗口模式 / EntryAbility；详册 `references/ux11-scbcompatible-letterbox.md` |
+| 左右是**系统色渐变/模糊墙纸**、有**三点把手**、WMS 有 `SCBCompatible` 且应用窗窄 | **UX-11 / PX-06** | 改 `module.json5` / 窗口模式 / EntryAbility；详册 `ohos-platform/scbcompatible-letterbox.md` |
 | 窗口已全宽，仅**内容**居中窄列 | **UX-02** | 去无意义 `maxWidth`，主内容 `Expanded`（`P-WIDE-FILL`） |
 
 两者可叠加：先退出信箱（UX-11），再修内容限宽（UX-02）。
@@ -403,7 +403,7 @@ final isWide = s.width >= 600;
 | **症状** | 内屏展开横屏两侧蓝/紫渐变；内容成竖条；顶栏三点把手 |
 | **根因** | 系统兼容显示 `SCBCompatible`；常叠加仅 `phone`、方向被映射为 `LOCKED`、脏安装 |
 | **修法** | WMS 取证 → `deviceTypes` 含 tablet、`supportWindowMode: ["fullscreen"]` → Ability `setSupportedWindowModes` → 全屏/maximize/必要时 resize → **重装**验收 |
-| **模式** | `P-NO-LETTERBOX`；详册 `references/ux11-scbcompatible-letterbox.md`；短版 PX-06 |
+| **模式** | `P-NO-LETTERBOX`；详册 `ohos-platform/scbcompatible-letterbox.md`；短版 PX-06 |
 | **验收** | 无系统蓝底；本应用窗宽 ≈ 屏宽；无窄窗 + `SCBCompatible` 组合 |
 | **易错** | 只 hot reload；只改 Flutter `maxWidth`；认为 maximize 一定退出兼容 |
 
@@ -565,9 +565,9 @@ final isWide = s.width >= 600;
 
 | ID | 场景 | 详读 |
 | --- | --- | --- |
-| PX-01 | 悬停态分屏、内外屏比例、FolderStack | `references/purax/hover_state_interaction.md`、`assets/folder_stack_example.dart` |
+| PX-01 | 悬停态分屏、内外屏比例、FolderStack | `references/purax/hover_state_interaction.md`、`examples/hadss/folder_stack.dart` |
 | PX-02 | 铰链/折痕避让 | `references/purax/crease_avoidance.md` |
-| PX-03 | 断点响应式、NavigationSplit | `references/purax/breakpoint_layout.md`、`assets/navigation_split_example.dart` |
+| PX-03 | 断点响应式、NavigationSplit | `references/purax/breakpoint_layout.md`、`examples/hadss/navigation_split.dart` |
 | PX-04 | 开合连续性（≈ UX-15） | `references/purax/fold_continuity.md` |
 | PX-05 | 折展问题修复清单 | `references/purax/bug_fix_cases.md` |
 | PX-06 | SCBCompatible 信箱（≈ UX-11） | `references/purax/scbcompatible_letterbox.md`（短版）；详册见 UX-11 |
@@ -580,7 +580,7 @@ final isWide = s.width >= 600;
 | --- | --- |
 | **场景** | 设备半折（悬停）：视频/通话/拍摄等需上展示、下操作或按折痕分区 |
 | **目标** | 展示区与操作区分离；内外屏比例差异有策略 |
-| **方案 A** | hadss `FolderStack` / FoldSplit 等（见官方与 `assets/folder_stack_example.dart`） |
+| **方案 A** | hadss `FolderStack` / FoldSplit 等（见官方与 `examples/hadss/folder_stack.dart`） |
 | **方案 B** | `FoldStatus` / `displayFeatures` + `Column` 双 `Expanded` 分区 |
 | **联动** | **必须同时考虑 PX-02**（控件勿压折痕） |
 | **验收** | 半折时分区正确；控件不在铰链上 |
@@ -604,7 +604,7 @@ final isWide = s.width >= 600;
 | **场景** | 展开后仍单栏；Grid 列数不随宽变；列表-详情未双栏 |
 | **目标** | 按 xs/sm/md/lg/xl（或宽度断点）切换列数、分栏、NavigationSplit |
 | **方案 A** | `BreakpointManager`（hadss_adaptive_layout） |
-| **方案 B** | `LayoutBuilder` / 自研监听（`assets/breakpoint_listener.dart`）+ `NavigationSplit` 等价（`assets/navigation_split_example.dart`） |
+| **方案 B** | `LayoutBuilder` / 自研监听（`examples/hadss/breakpoint_listener.dart`）+ `NavigationSplit` 等价（`examples/hadss/navigation_split.dart`） |
 | **验收** | 断点变化时列数/分栏正确；展开后列表+详情可并排（业务需要时） |
 | **对应 UX** | UX-02 / UX-13 可叠加 |
 
@@ -802,7 +802,7 @@ cp -R "$SRC" ~/.codebuddy/skills/
 | 找可复制的 Flutter 改法 | `patterns.md` |
 | 写测试 / 验收用例 | `checklist.md` |
 | 查 UX/PX 问题目录详解（症状/根因/修法/验收） | `说明.md` §7～§8 |
-| 蓝底信箱专项 | `references/ux11-scbcompatible-letterbox.md` |
+| 蓝底信箱专项 | `ohos-platform/scbcompatible-letterbox.md` |
 | 悬停 / 折痕 / 断点详解 | `references/purax/` |
 | 示例代码 | `assets/` |
 | 路由评测用例 | `test-cases/` |

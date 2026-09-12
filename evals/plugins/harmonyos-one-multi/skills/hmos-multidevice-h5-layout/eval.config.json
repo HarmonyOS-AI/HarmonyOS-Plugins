@@ -1,0 +1,13 @@
+{
+  "target": {
+    "plugin": "harmonyos-one-multi",
+    "skill": "hmos-multidevice-h5-layout"
+  },
+  "suites": [
+    {
+      "id": "deterministic",
+      "type": "deterministic",
+      "entry": "scan.test.mjs"
+    }
+  ]
+}

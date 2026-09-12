@@ -10,6 +10,7 @@ from .static_rules import Issue, run_all
 # 扫描时跳过的目录。
 # .preview 是 DevEco 预览器的生成产物，对生成代码报缺陷只会让 agent 去改一个
 # 下次预览就会被覆盖的文件。
+# .onemulti 是 skill 安装进工程的产物，不属于用户代码，与 onemulti/project.py 保持一致。
 SKIP_DIRS = {
     "node_modules",
     "oh_modules",
@@ -18,6 +19,7 @@ SKIP_DIRS = {
     ".hvigor",
     ".idea",
     ".preview",
+    ".onemulti",
     "dist",
 }
 

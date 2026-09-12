@@ -185,9 +185,8 @@ def command_record_batch(args: argparse.Namespace) -> dict[str, Any]:
         (item for item in ledger.get("batches", []) if item.get("batchId") == batch_id),
         None,
     )
-    if current_batch is None or current_batch.get("specConfirmed") is not True \
-            or current_batch.get("status") != "executing":
-        raise LedgerError("当前批次必须已整批确认且处于 executing")
+    if current_batch is None:
+        raise LedgerError("无法从账本确定有效 task.currentBatch")
     plans = plan_keys(ledger)
     issue_ids = {
         issue["issueId"] for issue in ledger["issues"]

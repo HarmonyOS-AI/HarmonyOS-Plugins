@@ -27,7 +27,6 @@ from onemulti.ledger import (  # noqa: E402
     TEST_CONCLUSIONS,
     add_deferred_regression,
     add_verification,
-    archive_ledger,
     atomic_write,
     batch_by_id,
     issue_by_id,
@@ -42,6 +41,7 @@ from onemulti.ledger import (  # noqa: E402
     normalize_issue,
     put_by_id,
     refresh_task_status,
+    reset_task_outputs,
     related_page_paths,
     validate_ledger,
 )
@@ -82,7 +82,8 @@ COPYABLE_EXAMPLES = {
     "dependencies": [],
     "predecessors": [],
     "domains": ["size-layout"],
-    "risk": "low"
+    "risk": "low",
+    "hifiRequired": false
   }]
 }""",
     "init": """可复制 JSON 示例（task.json）：
@@ -94,10 +95,11 @@ COPYABLE_EXAMPLES = {
     "merge-pages": """可复制 JSON 示例（pages.json）：
 {"pages":[{"path":"entry/src/main/ets/pages/Index.ets","type":"page","module":"entry","dependencies":[]}]}""",
     "put-batch": """可复制 JSON 示例（batches.json）：
-{"batches":[{"batchId":"B01","pages":["entry/src/main/ets/pages/Index.ets"],"dependencies":[],"predecessors":[],"domains":["size-layout"],"risk":"low"}]}""",
+{"batches":[{"batchId":"B01","pages":["entry/src/main/ets/pages/Index.ets"],"dependencies":[],"predecessors":[],"domains":["size-layout"],"risk":"low","hifiRequired":false}]}""",
     "transition-batch": """可复制 JSON 示例（batch-patch.json）：
 {"batch":{"specConfirmed":true,"status":"executing"}}
-流程主路径：pending -> executing -> completed；终止时进入 stopped""",
+流程主路径：pending -> executing -> completed；终止时进入 stopped
+用户要求高保真时可单独更新：{"batch":{"hifiRequired":true}}，不改变其他字段。""",
     "put-issues": """可复制 JSON 示例（issues.json）：
 {"issues":[{"issueId":"B01-UI-001","batchId":"B01","page":"entry/src/main/ets/pages/Index.ets","component":"Index","targetForms":["tablet"],"problem":"平板仍为单列","source":"task_analysis","rootCause":"未消费断点","proposal":"md+ 使用双列","plannedFiles":["entry/src/main/ets/pages/Index.ets"],"verificationPlan":[{"form":"tablet","checkId":"layout-two-column","routeId":"R-B01-INDEX","check":"平板显示双列且无截断"}]}]}""",
     "transition-issue": """可复制 JSON 示例（issue-patch.json）：
@@ -241,14 +243,9 @@ def command_init(args: argparse.Namespace) -> dict[str, Any]:
     task = object_input(args.input, "task")
     if os.path.exists(args.ledger):
         existing = load_json(args.ledger)
-        # 首次安装已创建 task=null 的安全占位账本，可直接初始化；只有真实旧任务
-        # 才要求显式归档，避免误覆盖历史确认和证据。
-        if is_bootstrap_ledger(existing):
-            pass
-        elif not args.archive_existing:
-            raise LedgerError(f"账本已存在: {args.ledger}；如需开始新任务请使用 --archive-existing")
-        else:
-            archive_ledger(args.ledger, args.history_root)
+        # 安装器的空账本可直接初始化；真实旧任务须先明确清理，不能隐式覆盖。
+        if not is_bootstrap_ledger(existing):
+            raise LedgerError(f"账本已存在: {args.ledger}；延续任务请更新账本，新任务请先执行 reset")
     ledger = new_ledger(task)
     atomic_write(args.ledger, ledger)
     initialize_evidence_index(args.ledger, ledger["task"]["taskId"])
@@ -308,9 +305,7 @@ def command_bootstrap(args: argparse.Namespace) -> dict[str, Any]:
     if os.path.exists(args.ledger):
         existing = load_json(args.ledger)
         if not is_bootstrap_ledger(existing):
-            if not args.archive_existing:
-                raise LedgerError(f"账本已存在: {args.ledger}；如需开始新任务请使用 --archive-existing")
-            archive_ledger(args.ledger, args.history_root)
+            raise LedgerError(f"账本已存在: {args.ledger}；延续任务请更新账本，新任务请先执行 reset")
     atomic_write(args.ledger, ledger)
     initialize_evidence_index(args.ledger, ledger["task"]["taskId"])
     return ledger
@@ -328,12 +323,8 @@ def command_validate(args: argparse.Namespace) -> dict[str, Any]:
     return ledger
 
 
-def command_archive(args: argparse.Namespace) -> dict[str, Any]:
-    ledger = load_ledger(args.ledger)
-    if ledger.get("task") is None:
-        raise LedgerError("空账本没有可归档的任务")
-    destination = archive_ledger(args.ledger, args.history_root)
-    return {"ledger": ledger, "archive": destination}
+def command_reset(args: argparse.Namespace) -> dict[str, Any]:
+    return {"removed": reset_task_outputs(args.ledger)}
 
 
 def command_set_task(args: argparse.Namespace) -> dict[str, Any]:
@@ -402,9 +393,9 @@ def command_transition_batch(args: argparse.Namespace) -> dict[str, Any]:
 
     def operation(ledger: dict[str, Any]) -> None:
         batch = batch_by_id(ledger, args.batch_id)
-        if "specConfirmed" in patch:
-            if not isinstance(patch["specConfirmed"], bool):
-                raise LedgerError("batch.specConfirmed 必须是布尔值")
+        for name in ("specConfirmed", "hifiRequired"):
+            if name in patch and not isinstance(patch[name], bool):
+                raise LedgerError(f"batch.{name} 必须是布尔值")
         if "status" in patch:
             if patch["status"] not in BATCH_STATUSES:
                 raise LedgerError(f"batch.status 非法: {patch['status']}")
@@ -491,8 +482,6 @@ def build_parser() -> argparse.ArgumentParser:
     init = commands.add_parser("init", help="初始化 schemaVersion=3 精简账本")
     init.add_argument("ledger")
     init.add_argument("--input", required=True, help="task JSON 文件，- 表示 stdin")
-    init.add_argument("--archive-existing", action="store_true")
-    init.add_argument("--history-root")
     init.set_defaults(handler=command_init)
     add_example(init, "init")
 
@@ -504,8 +493,6 @@ def build_parser() -> argparse.ArgumentParser:
     bootstrap.add_argument("ledger")
     bootstrap.add_argument("--input", required=True, help="包含 task/decisions/pages/batches 的 JSON 文件")
     bootstrap.add_argument("--route-map", required=True, help="已核实的 output/route-map.json")
-    bootstrap.add_argument("--archive-existing", action="store_true")
-    bootstrap.add_argument("--history-root")
     bootstrap.set_defaults(handler=command_bootstrap)
     add_example(bootstrap, "bootstrap")
 
@@ -513,10 +500,12 @@ def build_parser() -> argparse.ArgumentParser:
     validate.add_argument("ledger")
     validate.set_defaults(handler=command_validate)
 
-    archive = commands.add_parser("archive", help="归档账本、output 和 evidence")
-    archive.add_argument("ledger")
-    archive.add_argument("--history-root")
-    archive.set_defaults(handler=command_archive)
+    reset = commands.add_parser(
+        "reset", help="开始新任务前删除 .onemulti 内全部任务产物，保留 Skill 资源",
+        description="仅用于 Agent 已判断为新任务的请求；删除不可恢复，延续任务不得调用。",
+    )
+    reset.add_argument("ledger", help="工程内的 .onemulti/decisions.json")
+    reset.set_defaults(handler=command_reset)
 
     set_task = commands.add_parser("set-task", help="更新任务游标和配置")
     set_task.add_argument("ledger")
@@ -606,8 +595,8 @@ def main() -> int:
     args = parser.parse_args()
     try:
         result = args.handler(args)
-        if args.command == "archive":
-            output = {**summary(result["ledger"]), "archive": result["archive"]}
+        if args.command == "reset":
+            output = result
         else:
             output = summary(result)
         print(json.dumps({"ok": True, **output}, ensure_ascii=False, indent=2))

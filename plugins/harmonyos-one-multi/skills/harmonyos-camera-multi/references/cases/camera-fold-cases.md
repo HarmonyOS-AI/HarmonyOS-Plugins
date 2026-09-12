@@ -158,9 +158,11 @@ if (deviceIndex === -1) {
 
 **问题点**：防止数组越界不等于允许改变相机语义。跨 FRONT/BACK 的 fallback 必须是经确认的产品策略，并同步位置、镜像和控件状态。
 
-### 正例：完整重建相机链路
+### 正例：相机重建核心片段
 
 > 来源：`CameraPhoto.ets`（GoodCase）
+
+以下仅展示设备选择与会话重建，省略了串行调度和过期请求检查；接入时须复用工程的串行重建机制，并在异步边界检查请求是否过期，不可直接作为完整切镜实现。
 
 ```typescript
 async initCamera(supportedCameras?: Array<camera.CameraDevice>): Promise<boolean> {
@@ -236,9 +238,9 @@ async initCamera(supportedCameras?: Array<camera.CameraDevice>): Promise<boolean
 ### 通用修复方案
 
 - 选择相机时使用 `findIndex` 查找目标位置相机。
-- 已有预览或用户主动切镜时，若目标位置不存在则保持当前相机不变，并反馈不可用。
+- 用户主动切镜时，若目标位置不存在且当前相机仍可用，则保留原预览并反馈目标不可用。
 - 首次启动时只有产品策略明确允许“任意可用相机”才可选择其他位置；选择后必须同步实际 `cameraPosition`、镜像和控件状态。
-- 折展切镜不得用 `cameras[0]` 作为通用 fallback，应保持原位置意图并等待当前形态对应的物理镜头。
+- 折展导致旧相机失效时，保留原位置意图，遮住旧预览、禁用拍摄并串行释放旧链，等待当前形态对应的物理镜头；不得用 `cameras[0]` 作为通用 fallback。
 
 ## 场景 8：折展后画面不旋转、拉伸且有黑边（方向冻结复合症状）
 

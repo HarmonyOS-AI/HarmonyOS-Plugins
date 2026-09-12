@@ -257,12 +257,29 @@ def run(skill_root: Path) -> tuple[bool, str]:
             _write_json(root / "evidence" / "index.json", foundation_failed)
             failed_foundation = _run_cli(script, root, "--batch-id", "B02")
             assert failed_foundation.returncode == 0, failed_foundation.stderr
+            assert json.loads(failed_foundation.stdout)["flowStatus"] == "completed"
+            assert json.loads(failed_foundation.stdout)["testConclusion"] == "failed"
             failed_foundation_html = (root / "adaptation-report-B02.html").read_text(
                 encoding="utf-8"
             )
             assert "验证未通过" in failed_foundation_html
             assert "L1/L2 基础检查" in failed_foundation_html
             assert "构建或静态检查至少一项未通过" in failed_foundation_html
+
+            # 修复轮通过后读取最新基础结果，不被第一轮失败永久锁定。
+            repaired = _evidence()
+            repaired["entries"][0]["data"]["exitCode"] = 1
+            repaired["entries"].append({
+                "evidenceId": "E-REPAIRED", "type": "command", "round": 5,
+                "links": [{"issueId": "B01-UI-001"}],
+                "data": {"argv": ["devecocli", "build"], "exitCode": 0,
+                         "phase": "step3_foundation"},
+            })
+            _write_json(root / "evidence" / "index.json", repaired)
+            recovered = _run_cli(script, root, "--batch-id", "B01")
+            assert recovered.returncode == 0, recovered.stderr
+            assert json.loads(recovered.stdout)["testConclusion"] == "passed"
+            _write_json(root / "evidence" / "index.json", foundation_failed)
 
             ledger = json.loads((root / "decisions.json").read_text(encoding="utf-8"))
             ledger["task"]["status"] = "completed"
@@ -287,6 +304,15 @@ def run(skill_root: Path) -> tuple[bool, str]:
             assert "基础检查未通过，仍有 1 项运行或视觉检查未验证" in summary_html
             assert "0 项验证失败" not in summary_html
 
+            # 补测改变结论后可刷新已完成批次，旧 testConclusion 不再阻断报告。
+            ledger["batches"][0]["testConclusion"] = "failed"
+            _write_json(root / "decisions.json", ledger)
+            ledger_before_refresh = _digest(root / "decisions.json")
+            refreshed = _run_cli(script, root, "--batch-id", "B01")
+            assert refreshed.returncode == 0, refreshed.stderr
+            assert json.loads(refreshed.stdout)["testConclusion"] == "passed"
+            assert _digest(root / "decisions.json") == ledger_before_refresh
+
             valid_report_digest = _digest(report_b01)
             broken = json.loads((root / "evidence" / "index.json").read_text(encoding="utf-8"))
             broken["entries"][-1]["path"] = "evidence/B01/round-1/missing.png"
@@ -298,4 +324,4 @@ def run(skill_root: Path) -> tuple[bool, str]:
             )
     except Exception as error:  # noqa: BLE001 - 契约需返回完整失败原因
         return False, str(error)
-    return True, "批次/汇总统计、截图归档、转义、确定性和异常拒绝均通过"
+    return True, "批次/汇总统计、截图展示、转义、确定性和异常拒绝均通过"

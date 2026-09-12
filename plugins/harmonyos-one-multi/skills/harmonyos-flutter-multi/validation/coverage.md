@@ -59,7 +59,7 @@ Link mapping: references/purax/* -> ../references/purax/*; assets/* -> ../exampl
 | Grid 列数不随宽度变化 | 并 UX-02 / PX-03 |
 | FAB 挡底部手势条 | 并 UX-07 |
 | 视频全屏未随窗口更新 | 并 UX-05/09 |
-| 鼠标/键鼠焦点 | 非本 skill |
+| 鼠标/键鼠焦点（2in1） | 非本 skill |
 | 纯 ArkUI / Account Kit | `huawei-quick-login` / `hmos-multidevice-*` |
 | 冻屏卡死 | `hmos-appfreeze-analysis` |
 | 相机枚举/stride 花屏 | `hmos-multidevice-hardware-access` |

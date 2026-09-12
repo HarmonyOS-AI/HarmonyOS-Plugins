@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -27,6 +28,7 @@ def _route_map() -> dict:
             "targetPage": "entry/src/main/ets/pages/Index.ets",
             "steps": [{
                 "stepId": "S01", "action": "launch",
+                "desc": "启动应用，进入 Index 页面",
                 "target": "entry/EntryAbility", "expectPage": "Index",
             }],
         }],
@@ -58,6 +60,7 @@ def run(skill_root: Path) -> tuple[bool, str]:
             help_text = command("--help").stdout
             assert "add-evidence" not in help_text, "账本 CLI 不应提供内嵌 evidence 命令"
             assert "bootstrap" in help_text
+            assert "reset" in help_text and "archive" not in help_text
             for name in (
                 "bootstrap", "init", "set-task", "put-decision", "merge-pages",
                 "put-batch", "transition-batch", "put-issues", "transition-issue",
@@ -115,6 +118,8 @@ def run(skill_root: Path) -> tuple[bool, str]:
             bootstrapped = json.loads(bootstrap_ledger.read_text(encoding="utf-8"))
             assert bootstrapped["task"]["currentBatch"] == "B01"
             assert "testConclusion" not in bootstrapped["task"]
+            assert "hifiRequired" not in bootstrapped["task"]
+            assert bootstrapped["batches"][0]["hifiRequired"] is False
             assert bootstrapped["pages"]["entry/src/main/ets/pages/Index.ets"]["batchId"] == "B01"
             assert json.loads(
                 (bootstrap_root / "evidence" / "index.json").read_text(encoding="utf-8")
@@ -210,12 +215,59 @@ def run(skill_root: Path) -> tuple[bool, str]:
                 "--route-map", str(route_map), expect=1,
             )
             assert _digest(ledger) == before_route_gate, "旧 Markdown 路由表仍通过校验"
+            # 动作说明缺失、空白或类型错误时拒绝写入批次，不影响已有账本。
+            for invalid_desc in (None, "", "  ", 123):
+                invalid_route = _route_map()
+                step = invalid_route["routes"][0]["steps"][0]
+                if invalid_desc is None:
+                    step.pop("desc")
+                else:
+                    step["desc"] = invalid_desc
+                _write(route_map, invalid_route)
+                result = command(
+                    "put-batch", str(ledger), "--input", str(batch),
+                    "--route-map", str(route_map), expect=1,
+                )
+                assert ".desc" in result.stdout + result.stderr
+                assert _digest(ledger) == before_route_gate
             _write(route_map, _route_map())
             command(
                 "put-batch", str(ledger), "--input", str(batch),
                 "--route-map", str(route_map),
             )
             assert json.loads(ledger.read_text(encoding="utf-8"))["task"]["status"] == "planning"
+
+            # 高保真要求按批保存；增量改计划或状态不能把已记录要求重置掉。
+            hifi_patch = root / "hifi-patch.json"
+            _write(hifi_patch, {"batchId": "B01", "hifiRequired": True})
+            command("put-batch", str(ledger), "--input", str(hifi_patch),
+                    "--route-map", str(route_map))
+            command("put-batch", str(ledger), "--input", str(batch),
+                    "--route-map", str(route_map))
+            assert json.loads(ledger.read_text(encoding="utf-8"))["batches"][0]["hifiRequired"] is True
+            for required in (False, True):
+                _write(hifi_patch, {"batch": {"hifiRequired": required}})
+                command("transition-batch", str(ledger), "B01", "--input", str(hifi_patch))
+                hifi_data = json.loads(ledger.read_text(encoding="utf-8"))
+                assert hifi_data["batches"][0]["hifiRequired"] is required
+                assert hifi_data["batches"][0]["status"] == "pending"
+                assert hifi_data["batches"][0]["specConfirmed"] is False
+                assert hifi_data["task"]["targetForms"] == ["phone-portrait", "foldable-expanded"]
+            before_hifi_error = _digest(ledger)
+            for invalid_required in ("true", 1, None):
+                _write(hifi_patch, {"batch": {"hifiRequired": invalid_required}})
+                result = command("transition-batch", str(ledger), "B01", "--input", str(hifi_patch), expect=1)
+                assert "hifiRequired" in result.stdout + result.stderr
+                _write(hifi_patch, {"batchId": "B01", "hifiRequired": invalid_required})
+                result = command("put-batch", str(ledger), "--input", str(hifi_patch),
+                                 "--route-map", str(route_map), expect=1)
+                assert "hifiRequired" in result.stdout + result.stderr
+                assert _digest(ledger) == before_hifi_error
+            # 不在 task 重复维护，也不因尚无 HTML 文件而增加写入门禁。
+            _write(hifi_patch, {"hifiRequired": True})
+            command("set-task", str(ledger), "--input", str(hifi_patch), expect=1)
+            assert _digest(ledger) == before_hifi_error
+            command("validate", str(ledger))
 
             task_running = root / "task-running.json"
             _write(task_running, {"currentBatch": "B01"})
@@ -416,6 +468,20 @@ def run(skill_root: Path) -> tuple[bool, str]:
             command("set-task", str(ledger), "--input", str(removed_task_field), expect=1)
             assert _digest(ledger) == before_removed_task_field
 
+            # 已完成任务可继续；只刷新批次和任务状态，不清理原 SPEC 或证据。
+            completed_data = json.loads(ledger.read_text(encoding="utf-8"))
+            evidence_before_resume = _digest(root / "evidence" / "index.json")
+            resume_patch = root / "resume.json"
+            _write(resume_patch, {"status": "executing", "testConclusion": "not_run"})
+            command("transition-batch", str(ledger), "B01", "--input", str(resume_patch))
+            resumed_data = json.loads(ledger.read_text(encoding="utf-8"))
+            assert resumed_data["task"]["status"] == "executing"
+            assert resumed_data["issues"] == completed_data["issues"]
+            assert resumed_data["decisions"] == completed_data["decisions"]
+            assert resumed_data["batches"][0]["specConfirmed"] is True
+            assert _digest(root / "evidence" / "index.json") == evidence_before_resume
+            command("transition-batch", str(ledger), "B01", "--input", str(batch_done))
+
             # 证据字段不能混入精简结果，失败写入不能污染有效账本。
             before_illegal_result = _digest(ledger)
             illegal_result = root / "illegal-result.json"
@@ -433,21 +499,63 @@ def run(skill_root: Path) -> tuple[bool, str]:
             old_artifact = evidence_dir / "B01" / "round-1" / "old.png"
             old_artifact.parent.mkdir(parents=True)
             old_artifact.write_bytes(b"old evidence")
-            history = root / "history"
+            # 新任务清理旧产物，保留运行资源与工程代码；不再创建历史副本。
+            reset_project = root / "reset-project"
+            reset_om = reset_project / ".onemulti"
+            reset_om.mkdir(parents=True)
+            reset_ledger = reset_om / "decisions.json"
+            shutil.copy2(ledger, reset_ledger)
+            shutil.copytree(evidence_dir, reset_om / "evidence")
+            shutil.copytree(root / "output", reset_om / "output")
+            preserved = [reset_om / "SKILL.md"] + [
+                reset_om / directory / "keep.txt" for directory in ("assets", "references", "scripts", ".git")
+            ]
+            source_file = reset_project / "Index.ets"
+            for path in preserved + [source_file]:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("keep", encoding="utf-8")
+            for name in ("adaptation-report-B01.html", "adaptation-summary.html",
+                         "adaptation-report-batch1.md", "page-scan-extra.py", "task.tmp"):
+                (reset_om / name).write_text("old output", encoding="utf-8")
+            external = root / "external-data"
+            external.mkdir()
+            (external / "keep.txt").write_text("outside", encoding="utf-8")
+            (reset_om / "external-link").symlink_to(external, target_is_directory=True)
+            # 误传工程目录或链接目录必须在删除前拒绝。
+            original_digest = _digest(ledger)
+            command("reset", str(ledger), expect=1)
+            assert _digest(ledger) == original_digest
+            linked_root = root / "linked-project"
+            linked_root.mkdir()
+            (linked_root / ".onemulti").symlink_to(reset_om, target_is_directory=True)
+            command("reset", str(linked_root / ".onemulti" / "decisions.json"), expect=1)
+            assert reset_ledger.is_file()
+            cleared = json.loads(command("reset", str(reset_ledger)).stdout)
+            assert cleared["removed"]
+            assert {path.name for path in reset_om.iterdir()} == {"SKILL.md", "assets", "references", "scripts", ".git"}
+            assert all(path.read_text(encoding="utf-8") == "keep" for path in preserved + [source_file])
+            assert (external / "keep.txt").read_text(encoding="utf-8") == "outside"
+            assert json.loads(command("reset", str(reset_ledger)).stdout)["removed"] == []
+
+            # 清理后重新生成路由和计划，不能把新任务的产物一起删掉。
             next_task = root / "next-task.json"
-            _write(next_task, {
-                "taskId": "ui-eval-002", "scope": [], "targetForms": ["tablet"],
-                "confirmationMode": "batch",
-            })
+            next_input = json.loads(bootstrap_input.read_text(encoding="utf-8"))
+            next_input["task"]["taskId"] = "ui-eval-002"
+            next_input["task"]["currentBatch"] = "B01"
+            _write(next_task, next_input)
+            (reset_om / "output").mkdir()
+            next_route = reset_om / "output" / "route-map.json"
+            _write(next_route, _route_map())
             command(
-                "init", str(ledger), "--input", str(next_task), "--archive-existing",
-                "--history-root", str(history),
+                "bootstrap", str(reset_ledger), "--input", str(next_task),
+                "--route-map", str(next_route),
             )
-            assert (history / "ui-eval-001" / "decisions.json").is_file()
-            assert (history / "ui-eval-001" / "evidence" / "index.json").is_file()
-            assert (history / "ui-eval-001" / "evidence" / "B01" / "round-1" / "old.png").is_file()
-            assert {path.name for path in evidence_dir.iterdir()} == {"index.json"}
-            assert json.loads((evidence_dir / "index.json").read_text(encoding="utf-8")) == {
+            assert next_route.is_file()
+            new_data = json.loads(reset_ledger.read_text(encoding="utf-8"))
+            assert new_data["task"]["taskId"] == "ui-eval-002"
+            assert new_data["task"]["status"] == "planning" and new_data["issues"] == []
+            assert {path.name for path in (reset_om / "evidence").iterdir()} == {"index.json"}
+            assert json.loads((reset_om / "evidence" / "index.json").read_text(encoding="utf-8")) == {
                 "schemaVersion": 3, "taskId": "ui-eval-002", "entries": [],
             }
 
@@ -477,6 +585,7 @@ def run(skill_root: Path) -> tuple[bool, str]:
                         "routeId": f"R-{batch}", "batchId": batch, "targetPage": page,
                         "steps": [{
                             "stepId": "S01", "action": "launch",
+                            "desc": f"启动应用，进入 {Path(page).stem} 页面",
                             "target": "entry/EntryAbility", "expectPage": page,
                         }],
                     }
@@ -498,7 +607,8 @@ def run(skill_root: Path) -> tuple[bool, str]:
                     for page in pages_by_batch.values()
                 ],
                 "batches": [
-                    {"batchId": batch, "pages": [page], "dependencies": [], "risk": "low"}
+                    {"batchId": batch, "pages": [page], "dependencies": [], "risk": "low",
+                     "hifiRequired": batch == "B01"}
                     for batch, page in pages_by_batch.items()
                 ],
             })
@@ -547,6 +657,11 @@ def run(skill_root: Path) -> tuple[bool, str]:
                 )
 
             begin_multi_batch("B01")
+            hifi_batches = json.loads(multi_ledger.read_text(encoding="utf-8"))
+            assert hifi_batches["task"]["confirmationMode"] == "aggregate"
+            assert {batch["batchId"]: batch["hifiRequired"] for batch in hifi_batches["batches"]} == {
+                "B01": True, "B02": False,
+            }
 
             deferred_file = multi / "deferred-regression.json"
             _write(deferred_file, {
@@ -622,6 +737,19 @@ def run(skill_root: Path) -> tuple[bool, str]:
                     if item.get("evidenceId") == "E-PREFLIGHT"
                 )
 
+            # 缺少或失败的施工检查不阻断进入验证；失败记录仍保留。
+            verify_command(preflight, "begin", str(multi))
+            failing_check = om / "scripts" / "failing-check.py"
+            failing_check.parent.mkdir(exist_ok=True)
+            failing_check.write_text("raise SystemExit(1)\n", encoding="utf-8")
+            failed_foundation = subprocess.run(
+                [sys.executable, str(foundation), str(multi), "--prepare-first-round",
+                 "--devecocli", str(fake_devecocli), "--check-script", str(failing_check)],
+                text=True, capture_output=True, check=False,
+            )
+            assert failed_foundation.returncode == 1, failed_foundation.stderr
+            assert not json.loads(failed_foundation.stdout)["ok"]
+            verify_command(preflight, "begin", str(multi))
             prepare_foundation()
             # begin 不再依赖 read-protocol 凭据，并允许对同一批次幂等重跑。
             verify_command(preflight, "begin", str(multi))
@@ -637,11 +765,27 @@ def run(skill_root: Path) -> tuple[bool, str]:
             assert failed_probe == {
                 "mode": "STOPPED",
                 "stage": "multimodal_retry_confirmation_required",
-                "next": "ask-test-scope",
+                "next": "wait-model-switch",
                 "multimodalAvailable": False,
-                "testScopeEstimateMinutes": 6,
                 "reason": "multimodal_probe_failed",
+                "message": (
+                    "当前模型未通过图片理解探测，请选择后续测试方式：\n\n"
+                    "1. 仅基础测试（默认方案）：保留构建和静态检查结果，多模态测试标记为未验证，"
+                    "继续生成报告。请回复“仅基础测试”。\n"
+                    "2. 继续多模态测试：请先切换到支持图片理解的模型，"
+                    "再回复“切换完，继续执行多模态测试”。"
+                ),
             }
+            # 用户选择或预授权默认方案时走基础测试；失败探测本身仍保持 STOPPED。
+            basic_only = json.loads(verify_command(
+                preflight, "record-test-scope", str(multi), "--choice", "basic_only",
+            ).stdout)
+            assert basic_only["mode"] == "STATIC_ONLY"
+            assert basic_only["next"] == "record-static-only-results"
+            assert not preflight_state()["data"].get("device")
+            verify_command(preflight, "begin", str(multi))
+            assert json.loads(verify_command(preflight, "record-multimodal", str(multi)).stdout) == failed_probe
+            # 模拟用户在下一轮切换模型并明确继续；不是在失败后弹卡要求重试。
             retry = json.loads(verify_command(
                 preflight, "record-test-scope", str(multi),
                 "--choice", "basic_and_multimodal",
@@ -654,7 +798,7 @@ def run(skill_root: Path) -> tuple[bool, str]:
             failed_again = json.loads(
                 verify_command(preflight, "record-multimodal", str(multi)).stdout
             )
-            assert failed_again["stage"] == "multimodal_retry_confirmation_required"
+            assert failed_again == failed_probe
             verify_command(
                 preflight, "record-test-scope", str(multi),
                 "--choice", "basic_and_multimodal",
@@ -668,6 +812,183 @@ def run(skill_root: Path) -> tuple[bool, str]:
                 "stage": "multimodal_approved",
                 "next": "prepare-device",
             }
+            # 只使用假 CLI：验证 L2 失败仍可执行 L3，首轮失败不结束批次，
+            # 修复后第 2–5 轮仍能写入新结果；这里不启动真实设备。
+            test_tmp = om / "evidence" / "tmp"
+            test_tmp.mkdir(exist_ok=True)
+            device_file = test_tmp / "device.json"
+            _write(device_file, {"kind": "emulator", "identifier": "fixture-device"})
+            verify_command(preflight, "bind-device", str(multi), "--input", str(device_file))
+            calls = test_tmp / "cli-calls.txt"
+            fake_devecocli.write_text(
+                f"#!{sys.executable}\nimport sys\nfrom pathlib import Path\n"
+                f"with Path({str(calls)!r}).open('a') as stream:\n"
+                "    stream.write(sys.argv[1] + '\\n')\n",
+                encoding="utf-8",
+            )
+            for round_number in range(1, 6):
+                if round_number == 2:
+                    failing_check.write_text("raise SystemExit(0)\n", encoding="utf-8")
+                foundation_result = subprocess.run(
+                    [sys.executable, str(foundation), str(multi), "--round", str(round_number),
+                     "--devecocli", str(fake_devecocli), "--check-script", str(failing_check)],
+                    text=True, capture_output=True, check=False,
+                )
+                assert foundation_result.returncode == (1 if round_number == 1 else 0), \
+                    foundation_result.stderr
+                levels = json.loads(foundation_result.stdout)["levels"]
+                assert levels["L1"] == 0 and levels["L3"] == 0
+                assert preflight_state()["data"]["mode"] == "FULL"
+                result_status = "passed" if round_number == 5 else "failed"
+                round_input = test_tmp / "repair-round.json"
+                _write(round_input, {
+                    "round": round_number,
+                    "commands": [{
+                        "argv": ["fixture-ui-check", str(round_number)],
+                        "exitCode": 0 if result_status == "passed" else 1,
+                        **({"reason": f"第 {round_number} 轮新定位的布局问题"}
+                           if result_status == "failed" else {}),
+                        "links": [{"issueId": "B01-UI-001", "form": "foldable-expanded",
+                                   "checkId": "layout"}],
+                    }],
+                    "artifacts": [],
+                    "results": [{
+                        "issueId": "B01-UI-001", "form": "foldable-expanded", "checkId": "layout",
+                        "status": result_status,
+                        **({"reason": f"第 {round_number} 轮新定位的布局问题"}
+                           if result_status == "failed" else {}),
+                    }],
+                })
+                verify_command(evidence, "record-batch", str(multi), "--input", str(round_input))
+                round_ledger = json.loads(multi_ledger.read_text(encoding="utf-8"))
+                assert round_ledger["batches"][0]["status"] == "executing"
+                assert round_ledger["batches"][0]["testConclusion"] == "not_run"
+                assert round_ledger["issues"][0]["verificationResults"][0]["status"] == result_status
+            assert calls.read_text(encoding="utf-8").splitlines() == ["build", "run"] * 5
+            evidence_index = json.loads((om / "evidence" / "index.json").read_text(encoding="utf-8"))
+            foundations = [item for item in evidence_index["entries"]
+                           if item.get("data", {}).get("phase") == "step3_foundation"]
+            assert [item["round"] for item in foundations[-5:]] == [1, 2, 3, 4, 5]
+            assert [item["data"]["exitCode"] for item in foundations[-5:]] == [1, 0, 0, 0, 0]
+
+            # 独立多模块夹具：模块名不同于目录名，嵌套 HSP、同名前缀 HAR 和后续批次隔离。
+            hsp_project = root / "hsp-build"
+            shutil.copytree(multi, hsp_project)
+            hsp_om = hsp_project / ".onemulti"
+            module_definitions = [
+                ("entry", "entry", "entry"),
+                ("ui_shared", "libs/ui", "shared"),
+                ("nested_shared", "libs/ui/nested", "shared"),
+                ("other_har", "libs/ui-extra", "har"),
+                ("later_shared", "libs/later", "shared"),
+            ]
+            profile_path = hsp_project / "build-profile.json5"
+            _write(profile_path, {"modules": [
+                {"name": name, "srcPath": directory} for name, directory, _ in module_definitions
+            ]})
+            for name, directory, kind in module_definitions:
+                module_file = hsp_project / directory / "src/main/module.json5"
+                module_file.parent.mkdir(parents=True, exist_ok=True)
+                module_file.write_text(
+                    "// JSON5 fixture\n{'module': {'name': '" + name
+                    + "', 'type': '" + kind + "',},}\n", encoding="utf-8",
+                )
+            hsp_ledger = json.loads((hsp_om / "decisions.json").read_text(encoding="utf-8"))
+            hsp_ledger["issues"][0]["changedFiles"] += [
+                "libs/ui/a.ets", "libs/ui/b.ets", "libs/ui/nested/c.ets", "libs/ui-extra/d.ets",
+            ]
+            hsp_ledger["issues"][1].update({
+                "changeStatus": "modified", "changedFiles": ["libs/later/a.ets"],
+                "changeSummary": "后续批次的修改不得混入本批 HSP 构建",
+            })
+            _write(hsp_om / "decisions.json", hsp_ledger)
+            hsp_calls = hsp_om / "evidence/tmp/hsp-calls.jsonl"
+            fail_hsp = hsp_om / "evidence/tmp/fail-hsp"
+            hsp_cli = hsp_project / "fake-devecocli"
+            hsp_cli.write_text(
+                f"#!{sys.executable}\nimport json, sys\nfrom pathlib import Path\n"
+                f"with Path({str(hsp_calls)!r}).open('a') as stream:\n"
+                "    stream.write(json.dumps(sys.argv[1:]) + '\\n')\n"
+                f"if '--modules' in sys.argv and Path({str(fail_hsp)!r}).exists():\n"
+                "    print('fixture HSP compile error', file=sys.stderr)\n"
+                "    raise SystemExit(7)\n", encoding="utf-8",
+            )
+            hsp_argv = ["build", "--modules", "nested_shared", "ui_shared"]
+            default_build = ["build"]
+            device_run = ["run", "--device", "fixture-device"]
+
+            def run_hsp(*arguments: str, expected: int = 0) -> tuple[dict, list]:
+                hsp_calls.write_text("", encoding="utf-8")
+                result = subprocess.run(
+                    [sys.executable, str(foundation), str(hsp_project),
+                     "--devecocli", str(hsp_cli), *arguments],
+                    text=True, capture_output=True, check=False,
+                )
+                assert result.returncode == expected, result.stdout + result.stderr
+                return json.loads(result.stdout), [
+                    json.loads(line) for line in hsp_calls.read_text(encoding="utf-8").splitlines()
+                ]
+
+            fail_hsp.write_text("fail", encoding="utf-8")
+            result, commands = run_hsp("--prepare-first-round", expected=1)
+            assert commands == [hsp_argv, default_build]
+            assert result["levels"]["L1"] == 7 and result["levels"]["L3"] is None
+            fail_hsp.unlink()
+            result, commands = run_hsp("--prepare-first-round")
+            assert commands == [hsp_argv, default_build]
+            assert result["hspModules"] == ["nested_shared", "ui_shared"]
+            # 同源码且 HSP 已编译时，首轮只装机；旧版无 HSP 记录时必须补跑。
+            result, commands = run_hsp("--round", "1")
+            assert commands == [device_run] and result["levels"]["L1"] is None
+            hsp_index_path = hsp_om / "evidence/index.json"
+            hsp_index = json.loads(hsp_index_path.read_text(encoding="utf-8"))
+            hsp_index["entries"] = [item for item in hsp_index["entries"]
+                                    if item.get("data", {}).get("phase") != "hsp_build"]
+            _write(hsp_index_path, hsp_index)
+            for round_number in range(1, 6):
+                result, commands = run_hsp("--round", str(round_number))
+                assert commands == [hsp_argv, default_build, device_run]
+                assert result["levels"]["L1"] == 0
+            # HSP 失败不能被入口成功覆盖，也不能安装旧包；配置识别失败同样登记。
+            fail_hsp.write_text("fail", encoding="utf-8")
+            result, commands = run_hsp("--round", "5", expected=1)
+            assert commands == [hsp_argv, default_build]
+            assert result["levels"]["L1"] == 7 and result["levels"]["L3"] is None
+            hsp_index = json.loads(hsp_index_path.read_text(encoding="utf-8"))
+            assert any(item.get("data", {}).get("phase") == "hsp_build"
+                       and item["data"].get("exitCode") == 7
+                       and "HSP compile error" in item["data"].get("stderr", "")
+                       for item in hsp_index["entries"])
+            profile_path.write_text("{invalid", encoding="utf-8")
+            result, commands = run_hsp("--round", "5", expected=1)
+            assert commands == [default_build] and result["levels"]["L3"] is None
+            hsp_index = json.loads(hsp_index_path.read_text(encoding="utf-8"))
+            assert "HSP 模块识别失败" in hsp_index["entries"][-1]["data"]["stderr"]
+            assert next(item for item in hsp_index["entries"]
+                        if item.get("evidenceId") == "E-PREFLIGHT")["data"]["mode"] == "FULL"
+            assert json.loads((hsp_om / "decisions.json").read_text(encoding="utf-8"))["batches"][0]["status"] == "executing"
+
+            # 构建失败、命令缺失都登记错误；不启动旧包，也不把 preflight 改成 STOPPED。
+            fake_devecocli.write_text("#!/bin/sh\nexit 1\n", encoding="utf-8")
+            for cli_path in (fake_devecocli, test_tmp / "missing-cli"):
+                failed_build = subprocess.run(
+                    [sys.executable, str(foundation), str(multi), "--round", "5",
+                     "--devecocli", str(cli_path)],
+                    text=True, capture_output=True, check=False,
+                )
+                assert failed_build.returncode == 1, failed_build.stderr
+                assert json.loads(failed_build.stdout)["levels"]["L3"] is None
+                assert preflight_state()["data"]["mode"] == "FULL"
+            fake_devecocli.write_text("#!/bin/sh\nexit 0\n", encoding="utf-8")
+            excessive_round = subprocess.run(
+                [sys.executable, str(foundation), str(multi), "--round", "6",
+                 "--devecocli", str(fake_devecocli)],
+                text=True, capture_output=True, check=False,
+            )
+            assert excessive_round.returncode == 2
+            # 未登记的额外日志不作为证据，也不阻断收尾校验。
+            (om / "evidence" / "extra.log").write_text("unused log", encoding="utf-8")
+            verify_command(validate_state, str(multi))
             b01_artifact = om / "evidence" / "B01" / "round-1" / "round-1-B01-UI-001-foldable-expanded-layout.png"
             b01_artifact.parent.mkdir(parents=True)
             b01_artifact.write_bytes(b"B01 screenshot")
@@ -705,6 +1026,32 @@ def run(skill_root: Path) -> tuple[bool, str]:
             _write(done_file, {"status": "completed", "testConclusion": "failed"})
             command("transition-batch", str(multi_ledger), "B01", "--input", str(done_file))
             assert json.loads(multi_ledger.read_text(encoding="utf-8"))["task"]["status"] == "executing"
+            # 流程状态不是写入权限：补测、证据和回归记录不被旧状态或确认标记卡住。
+            phase_patch = root / "batch-phase.json"
+            for status in ("pending", "completed", "stopped"):
+                _write(phase_patch, {"status": status, "specConfirmed": False})
+                command("transition-batch", str(multi_ledger), "B01", "--input", str(phase_patch))
+                prepare_foundation()
+                phase_preflight = json.loads(verify_command(preflight, "begin", str(multi)).stdout)
+                assert phase_preflight["next"] == "record-multimodal"
+                verify_command(evidence, "record-batch", str(multi), "--input", str(result_file))
+                command(
+                    "add-deferred-regression", str(multi_ledger), "B01-UI-001",
+                    "--input", str(deferred_file),
+                )
+                phase_data = json.loads(multi_ledger.read_text(encoding="utf-8"))
+                assert phase_data["batches"][0]["status"] == status
+                assert phase_data["batches"][0]["specConfirmed"] is False
+            _write(phase_patch, {"specConfirmed": True})
+            command("transition-batch", str(multi_ledger), "B01", "--input", str(phase_patch))
+            # 补测恢复后，原批次可再次进入第四步，原证据仍可读取。
+            command("transition-batch", str(multi_ledger), "B01", "--input", str(resume_patch))
+            prepare_foundation()
+            resumed_preflight = json.loads(verify_command(preflight, "begin", str(multi)).stdout)
+            assert resumed_preflight["next"] == "record-multimodal"
+            assert b01_artifact.read_bytes() == b"B01 screenshot"
+            assert json.loads(multi_ledger.read_text(encoding="utf-8"))["issues"] == after_test["issues"]
+            command("transition-batch", str(multi_ledger), "B01", "--input", str(done_file))
             _write(multi_task, {"currentBatch": "B02"})
             command("set-task", str(multi_ledger), "--input", str(multi_task))
             begin_multi_batch("B02")
@@ -720,6 +1067,7 @@ def run(skill_root: Path) -> tuple[bool, str]:
                 "--description", "蓝色圆形图标",
             ).stdout)
             assert initial_probe["stage"] == "test_scope_confirmation_required"
+            assert initial_probe["next"] == "ask-test-scope"
             basic_only = json.loads(verify_command(
                 preflight, "record-test-scope", str(multi), "--choice", "basic_only",
             ).stdout)

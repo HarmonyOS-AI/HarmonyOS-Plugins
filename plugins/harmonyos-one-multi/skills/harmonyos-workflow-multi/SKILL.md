@@ -13,6 +13,8 @@ description: 判断 HarmonyOS 一多适配请求是直接修复、全量分析�
 
 当前支持手机、折叠屏和平板形态，不支持 2in1/PC。范围或冻结验证计划明确包含 2in1/PC 时，记录为当前不支持并停止对应项，不得映射成其他设备继续执行。
 
+**待办约束：** 用户可见 Todo 固定为五项，与下文五步一一对应。前置准备、构建、扫描等不单列；多批次复用第二至第五项，仅更新批次标识和状态。
+
 ## 前置准备
 
 全部命令用 `$OM` 表示流程 Skill 根目录：
@@ -30,6 +32,10 @@ python3 <workflow Skill源目录>/scripts/install-to-project.py <工程根>
 
 安装器只复制流程资源到 `<工程根>/.onemulti/`，并保留已有账本、证据和报告。领域 Skill 不安装到 `.onemulti`。
 
+## 接续任务
+
+先读取已有 `$OM/decisions.json`。任务未完成时从当前进度继续；`task.status=completed` 时，由 Agent 判断本次请求是原任务的修正、补测或方案调整，还是新的独立任务：延续任务保留产物并刷新相关批次状态；新任务先清理旧任务产物，再从第一步开始。具体命令按 [任务账本](references/task-ledger.md#接续与新任务)。仅查询或解释不改状态，无法判断时先询问，不自行清理。
+
 ## 五步闭环
 
 ### 1. 确认范围并生成批次计划
@@ -44,15 +50,15 @@ python3 $OM/scripts/project-scan.py . --json
 
 本步不为具体修法检索官方文档。
 
-按 [任务账本](references/task-ledger.md) 使用 `bootstrap` 初始化 `$OM/decisions.json`。多批任务询问用户先生成第一批 SPEC，还是先生成全部 SPEC；单批任务直接进入第二步。
+按 [任务账本](references/task-ledger.md) 使用 `bootstrap` 初始化 `$OM/decisions.json`；用户已要求高保真时，将对应批次的 `hifiRequired` 写为 `true`。多批任务询问用户先生成第一批 SPEC，还是先生成全部 SPEC；单批任务直接进入第二步。
 
 ### 2. 逐批生成并确认 SPEC
 
-对当前批次加载命中的领域 Skill，由领域知识确定现象、证据、根因、方案、计划文件和验证方法。写入 `decisions.json` 的本批 `issues` 就是 SPEC，不生成第二份 PRD/SPEC。
+按确认模式为当前批或全部批次加载命中的领域 Skill，由领域知识确定现象、证据、根因、方案、计划文件和验证方法。写入 `decisions.json` 的各批 `issues` 就是 SPEC，不生成第二份 PRD/SPEC。
 
 这是官方文档检索的主要阶段：当领域 Skill 判断 API、版本、系统行为或知识缺口需要核实时，按该领域 Skill 的规则执行 `devecocli docs search/read`；不得用搜索摘要替代领域诊断。
 
-展示本批 SPEC 前先读 [高保真流程契约](references/hifi-delivery.md)。除契约定义的极小改动外，必须在同一次确认中提供“先生成高保真预览”和“确认 SPEC 直接施工”选项；用户选择预览后，再加载 UI 领域 Skill 的高保真知识生成 HTML，并将 SPEC 与 HTML 一起确认。不得连续询问是否生成高保真和是否开始施工。
+展示 SPEC 前先读 [高保真流程契约](references/hifi-delivery.md) 及账本：`batch.hifiRequired=true` 时直接生成 HTML，设备覆盖读取 `task.targetForms`，不得按批自行缩减。尚未要求高保真且不是极小改动时，在同一次交互中提供预览或直接施工选项，选择预览后写回该批要求。`aggregate` 模式先生成全部 SPEC 和所有要求的批次 HTML，再统一确认；不得用 SPEC 已确认代替高保真交付，也不得连续询问预览和施工。
 
 未获得整批确认前不得进入施工。
 
@@ -64,21 +70,21 @@ python3 $OM/scripts/project-scan.py . --json
 
 当前批已有高保真时，SPEC 控制修改范围和方案，HTML 控制已确认的布局、比例、位置和组件状态。
 
+施工结束后按 [工具说明](references/tooling.md) 记录构建和适用检查结果；检查失败不阻断进入第四步，由验证阶段判断修复或记录限制。
+
 ### 4. 验证、修复并回写证据
 
 完整读取 [验证流程](references/verification.md)，只执行已确认 `verificationPlan` 中的形态、路由和检查项。构建、静态检查、设备运行、多模态、证据和结果写回均由流程 Skill 执行；具体问题的验收标准来自对应领域知识。
 
-只修复有证据表明由本批修改引起的问题，每批最多 5 轮。无法形成可靠证据时记为未验证，不得用编译成功代替运行或视觉结论。
+只修复有证据表明由本批修改引起的问题，每批最多 5 轮；连续两轮无新增证据或根因进展时停止。可修复问题继续下一轮，不因首轮失败直接收尾。验证通过、无可继续自动修复项或达到停止条件后，记录遗留问题并进入报告；无法形成可靠证据时记为未验证，不得用编译成功代替运行或视觉结论。
 
 验证失败且根因不明确时，可按领域 Skill 规则查询官方 FAQ 或最佳实践；报告阶段不再检索文档。
 
 ### 5. 生成批次报告与最终汇总
 
-先执行账本和证据校验，再按 [报告规则](references/reporting.md) 生成 HTML：
+验证循环结束后，按 [报告规则](references/reporting.md) 生成 HTML；失败和未验证结果不阻断报告生成。脚本自带输入校验，无需重复执行校验命令：
 
 ```bash
-python3 $OM/scripts/task-ledger.py validate $OM/decisions.json
-python3 $OM/scripts/validate-state.py .
 python3 $OM/scripts/render-report.py $OM --batch-id <batchId>
 ```
 
